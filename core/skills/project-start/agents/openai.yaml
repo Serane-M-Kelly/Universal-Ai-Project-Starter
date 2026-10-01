@@ -1,0 +1,4 @@
+interface:
+  display_name: "project-start"
+  short_description: "Piloter le projet avec un suivi par phases"
+  default_prompt: "Utilise $project-start dans le workspace de ce projet."

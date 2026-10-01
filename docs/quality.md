@@ -1,0 +1,40 @@
+# Qualité du starter
+
+## Porte locale unique
+
+Avant toute version ou modification structurelle :
+
+```bash
+npm ci --ignore-scripts
+npm run validate
+```
+
+`validate` enchaîne trois preuves :
+
+1. compilation TypeScript stricte sans émission ;
+2. compilation réelle et totalité des tests ;
+3. inspection à blanc du paquet npm distribuable.
+
+La validation du paquet confirme la cohérence des versions, la présence du CLI, des schémas, profils, adaptateurs, skills et agents, et l'absence de sources internes, tests, scripts, dépendances ou fichiers `.DS_Store`. La suite couvre notamment les importations valides, répétées, incompatibles, dangereuses et altérées d'un product-package, ainsi que les parcours du backlog v2.
+
+## Fixtures
+
+Les fixtures de `tests/fixtures/` représentent des entrées stables : application Node autonome, application Next.js App Router convertible en Pages Router, projets SwiftUI Xcode et Swift Package, site, extension et thème WordPress, application de monorepo, agent métier personnel valide et agent volontairement dangereux. Chaque test copie sa fixture dans un dossier temporaire ; il ne modifie jamais l'original ni un projet réel.
+
+## Validation continue
+
+`.github/workflows/quality.yml` exécute la même commande `npm run validate` :
+
+- sur Node 22, 24 et 26 sous Ubuntu ;
+- sur Node 24 sous macOS et Windows ;
+- à chaque push, pull request et déclenchement manuel.
+
+Le workflow possède seulement `contents: read`, n'enregistre pas les identifiants Git, n'exécute pas les scripts d'installation npm et référence ses actions par SHA complet immuable. Les exécutions obsolètes d'une même branche sont annulées.
+
+## Dépendances
+
+`.github/dependabot.yml` propose chaque semaine les mises à jour npm et GitHub Actions. Chaque proposition doit passer la porte qualité ; elle n'est jamais fusionnée ou publiée automatiquement par cette configuration.
+
+## Politique de compatibilité
+
+Le minimum supporté est Node 22. Node 20 n'est plus accepté depuis son passage en fin de vie. La ligne LTS Node 24 sert de référence de portabilité ; Node 26 détecte en avance les incompatibilités avec la ligne courante.

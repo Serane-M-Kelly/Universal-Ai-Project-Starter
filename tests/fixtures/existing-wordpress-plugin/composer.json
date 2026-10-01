@@ -1,0 +1,13 @@
+{
+  "name": "fixtures/universal-starter-plugin",
+  "type": "wordpress-plugin",
+  "require": {
+    "php": ">=8.2"
+  },
+  "scripts": {
+    "lint": "phpcs .",
+    "analyze": "phpstan analyse",
+    "test": "phpunit"
+  }
+}
+

@@ -1,0 +1,30 @@
+✔ phase workflow: checks, human observation, independent review, acceptance and cold resume (2354.214515ms)
+✔ phase workflow: failed check then correction invalidates earlier code evidence (1347.42952ms)
+✔ phase workflow: cannot replace human observation with a test (1065.904763ms)
+✔ phase workflow: future addition preserves mandate; active scope change needs decision (2095.242958ms)
+✔ phase workflow: discovered technical task retains mandate and can be completed (2339.712458ms)
+✔ phase workflow: reopening dependency revokes dependent and old proofs (1846.025721ms)
+✔ phase workflow: manual view is archived, never treated as plan or evidence (1759.778088ms)
+✔ phase workflow: report must name exact code and contract; later negative review blocks (1666.981577ms)
+✔ phase workflow: Swift build links ignored, source changes tracked and source links refused (1425.660321ms)
+✔ phase workflow: lock and command changing sources refuse false completion (1094.11886ms)
+✔ phase workflow: init installs nine skills and native defaults; customization preserved (2112.465637ms)
+✔ phase workflow: a failed later control does not reuse a previous pass (1978.76088ms)
+✔ phase workflow: manual Git preparation and verification with an unrelated preexisting edit (2910.314502ms)
+✔ phase workflow: migration of legacy v2 preserves archives and maps dependencies without acceptance (3726.840846ms)
+✔ phase workflow: Next migration preserves dependencies and human tasks, not old passes (4513.05513ms)
+✔ phase workflow: invalid plans leave canonical state unchanged (2217.701422ms)
+✔ phase workflow: restoring a corrupted state requires a valid snapshot and revokes old authority (3167.610057ms)
+DIAGNOSTIC_FIXTURE /workspace/scratch/9b165d4b8096/temp-v0201/alias/starter-public-cli-pxC99i
+✔ phase workflow: public CLI begins after brief approval, repeated approval preserves mandate (7714.511208ms)
+✔ phase workflow: aliased parent paths preserve the complete execution cycle (1756.537277ms)
+✔ phase workflow: canonicalizing the root still refuses a redirected state file (794.395073ms)
+✔ phase workflow: canonicalizing the root still refuses an escaping intermediate directory (821.982862ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48918.576911

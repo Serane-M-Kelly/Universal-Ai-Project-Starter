@@ -1,0 +1,156 @@
+schema_version: 1
+skills:
+- id: project-discover
+  version: 5
+  label: Project Discover
+  source: project-discover
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - legacy
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-handoff
+  version: 4
+  label: Project Handoff
+  source: project-handoff
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - legacy
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-setup
+  version: 6
+  label: Project Setup
+  source: project-setup
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - legacy
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-plan
+  version: 5
+  label: Project Plan
+  source: project-plan
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - legacy
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-work
+  version: 4
+  label: Project Work
+  source: project-work
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - legacy
+- id: project-ship
+  version: 4
+  label: Project Ship
+  source: project-ship
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - legacy
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-start
+  version: 4
+  label: project-start
+  source: project-start
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-next
+  version: 3
+  label: project-next
+  source: project-next
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - phases-v3
+    phase_runtime_min: 0.22.0
+- id: project-phase
+  version: 4
+  label: project-phase
+  source: project-phase
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - phases-v3
+    phase_runtime_min: 0.23.0
+- id: project-review
+  version: 4
+  label: project-review
+  source: project-review
+  compatibility:
+    entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+    profiles:
+    - '*'
+    workflows:
+    - phases-v3
+    phase_runtime_min: 0.23.0

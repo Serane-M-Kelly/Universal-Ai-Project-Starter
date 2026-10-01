@@ -1,0 +1,39 @@
+contract: project-architect-product-package
+contract_version: 1
+package_id: imported-product-pp-001
+package_version: 1
+package_status: ready_for_intake
+project_name: Imported Product
+project_stage: concept_defined
+decision_owner: Kelly
+created_at: 2026-08-05T09:00:00Z
+updated_at: 2026-08-05T10:00:00Z
+supersedes: null
+producer:
+  name: project-architect
+  surface: chatgpt
+evidence:
+  public_research: available
+  real_user_validation: available
+  synthetic_material_present: false
+prototype:
+  status: available
+  canonical_reference: https://example.test/imported-product/prototype-v1
+review:
+  independent_review: passed
+  reviewed_at: 2026-08-05T10:00:00Z
+confidentiality:
+  classification: private
+  contains_personal_data: false
+  restricted_paths: []
+contents:
+  project_passport: PROJECT_PASSPORT.md
+  evidence_register: EVIDENCE_REGISTER.md
+  product_strategy: PRODUCT_STRATEGY.md
+  ux_flows: UX_FLOWS.md
+  prototype_brief: PROTOTYPE_BRIEF.md
+  validation_report: VALIDATION_REPORT.md
+  decision_log: DECISION_LOG.md
+  open_questions: OPEN_QUESTIONS.md
+  review_report: REVIEW_REPORT.md
+  build_handoff: BUILD_HANDOFF.md

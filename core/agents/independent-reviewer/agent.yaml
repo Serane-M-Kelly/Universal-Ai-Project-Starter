@@ -1,0 +1,33 @@
+schema_version: 1
+
+agent:
+  id: independent-reviewer
+  version: 1
+  label: Independent Reviewer
+  description: Examine en lecture seule une unité implémentée avec son diff et ses preuves, puis retourne des constats priorisés sans corriger ni accepter le résultat.
+
+enabled: true
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+  profiles:
+    - "*"
+
+execution:
+  filesystem: read-only
+  shell: true
+  network: false
+  delegation: false
+
+authority:
+  brief_approval: false
+  work_acceptance: false
+  ship_approval: false
+  external_actions: forbidden
+  destructive_actions: forbidden
+  commits: forbidden
+  deployment: forbidden

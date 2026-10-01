@@ -1,0 +1,18 @@
+# Fixtures
+
+Ces dossiers représentent des entrées stables et réalistes pour la suite de tests :
+
+- `existing-node-app` : petite application Node autonome avec toutes les commandes détectables ;
+- `existing-monorepo` : application web imbriquée dans un dépôt à workspaces ;
+- `existing-node-api` : service HTTP TypeScript sans framework conforme au profil `node-api` ;
+- `existing-nextjs-app` : application Next.js TypeScript App Router conforme au profil `nextjs` et utilisée aussi pour vérifier Pages Router ;
+- `existing-swiftui-xcode` : application SwiftUI dans un projet Xcode au nom variable ;
+- `existing-swiftui-package` : application SwiftUI macOS décrite par `Package.swift` ;
+- `existing-wordpress-site` : site WordPress sans `wp-config.php` versionné ;
+- `existing-wordpress-plugin` : extension WordPress avec outils Composer et Node combinés ;
+- `existing-wordpress-theme` : thème bloc WordPress avec chaîne Node ;
+- `domain-expert-agent` : agent personnel valide, non technique et en lecture seule ;
+- `invalid-agent` : manifeste volontairement dangereux que le schéma doit refuser.
+- `product-package-ready` : dossier Project Architect v1 complet, relu et prêt pour un import déterministe.
+
+Les tests copient toujours les fixtures dans un dossier temporaire avant de les modifier. Les originaux restent immuables.

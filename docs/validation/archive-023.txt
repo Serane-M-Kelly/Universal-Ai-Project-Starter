@@ -1,0 +1,40 @@
+$ node dist/index.js workflow init /tmp/starter-023-archive-7_kqsrs0/pilot --name Archive SEO check --owner Synthetic test
+{
+  "workspace": "/tmp/starter-023-archive-7_kqsrs0/pilot/ai-workspace",
+  "next": "Ouvrir ai-workspace puis project-start."
+}
+
+exit=0
+
+$ node .starter/run.mjs workflow status --compact
+{
+  "revision": 1,
+  "brief_approved": false,
+  "setup_recorded": false,
+  "backlog_refresh_needed": false,
+  "active": null,
+  "phases": [],
+  "next": null,
+  "recommended": "project-start / project-handoff"
+}
+
+exit=0
+
+$ node .starter/run.mjs doctor . --json --compact
+{
+  "workspace": "/tmp/starter-023-archive-7_kqsrs0/pilot/ai-workspace",
+  "verdict": "WARNING",
+  "ok_count": 23,
+  "items": [
+    {
+      "severity": "warning",
+      "code": "REPOSITORY_NO_GIT",
+      "message": "Aucun dépôt Git n'est détecté dans le repository root.",
+      "path": "/tmp/starter-023-archive-7_kqsrs0/pilot/app"
+    }
+  ]
+}
+
+exit=1
+
+Archive extracted; Node CLI initialized an independent workspace. SEO reference identical; native dependencies and tsc symlink preserved. No product deployment or SEO ranking checked.

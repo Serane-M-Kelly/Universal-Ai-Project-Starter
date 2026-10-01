@@ -1,0 +1,12 @@
+{
+  "name": "fixtures/wordpress-site",
+  "type": "project",
+  "require": {
+    "php": ">=8.2"
+  },
+  "scripts": {
+    "lint": "phpcs wp-content",
+    "test": "phpunit"
+  }
+}
+

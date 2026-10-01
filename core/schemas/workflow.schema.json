@@ -1,0 +1,378 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 3
+    },
+    "revision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "next_id": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "active": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "brief": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "by": {
+              "type": "string"
+            },
+            "request": {
+              "type": "string"
+            },
+            "at": {
+              "type": "string"
+            },
+            "hash": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "by",
+            "request",
+            "at",
+            "hash"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "setup": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "ref": {
+              "type": "string"
+            },
+            "hash": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "ref",
+            "hash"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "phases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "goal": {
+            "type": "string"
+          },
+          "validation": {
+            "type": "string"
+          },
+          "excludes": {
+            "type": "string"
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "optional": {
+            "type": "boolean"
+          },
+          "agent": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "human": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "id",
+                "title",
+                "human"
+              ]
+            }
+          },
+          "mandate": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "by": {
+                    "type": "string"
+                  },
+                  "request": {
+                    "type": "string"
+                  },
+                  "at": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "by",
+                  "request",
+                  "at",
+                  "hash"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "acceptance": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "by": {
+                    "type": "string"
+                  },
+                  "request": {
+                    "type": "string"
+                  },
+                  "at": {
+                    "type": "string"
+                  },
+                  "hash": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "by",
+                  "request",
+                  "at",
+                  "hash"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "blocked": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "baseline": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "iteration": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                }
+              }
+            }
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "goal",
+          "validation",
+          "excludes",
+          "depends_on",
+          "optional",
+          "agent",
+          "tasks",
+          "mandate",
+          "acceptance",
+          "blocked",
+          "baseline",
+          "iteration"
+        ]
+      }
+    },
+    "proofs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "string"
+          },
+          "tasks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "kind": {
+            "enum": [
+              "check",
+              "observation",
+              "review"
+            ]
+          },
+          "contract": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          },
+          "ref": {
+            "type": "string"
+          },
+          "report_hash": {
+            "type": "string"
+          },
+          "by": {
+            "type": "string"
+          },
+          "request": {
+            "type": "string"
+          },
+          "at": {
+            "type": "string"
+          },
+          "passed": {
+            "type": "boolean"
+          },
+          "verdict": {
+            "type": "string"
+          },
+          "independent": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "phase",
+          "tasks",
+          "kind",
+          "contract",
+          "code",
+          "ref",
+          "report_hash",
+          "by",
+          "request",
+          "at",
+          "passed",
+          "verdict",
+          "independent"
+        ]
+      }
+    },
+    "retired_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "by": {
+            "type": "string"
+          },
+          "request": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "at",
+          "action",
+          "by",
+          "request"
+        ]
+      }
+    },
+    "view_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "revision",
+    "next_id",
+    "active",
+    "brief",
+    "setup",
+    "phases",
+    "proofs",
+    "retired_ids",
+    "events",
+    "view_hash"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

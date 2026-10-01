@@ -1,0 +1,52 @@
+{
+  "scenario": "Synthetic fixture: 400 actual node:test checks, spec reporter; then a phase with 9 historical proofs and 1 current proof.",
+  "measured_at": "2026-09-15T13:15:54.409Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "model_called": false,
+  "actual_model_tokens": null,
+  "monetary_savings": null,
+  "measurement": "UTF-8 JSON payload bytes (2-space indentation); metadata included, metrics envelope excluded. CLI adds one newline per response.",
+  "already_short_check_response_bytes": 114,
+  "check_report_original_file_bytes": 14413,
+  "report_read": {
+    "original_bytes": 15739,
+    "delivered_bytes": 1603,
+    "saved_bytes": 14136,
+    "reduction_percent": 89.82,
+    "unit": "UTF-8 bytes of JSON payload; excludes metrics envelope and CLI newline",
+    "model_tokens": null,
+    "billed_savings": null
+  },
+  "report_plus_one_detail_read": {
+    "delivered_bytes": 4252,
+    "saved_vs_full_read_bytes": 11487
+  },
+  "report_then_full_read": {
+    "delivered_bytes": 17342,
+    "extra_vs_full_read_bytes": 1603,
+    "note": "Reading compact then all details costs more than reading the original once."
+  },
+  "phase_context": {
+    "original_bytes": 7508,
+    "delivered_bytes": 1919,
+    "saved_bytes": 5589,
+    "reduction_percent": 74.44,
+    "unit": "UTF-8 bytes of JSON payload; excludes metrics envelope and CLI newline",
+    "model_tokens": null,
+    "billed_savings": null
+  },
+  "constraints_preserved": [
+    "complete phase contract",
+    "baseline",
+    "human tasks",
+    "current proofs including failures",
+    "latest historical review if applicable"
+  ],
+  "limits": [
+    "This is not a complete agent session.",
+    "No bill, quota or token percentage can be inferred.",
+    "Unrecognized formats and failed checks are not compressed.",
+    "No gain if the agent never needed the full report."
+  ]
+}

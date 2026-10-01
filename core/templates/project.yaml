@@ -1,0 +1,49 @@
+schema_version: 1
+starter_version: 0.23.0
+project:
+  name: À compléter
+  slug: a-completer
+  entry_mode: brief
+  owner: null
+paths:
+  workspace_root: .
+  code_root: ../app
+  repository_root: ../app
+profile:
+  id: generic
+  version: 1
+adapters: []
+skills: []
+agents: []
+commands:
+  install: null
+  dev: null
+  lint: null
+  typecheck: null
+  test: null
+  build: null
+governance:
+  brief_approval: ask
+  external_actions: ask
+  destructive_actions: ask
+  commits: ask
+  deployment: ask
+  ai_disclosure: unspecified
+privacy:
+  private_paths:
+    - intake/
+    - prototype/private/
+    - prototype/product-package/
+    - PROJECT_BRIEF.md
+    - PROJECT_BRIEF.draft.md
+    - PROJECT_STATE.md
+    - docs/internal/
+    - taches/
+    - livraisons/
+    - .claude/
+    - .codex/
+  secret_patterns:
+    - .env
+    - .env.*
+    - "**/secrets/**"
+    - "**/credentials.*"

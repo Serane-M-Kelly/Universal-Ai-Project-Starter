@@ -1,0 +1,7 @@
+schema_version: 1
+
+agents:
+  - id: builder
+    source: builder
+  - id: independent-reviewer
+    source: independent-reviewer

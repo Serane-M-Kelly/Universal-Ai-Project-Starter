@@ -1,0 +1,377 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:universal-ai-project-starter:profile:v5",
+  "title": "Universal AI Project Starter profile manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "compatibility", "commands", "guidance", "validation"],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 5
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "label", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry_modes"],
+      "properties": {
+        "entry_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": ["idea", "brief", "existing", "maintenance"]
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["strategy", "defaults", "required", "required_by_entry_mode"],
+      "properties": {
+        "strategy": {
+          "enum": ["detect-existing", "profile-defaults", "manual"]
+        },
+        "defaults": {
+          "$ref": "#/$defs/commands"
+        },
+        "required": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/commandName"
+          }
+        },
+        "required_by_entry_mode": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "entry_modes"],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/commandName"
+              },
+              "entry_modes": {
+                "$ref": "#/$defs/entryModes"
+              }
+            }
+          }
+        }
+      }
+    },
+    "guidance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["principles", "setup_outcomes"],
+      "properties": {
+        "principles": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "setup_outcomes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required_paths", "any_of_paths", "any_of_matches", "required_text_matches", "required_json_fields", "any_of_json_fields"],
+      "properties": {
+        "required_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "kind", "severity"],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": ["file", "directory"]
+              },
+              "severity": {
+                "enum": ["warning", "blocked"]
+              },
+              "entry_modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": ["idea", "brief", "existing", "maintenance"]
+                }
+              }
+            }
+          }
+        },
+        "any_of_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "alternatives", "severity"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "alternatives": {
+                "type": "array",
+                "minItems": 2,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["path", "kind"],
+                  "properties": {
+                    "path": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "enum": ["file", "directory"]
+                    }
+                  }
+                }
+              },
+              "severity": {
+                "enum": ["warning", "blocked"]
+              },
+              "entry_modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": ["idea", "brief", "existing", "maintenance"]
+                }
+              }
+            }
+          }
+        },
+        "any_of_matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "alternatives", "max_depth", "severity"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "alternatives": {
+                "type": "array",
+                "minItems": 2,
+                "uniqueItems": true,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["pattern", "kind"],
+                  "properties": {
+                    "pattern": {
+                      "$ref": "#/$defs/safeGlob"
+                    },
+                    "kind": {
+                      "enum": ["file", "directory"]
+                    }
+                  }
+                }
+              },
+              "max_depth": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "severity": {
+                "enum": ["warning", "blocked"]
+              },
+              "entry_modes": {
+                "$ref": "#/$defs/entryModes"
+              }
+            }
+          }
+        },
+        "required_text_matches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["label", "patterns", "contains", "match", "max_depth", "severity"],
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "patterns": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "#/$defs/safeGlob"
+                }
+              },
+              "contains": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 200
+                }
+              },
+              "match": {
+                "enum": ["any", "all"]
+              },
+              "max_depth": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 8
+              },
+              "severity": {
+                "enum": ["warning", "blocked"]
+              },
+              "entry_modes": {
+                "$ref": "#/$defs/entryModes"
+              }
+            }
+          }
+        },
+        "required_json_fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "fields", "severity"],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fields": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)*$"
+                }
+              },
+              "severity": {
+                "enum": ["warning", "blocked"]
+              },
+              "entry_modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": ["idea", "brief", "existing", "maintenance"]
+                }
+              }
+            }
+          }
+        },
+        "any_of_json_fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["path", "fields", "severity"],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "fields": {
+                "type": "array",
+                "minItems": 2,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_-]+(?:\\.[A-Za-z0-9_-]+)*$"
+                }
+              },
+              "severity": {
+                "enum": ["warning", "blocked"]
+              },
+              "entry_modes": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "enum": ["idea", "brief", "existing", "maintenance"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "entryModes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": ["idea", "brief", "existing", "maintenance"]
+      }
+    },
+    "safeGlob": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\)[^\\u0000]+$"
+    },
+    "commandName": {
+      "enum": ["install", "dev", "lint", "typecheck", "test", "build"]
+    },
+    "optionalCommand": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["install", "dev", "lint", "typecheck", "test", "build"],
+      "properties": {
+        "install": { "$ref": "#/$defs/optionalCommand" },
+        "dev": { "$ref": "#/$defs/optionalCommand" },
+        "lint": { "$ref": "#/$defs/optionalCommand" },
+        "typecheck": { "$ref": "#/$defs/optionalCommand" },
+        "test": { "$ref": "#/$defs/optionalCommand" },
+        "build": { "$ref": "#/$defs/optionalCommand" }
+      }
+    }
+  }
+}

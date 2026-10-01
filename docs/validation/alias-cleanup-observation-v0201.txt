@@ -1,0 +1,35 @@
+✔ phase workflow: checks, human observation, independent review, acceptance and cold resume (5446.627901ms)
+✔ phase workflow: failed check then correction invalidates earlier code evidence (2233.59311ms)
+✔ phase workflow: cannot replace human observation with a test (1875.299279ms)
+✔ phase workflow: future addition preserves mandate; active scope change needs decision (2553.070184ms)
+✔ phase workflow: discovered technical task retains mandate and can be completed (2313.901867ms)
+✔ phase workflow: reopening dependency revokes dependent and old proofs (2526.387698ms)
+✔ phase workflow: manual view is archived, never treated as plan or evidence (2611.757174ms)
+✔ phase workflow: report must name exact code and contract; later negative review blocks (1564.304308ms)
+✔ phase workflow: Swift build links ignored, source changes tracked and source links refused (1639.036194ms)
+✔ phase workflow: lock and command changing sources refuse false completion (1112.569181ms)
+✔ phase workflow: init installs nine skills and native defaults; customization preserved (2711.041427ms)
+✔ phase workflow: a failed later control does not reuse a previous pass (3302.44377ms)
+✔ phase workflow: manual Git preparation and verification with an unrelated preexisting edit (3716.239157ms)
+✔ phase workflow: migration of legacy v2 preserves archives and maps dependencies without acceptance (4628.163179ms)
+✖ phase workflow: Next migration preserves dependencies and human tasks, not old passes (4207.725461ms)
+✔ phase workflow: invalid plans leave canonical state unchanged (1870.765561ms)
+✔ phase workflow: restoring a corrupted state requires a valid snapshot and revokes old authority (1780.259396ms)
+✔ phase workflow: public CLI begins after brief approval, repeated approval preserves mandate (8436.722226ms)
+✔ phase workflow: aliased parent paths preserve the complete execution cycle (3679.320072ms)
+✔ phase workflow: canonicalizing the root still refuses a redirected state file (1579.195507ms)
+✔ phase workflow: canonicalizing the root still refuses an escaping intermediate directory (1242.396287ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 20
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 61444.277758
+
+✖ failing tests:
+
+test at tests/phase-workflow.test.mjs:553:1
+✖ phase workflow: Next migration preserves dependencies and human tasks, not old passes (4207.725461ms)
+  [Error: ENOTEMPTY: directory not empty, rmdir '/workspace/scratch/9b165d4b8096/temp-v0201/alias/starter-phase-NK7NRN/from-next/ai-workspace/.starter'] { errno: -39, code: 'ENOTEMPTY', syscall: 'rmdir', path: '/workspace/scratch/9b165d4b8096/temp-v0201/alias/starter-phase-NK7NRN/from-next/ai-workspace/.starter' }

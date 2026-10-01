@@ -1,0 +1,26 @@
+✔ phase workflow: checks, human observation, independent review, acceptance and cold resume (3693.908339ms)
+✔ phase workflow: failed check then correction invalidates earlier code evidence (1709.375381ms)
+✔ phase workflow: cannot replace human observation with a test (847.931212ms)
+✔ phase workflow: future addition preserves mandate; active scope change needs decision (971.889871ms)
+✔ phase workflow: discovered technical task retains mandate and can be completed (1156.928587ms)
+✔ phase workflow: reopening dependency revokes dependent and old proofs (1329.559858ms)
+✔ phase workflow: manual view is archived, never treated as plan or evidence (1400.098182ms)
+✔ phase workflow: report must name exact code and contract; later negative review blocks (1148.853146ms)
+✔ phase workflow: Swift build links ignored, source changes tracked and source links refused (728.998043ms)
+✔ phase workflow: lock and command changing sources refuse false completion (913.056581ms)
+✔ phase workflow: init installs nine skills and native defaults; customization preserved (1836.108529ms)
+✔ phase workflow: a failed later control does not reuse a previous pass (1131.279133ms)
+✔ phase workflow: manual Git preparation and verification with an unrelated preexisting edit (2308.057601ms)
+✔ phase workflow: migration of legacy v2 preserves archives and maps dependencies without acceptance (3326.492251ms)
+✔ phase workflow: Next migration preserves dependencies and human tasks, not old passes (5013.478995ms)
+✔ phase workflow: invalid plans leave canonical state unchanged (1151.798784ms)
+✔ phase workflow: restoring a corrupted state requires a valid snapshot and revokes old authority (1327.383922ms)
+✔ phase workflow: public CLI begins after brief approval, repeated approval preserves mandate (8211.00046ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 38420.486384

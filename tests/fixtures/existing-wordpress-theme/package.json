@@ -1,0 +1,15 @@
+{
+  "name": "universal-starter-theme",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "wp-env start",
+    "lint": "wp-scripts lint-js && wp-scripts lint-style",
+    "test": "wp-scripts test-unit-js",
+    "build": "wp-scripts build"
+  }
+}
+

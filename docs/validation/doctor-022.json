@@ -1,0 +1,18 @@
+{
+  "scenario": "New synthetic phase workspace, no Git repository",
+  "measured_at": "2026-10-01T07:42:13.875Z",
+  "node": "v24.19.0",
+  "platform": "linux",
+  "measurement": "UTF-8 bytes of CLI stdout JSON including final newline",
+  "original_bytes": 4989,
+  "delivered_bytes": 359,
+  "saved_bytes": 4630,
+  "reduction_percent": 92.8,
+  "verdict": "WARNING",
+  "exit_code": 1,
+  "ok_count": 23,
+  "non_ok_count": 1,
+  "model_called": false,
+  "actual_model_tokens": null,
+  "monetary_savings": null
+}

@@ -1,0 +1,33 @@
+schema_version: 1
+
+agent:
+  id: domain-expert
+  version: 1
+  label: Expert du domaine
+  description: Analyse les sources métier autorisées et retourne une synthèse traçable sans prendre de décision produit à la place de l'utilisatrice.
+
+enabled: true
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+  profiles:
+    - "*"
+
+execution:
+  filesystem: read-only
+  shell: false
+  network: false
+  delegation: false
+
+authority:
+  brief_approval: false
+  work_acceptance: false
+  ship_approval: false
+  external_actions: forbidden
+  destructive_actions: forbidden
+  commits: forbidden
+  deployment: forbidden

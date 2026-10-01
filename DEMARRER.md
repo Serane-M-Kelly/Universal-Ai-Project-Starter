@@ -1,0 +1,124 @@
+# Démarrer avec le starter 0.23.0
+
+La distribution contient les sources, le programme compilé, les dépendances et les neuf skills.
+Node.js 22 ou supérieur suffit. Aucun RTK externe ni nouvelle installation globale.
+
+## Premier essai dans un nouveau projet
+
+Depuis le dossier décompressé du starter, choisis une destination qui n’existe pas encore :
+
+```bash
+node dist/index.js workflow init ../pilote-contexte-v023 --name "Pilote contexte" --owner "Kelly"
+cd ../pilote-contexte-v023/ai-workspace
+codex
+```
+
+Dans Codex, donne une demande ordinaire :
+
+```text
+$project-start
+Je veux une liste de tâches locale : ajouter, cocher, supprimer et conserver après rechargement.
+Sans compte, serveur ou déploiement. Prépare le projet et propose un plan simple à valider.
+```
+
+Laisse Start retrouver ce qui manque, puis valide les vrais choix qu’il présente. Next recommande
+la suite, Phase réalise la phase choisie, Review vérifie et organise les corrections. Donne ton
+essai réel quand l’agent le demande. Ferme la session, ouvre-en une nouvelle et appelle Start :
+il doit retrouver les acquis et le mandat. Tu n’as aucune nouvelle syntaxe de pilotage à apprendre.
+
+Pour voir la différence, tu peux demander à l’agent : « Compare la taille de la vue compacte et
+de l’original pour le rapport de tests que tu viens d’enregistrer. Montre aussi ce qui a été masqué. »
+S’il n’existe que peu de tests ou d’historique, un gain nul est normal.
+
+## Vérification reproductible du module
+
+Dans un autre Terminal, depuis le dossier du starter :
+
+```bash
+npm run validate
+node scripts/benchmark-context.mjs
+```
+
+La seconde commande utilise un projet temporaire synthétique qu’elle supprime ensuite. Elle ne
+modifie pas ton pilote. Elle mesure le volume de lecture et son surcoût lorsque tous les détails
+sont ensuite ouverts ; elle ne mesure pas ta facture.
+
+## Ton workspace actuel 0.20.x, 0.21.x ou 0.22.x
+
+Tu peux essayer les vues avec le CLI de cette distribution et `--workspace`, sans modifier ton
+installation existante. Voir [les commandes et limites](docs/CONTEXT-0.21.0.md).
+Les [notes 0.23](docs/RELEASE-0.23.0.md) précisent les références PA/AD et les restrictions de mise à niveau.
+**N’exécute pas une migration legacy sur le workspace v3 que tu viens de tester.**
+La nouvelle archive ne met pas à jour automatiquement les runtimes déjà copiés dans tes projets.
+
+## Anciens pilotes seulement (Python v0.1.1 ou backlog historique v2)
+
+La procédure ci-dessous concerne uniquement ces formats anciens.
+
+## Reprendre ton pilote Télécommande
+
+Décompresse l’archive. Dans Terminal, ouvre le dossier décompressé du starter. Ferme la session
+de l’ancien pilote. Adapte les deux chemins ci-dessous si tes dossiers sont ailleurs.
+
+```bash
+node dist/index.js workflow migrate --source "../telecommande-pilote-v011/ai-workspace" --target "../telecommande-v020" --dry-run
+```
+
+Cette commande décrit la conversion. Si les chemins affichés correspondent à ton pilote :
+
+```bash
+node dist/index.js workflow migrate --source "../telecommande-pilote-v011/ai-workspace" --target "../telecommande-v020"
+cd ../telecommande-v020/ai-workspace
+codex
+```
+
+La migration crée un nouveau workspace et archive le précédent. Elle conserve le chemin du code
+utilisé par le pilote : **elle ne copie pas l’application**. Pour tester sur une autre copie, crée
+cette copie avant de travailler, puis demande à l’agent de mettre le chemin à jour avec relocate.
+
+Dans Codex :
+
+```text
+$project-start
+```
+
+Le premier Start doit examiner le plan importé et les anciens résultats, puis te présenter les
+seuls écarts utiles. Les anciennes preuves restent historiques : l’agent doit examiner ce qu’elles
+couvrent aujourd’hui. Tu n’as ni fichier JSON ni backlog à modifier toi-même.
+
+## Ton essai en cinq gestes
+
+1. **Start** : vérifier que le résultat acquis et la prochaine action sont compréhensibles.
+2. **Next** : obtenir la phase recommandée, son résultat attendu et le spécialiste utile.
+3. **Phase** : lancer le numéro proposé ; laisser l’agent implémenter, tester et corriger dans ce périmètre.
+4. **Review** : obtenir la revue distincte et les corrections nécessaires. Si un test sur appareil est requis, donner ton observation réelle.
+5. **Reprise** : fermer la session, en ouvrir une nouvelle dans le même ai-workspace et appeler Start. Il doit retrouver le mandat et les résultats.
+
+Pour ajouter une idée : « Ajoute le contrôle du volume pour la suite. » L’agent adapte le plan.
+Si cet ajout est indépendant, la phase actuelle conserve son autorisation. S’il change l’objectif
+actif, l’agent explique ce qu’il faut arbitrer.
+
+Si tu acceptes le résultat, dis-le simplement. Pour le commit, appelle Project Ship ou dis :
+« Prépare le commit de cette phase. » Il fournit les commandes exactes ; tu les exécutes toi-même.
+Il vérifie ensuite le commit réel. L’acceptation n’est pas un commit, et un commit n’est pas un push.
+
+## Démarrer un autre produit
+
+Depuis le starter décompressé :
+
+```bash
+node dist/index.js workflow init ../mon-projet --name "Mon produit" --owner "Kelly"
+cd ../mon-projet/ai-workspace
+codex
+```
+
+Fournis le dossier Project Architect puis appelle Start. Discover, Handoff, Setup et Plan servent
+à compléter la préparation ; les acquis suffisants peuvent être réutilisés dans la même demande.
+Le [README](README.md) décrit les profils, les modèles, les limites et les autres modes d’entrée.
+
+## Pour un site public
+
+À Start, fournir les décisions PA/AD déjà disponibles et préciser les pages publiques, langues
+et éventuels changements de domaine ou d’URL. Le starter complète les seuls manques utiles.
+Le [parcours SEO](docs/SEO-WORKFLOW.md) explique les contrôles de réalisation, de publication
+et le suivi. Un essai privé de liste de tâches n’a pas besoin de ce parcours.

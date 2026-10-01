@@ -1,0 +1,12 @@
+{
+  "name": "@fixture/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "lint": "eslint .",
+    "test": "node --test",
+    "build": "vite build"
+  }
+}

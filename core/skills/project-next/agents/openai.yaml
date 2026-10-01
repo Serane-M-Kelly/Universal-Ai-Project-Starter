@@ -1,0 +1,4 @@
+interface:
+  display_name: "project-next"
+  short_description: "Piloter le projet avec un suivi par phases"
+  default_prompt: "Utilise $project-next dans le workspace de ce projet."

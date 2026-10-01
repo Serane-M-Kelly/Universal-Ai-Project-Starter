@@ -1,0 +1,43 @@
+schema_version: 1
+
+adapter:
+  id: claude-code
+  version: 3
+  label: Claude Code
+  vendor: Anthropic
+  description: Traduit le cœur universel vers la mémoire projet, les réglages, les skills et les agents reconnus par Claude Code.
+
+compatibility:
+  project_schema_versions:
+    - 1
+  profiles:
+    - "*"
+
+launch:
+  working_directory: workspace
+  command: claude
+  requires_trust: true
+
+directories:
+  - .claude/skills
+  - .claude/agents
+
+skills:
+  destination: .claude/skills
+  ownership: starter-managed
+
+agents:
+  destination: .claude/agents
+  format: claude-markdown
+  ownership: starter-managed
+
+outputs:
+  - path: CLAUDE.md
+    template: templates/CLAUDE.md
+    ownership: user-owned
+  - path: .claude/settings.json
+    template: templates/settings.json
+    ownership: user-owned
+  - path: CLAUDE_SETUP.md
+    template: templates/CLAUDE_SETUP.md
+    ownership: user-owned

@@ -1,0 +1,30 @@
+schema_version: 1
+
+agent:
+  id: invalid-agent
+  version: 1
+  label: Agent invalide
+  description: Cette fixture est volontairement invalide afin de vérifier que le CLI bloque une autorité excessive.
+
+enabled: true
+
+compatibility:
+  entry_modes:
+    - brief
+  profiles:
+    - "*"
+
+execution:
+  filesystem: workspace-write
+  shell: true
+  network: true
+  delegation: true
+
+authority:
+  brief_approval: true
+  work_acceptance: false
+  ship_approval: false
+  external_actions: ask
+  destructive_actions: ask
+  commits: ask
+  deployment: ask

@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/universal-ai-project-starter/project.schema.json",
+  "title": "Universal AI Project Starter configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "starter_version",
+    "project",
+    "paths",
+    "profile",
+    "adapters",
+    "commands",
+    "governance",
+    "privacy"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "starter_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "slug", "entry_mode"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "slug": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "entry_mode": {
+          "enum": ["idea", "brief", "existing", "maintenance"]
+        },
+        "owner": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["workspace_root", "code_root", "repository_root"],
+      "properties": {
+        "workspace_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "code_root": {
+          "type": "string",
+          "minLength": 1
+        },
+        "repository_root": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "adapters": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "source_hash"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "source_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          }
+        }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "version", "origin", "source_hash", "replicas"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "origin": {
+            "enum": ["starter", "user"]
+          },
+          "source_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "replicas": {
+            "type": "object",
+            "propertyNames": {
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            },
+            "additionalProperties": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["install", "dev", "lint", "typecheck", "test", "build"],
+      "properties": {
+        "install": { "$ref": "#/$defs/optionalCommand" },
+        "dev": { "$ref": "#/$defs/optionalCommand" },
+        "lint": { "$ref": "#/$defs/optionalCommand" },
+        "typecheck": { "$ref": "#/$defs/optionalCommand" },
+        "test": { "$ref": "#/$defs/optionalCommand" },
+        "build": { "$ref": "#/$defs/optionalCommand" }
+      }
+    },
+    "governance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "brief_approval",
+        "external_actions",
+        "destructive_actions",
+        "commits",
+        "deployment",
+        "ai_disclosure"
+      ],
+      "properties": {
+        "brief_approval": { "$ref": "#/$defs/approvalPolicy" },
+        "external_actions": { "$ref": "#/$defs/approvalPolicy" },
+        "destructive_actions": { "$ref": "#/$defs/approvalPolicy" },
+        "commits": { "$ref": "#/$defs/approvalPolicy" },
+        "deployment": { "$ref": "#/$defs/approvalPolicy" },
+        "ai_disclosure": {
+          "enum": ["unspecified", "allowed", "required", "forbidden"]
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["private_paths", "secret_patterns"],
+      "properties": {
+        "private_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "secret_patterns": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "optionalCommand": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "approvalPolicy": {
+      "enum": ["allowed", "ask", "forbidden"]
+    }
+  }
+}

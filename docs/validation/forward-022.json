@@ -1,0 +1,61 @@
+{
+  "plan": {
+    "revision": 4,
+    "active": null,
+    "proof_count": 0,
+    "phases": [
+      {
+        "title": "Formulaire local de demande de devis et états mobiles",
+        "mandate": null,
+        "blocked": null,
+        "sources": [
+          {
+            "path": "PROJECT_BRIEF.md",
+            "sha256": "dfea7d4369b09502e4dba4b6bae88b8f4d721dbcb90d805ec7c1d66c6acaf85e"
+          },
+          {
+            "path": "product/BUILD_HANDOFF.md",
+            "sha256": "be6be68d3d292fcd33691d32d39ebc06e0a7b87272d1be4bd037df9ae4fe6ca4"
+          },
+          {
+            "path": "design/INDEX.md",
+            "sha256": "00f4eb4de42d3b9823ee0284888238dfe67c50e5a728acd346f711123c9aecea"
+          },
+          {
+            "path": "design/tokens.json",
+            "sha256": "3e54a77ac4fc6d5c06f28042fda89f16e3bfdae19dfb537dbeab59fa2cca0583"
+          }
+        ]
+      }
+    ],
+    "code_unchanged": true
+  },
+  "resume": {
+    "revision": 6,
+    "active": "p-1",
+    "proof_count": 0,
+    "phases": [
+      {
+        "title": "Formulaire local",
+        "mandate": {
+          "by": "Propriétaire de la fixture",
+          "request": "Lancement synthétique de la phase",
+          "at": "2026-10-01T07:40:41.893Z",
+          "hash": "1cb8357032e5117e1905d2e0e69c4e37708ee479101bd887d4b21afaedce6ecf"
+        },
+        "blocked": "Référence AD divergente : design/tokens.json ne correspond plus à son empreinte épinglée ; sa révision 2 indique fond #07192b et texte #ffffff, tandis que design/INDEX.md accepté indique crème et brun. Résolution : obtenir le choix de la propriétaire de la fixture, puis restaurer la référence acceptée ou réconcilier les références et le plan selon la décision explicite. Aucun rafraîchissement automatique des empreintes.",
+        "sources": [
+          {
+            "path": "design/INDEX.md",
+            "sha256": "00f4eb4de42d3b9823ee0284888238dfe67c50e5a728acd346f711123c9aecea"
+          },
+          {
+            "path": "design/tokens.json",
+            "sha256": "3e54a77ac4fc6d5c06f28042fda89f16e3bfdae19dfb537dbeab59fa2cca0583"
+          }
+        ]
+      }
+    ],
+    "code_unchanged": true
+  }
+}

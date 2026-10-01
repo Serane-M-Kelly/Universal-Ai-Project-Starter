@@ -1,0 +1,16 @@
+✔ le schéma embarqué correspond exactement au contrat du starter testé (8.887109ms)
+✔ assemblage conforme conserve sources, absence de preuve et avertissements (241.89801ms)
+✔ sans moteur, le précontrôle ne prétend pas valider le schéma (20.566427ms)
+✔ une version existante reste intacte ; une nouvelle version peut être assemblée (142.266781ms)
+✔ document absent et manifeste invalide refusés sans sortie partielle (46.226522ms)
+✔ pièce jointe valide conservée ; sorties détournées et liens refusés (72.760057ms)
+✔ une revue défavorable ne peut pas produire un package prêt à importer (2.956847ms)
+✔ import réel idempotent dans le starter sans approbation ni réécriture du brief (5440.267899ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5985.427742

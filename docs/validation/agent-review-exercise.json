@@ -1,0 +1,36 @@
+{
+  "code_hash": "449addbc6fab243e700563c43f93d7a41c4497b682682e565bc0fb787988a385",
+  "contract_hash": "30600d7bae4de5c61465625668858ac57da7fc3d379a6c3f05581beb73feadca",
+  "summary": "La fonction add retourne la somme attendue. L’inspection indépendante et l’exécution locale des tests confirment les critères de la phase.",
+  "findings": [],
+  "checks": [
+    {
+      "name": "Inspection directe du code et des tests",
+      "result": "passed",
+      "details": "calc.mjs applique l’addition. calc.test.mjs contient huit assertions couvrant positifs, décimaux, négatifs, signes opposés et zéro. Les résultats attendus explicites permettraient de détecter notamment une soustraction, un retour constant ou un opérande ignoré."
+    },
+    {
+      "name": "Exécution indépendante des tests",
+      "result": "passed",
+      "command": "node --test calc.test.mjs",
+      "exit_code": 0,
+      "details": "Trois tests réussis, aucun échec, aucun test ignoré."
+    },
+    {
+      "name": "Vérification de la preuve citée",
+      "result": "passed",
+      "details": "Le rapport reports/phases/p-1/3c206e4f-276d-4e09-a61a-844cb68cba17.json correspond à la commande vérifiée. Son SHA-256 observé est a34d412b6ad083c742af38a8af69711e0d447c388d87000066a4cd73d86bae93, identique à celui du contexte."
+    },
+    {
+      "name": "Actualité des empreintes",
+      "result": "passed",
+      "details": "Les deux lectures de workflow context 1, avant et après les tests, donnent les mêmes code_hash et contract_hash que ceux du présent rapport."
+    },
+    {
+      "name": "Respect du périmètre",
+      "result": "passed",
+      "details": "Aucun fichier, suivi ou état Git modifié. Aucun accès réseau. Aucune observation humaine revendiquée."
+    }
+  ],
+  "verdict": "passed"
+}

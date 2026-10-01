@@ -1,0 +1,10 @@
+.DS_Store
+node_modules/
+dist/
+coverage/
+.cache/
+*.tmp
+*.log
+
+# Configuration locale Claude Code
+.claude/settings.local.json

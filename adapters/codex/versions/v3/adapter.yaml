@@ -1,0 +1,43 @@
+schema_version: 1
+
+adapter:
+  id: codex
+  version: 3
+  label: Codex
+  vendor: OpenAI
+  description: Traduit le cœur universel vers les instructions, la configuration, les skills et les agents reconnus par Codex.
+
+compatibility:
+  project_schema_versions:
+    - 1
+  profiles:
+    - "*"
+
+launch:
+  working_directory: workspace
+  command: codex
+  requires_trust: true
+
+directories:
+  - .agents/skills
+  - .codex/agents
+
+skills:
+  destination: .agents/skills
+  ownership: starter-managed
+
+agents:
+  destination: .codex/agents
+  format: codex-toml
+  ownership: starter-managed
+
+outputs:
+  - path: AGENTS.md
+    template: templates/AGENTS.md
+    ownership: user-owned
+  - path: .codex/config.toml
+    template: templates/config.toml
+    ownership: user-owned
+  - path: CODEX_SETUP.md
+    template: templates/CODEX_SETUP.md
+    ownership: user-owned

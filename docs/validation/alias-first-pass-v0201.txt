@@ -1,0 +1,257 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> universal-ai-project-starter@0.20.1 validate
+> npm run check && npm test && npm run verify:package
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> universal-ai-project-starter@0.20.1 check
+> tsc -p tsconfig.json --noEmit
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> universal-ai-project-starter@0.20.1 test
+> npm run build && node --test
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> universal-ai-project-starter@0.20.1 build
+> tsc -p tsconfig.json
+
+✔ parcours 1-3 : un backlog v2 progressif produit une vue vérifiable (4239.53218ms)
+✔ parcours 3 négatif : une vue périmée est détectée et réparable (2323.578979ms)
+✔ parcours 4 : cocher une tâche avec sa preuve ne change ni version ni approbation (2839.355286ms)
+✔ parcours 4 négatif : une tâche cochée sans preuve est refusée (2602.290694ms)
+✔ parcours 5 : une révision archive l'état courant et efface l'approbation (3893.97493ms)
+✔ parcours 6 : une interruption entre archive et écriture est reprise (2650.196857ms)
+✔ parcours 6 négatif : une archive différente bloque et n'est jamais écrasée (3494.882066ms)
+✔ parcours 5 négatif : une révision sur une vue périmée est refusée (1114.775453ms)
+✔ parcours 7 : la migration v1→v2 archive, ne perd rien et n'invente rien (3175.727177ms)
+✔ parcours 7 négatif : un v1 invalide est refusé avant toute écriture (1105.569868ms)
+✔ parcours 7 négatif : la migration refuse un marqueur injecté par une unité (1152.197661ms)
+✔ parcours 8 : la conversion des liens historiques débloque PLAN_READY (3386.20077ms)
+✔ parcours 9 : progression complète d'un résultat, construction puis acceptation (3791.115952ms)
+✔ parcours 9 négatif : pas d'acceptation tant qu'une unité liée est active (1178.177132ms)
+✔ parcours 10 : les incohérences de l'état courant sont refusées, chacune par son code (21841.9275ms)
+✔ parcours 10 positif : une phase préparée admet des candidats lointains sans tâche (1200.310988ms)
+✔ parcours 11 : sync-view préserve récit, frontmatter, commentaires et fins de ligne (2988.444831ms)
+✔ parcours 11 négatif : un marqueur injecté n'endommage jamais le fichier (8639.656925ms)
+✔ parcours 11 positif : Markdown et commentaires HTML ordinaires traversent sans dommage (1664.580684ms)
+✔ parcours 12 : un workspace v1 reste utilisable sans migration forcée (1109.034463ms)
+✔ parcours 12 négatif : un v1 structurellement incohérent bloque encore (1372.165843ms)
+✔ parcours 13 : une vérification humaine n'est validée que par une observation nommée (2629.67019ms)
+✔ parcours 13 : l'acceptation d'un résultat exige identité, date et tâches terminées (5981.828925ms)
+✔ parcours 14 : absent, illisible et invalide produisent des diagnostics distincts (6829.322627ms)
+✔ parcours 14 : sync-view refuse toute unité illisible ou invalide sans réécrire (2721.068595ms)
+✔ parcours 14 : revise refuse une archive redirigée hors du workspace (1467.150713ms)
+✔ lot transversal : justification réellement rédigée exigée (1536.946409ms)
+✔ voie d'urgence : métadonnée structurée, jamais une phrase (1391.721226ms)
+✔ golden : le rendu de référence est exact, y compris son ordre (16.560361ms)
+✔ le rendu de la roadmap correspond octet à octet à la référence (89.451822ms)
+✔ la vue de référence porte exactement les comptes attendus (2.417993ms)
+✔ aucun état autre que done ne produit une case cochée (0.54679ms)
+✔ un résultat sans tâche obligatoire n'est jamais built ni done (38.027125ms)
+✔ une tâche obligatoire abandonnée continue de bloquer le résultat (43.863097ms)
+✔ une phase devient in_progress dès qu'une unité est active, sans aucune tâche terminée (28.671653ms)
+✔ sync-view répare une vue périmée et reste idempotente (4083.426102ms)
+✔ sync-view ne touche aucun octet du récit rédigé à la main (1786.528279ms)
+✔ un titre contenant des métacaractères Markdown traverse sync-view sans corruption (2474.797785ms)
+✔ sync-view insère le bloc absent au lieu d'échouer (1981.261843ms)
+✔ doctor accepte le backlog v2 de référence et signale seulement le lien historique (1703.30361ms)
+✔ doctor bloque une vue générée périmée (2224.963397ms)
+✔ doctor bloque un titre de section divergeant du frontmatter (1866.464875ms)
+✔ doctor bloque un stage ready sans tâche obligatoire, mais jamais un candidate sans tâche (2610.332931ms)
+✔ doctor bloque une preuve manquante, superflue ou inexpliquée (3566.259141ms)
+✔ doctor bloque une preuve documentaire pointant un fichier inexistant (1762.063248ms)
+✔ doctor refuse qu'une vérification humaine soit validée autrement que par une observation nommée (2867.851993ms)
+✔ doctor bloque une acceptation de résultat prématurée ou concurrente d'une unité active (1825.723495ms)
+✔ doctor bloque une dépendance vers l'aval et un ordre dupliqué dans une phase (1825.009124ms)
+✔ doctor protège la stabilité des identifiants de phases, résultats, tâches et preuves (6136.150489ms)
+✔ doctor encadre une tâche découverte pendant une unité approuvée (2716.591545ms)
+✔ doctor bloque une unité traversant plusieurs résultats sans justification (5399.422492ms)
+✔ doctor bloque une unité réalisant une tâche inexistante (2152.134888ms)
+✔ doctor bloque une phase vide seulement à l'approbation (3565.891174ms)
+✔ doctor avertit quand tous les résultats obligatoires d'une phase sont reportés (1684.559828ms)
+✔ un backlog v1 produit un avertissement de migration, jamais un blocage (1512.400497ms)
+✔ backlog migrate --dry-run n'écrit ni backlog ni archive (1495.549821ms)
+✔ backlog migrate transpose la structure sans rien inventer ni perdre (2186.59013ms)
+✔ backlog migrate d'un backlog approuvé efface l'approbation et incrémente la version (1405.72513ms)
+✔ backlog migrate refuse un backlog déjà en v2 (796.066732ms)
+✔ la conversion des liens ne touche jamais le contenu contractuel de l'unité (2648.988427ms)
+✔ PLAN_READY reste refusé tant qu'un lien historique n'est pas converti (2505.029326ms)
+✔ les modèles livrés respectent leur schéma et leur vue générée (148.481277ms)
+✔ le schéma de stratégie accepte les phases et refuse les tâches (35.662598ms)
+✔ une stratégie couvrant une phase inconnue est bloquée (2044.367919ms)
+✔ régénérer la vue ne dé-approuve jamais le backlog (1695.037382ms)
+✔ les résultats reportés et retirés restent visibles mais sortent des dénominateurs (1044.675336ms)
+✔ new crée un dépôt applicatif isolé du workspace privé (1211.681874ms)
+✔ adopt conserve une application Node autonome intacte et détecte toutes ses commandes (923.137087ms)
+✔ adopt distingue l'application ciblée de la racine d'un monorepo (1197.773653ms)
+✔ adopt refuse de placer le workspace privé dans le dépôt (440.547424ms)
+✔ doctor bloque une fuite de document privé dans le code (1108.340307ms)
+✔ doctor n'exige aucune action quand .claude est absent du code root (900.956428ms)
+✔ doctor autorise le marqueur runtime Claude Code .claude/.cc-writes vide (1071.833311ms)
+✔ doctor bloque tout autre contenu dans .claude (1067.700337ms)
+✔ doctor bloque un .claude/.cc-writes non vide (1147.143542ms)
+✔ doctor bloque .cc-writes lorsque ce n'est pas un répertoire réel (1303.202635ms)
+✔ doctor bloque .cc-writes lorsque c'est un lien symbolique (1793.223272ms)
+✔ doctor bloque .claude lorsque c'est lui-même un lien symbolique, même vers un marqueur valide (3089.060262ms)
+✔ doctor autorise les modèles d'environnement sans secrets (1290.953841ms)
+✔ doctor bloque une configuration qui ne respecte pas le schéma (1619.394751ms)
+✔ doctor bloque une version de profil incompatible (1255.284572ms)
+✔ new refuse un profil inconnu avant de créer le projet (271.776447ms)
+✔ profile list et profile show rendent les profils spécialisés découvrables (2045.403644ms)
+✔ new avec node-api inscrit une cible technique sans générer un framework (1124.892831ms)
+✔ adopt reconnaît une API Node TypeScript complète sans modifier sa fixture (1502.785488ms)
+✔ adopt avec node-api bloque un dépôt qui ne démontre pas son contrat (1365.062715ms)
+✔ new avec nextjs inscrit une cible adaptable sans générer le framework (1081.347741ms)
+✔ adopt reconnaît une application Next.js App Router sans exiger next.config (986.765179ms)
+✔ adopt reconnaît aussi une application Next.js Pages Router (968.572875ms)
+✔ adopt avec nextjs bloque une application qui ne démontre plus son contrat (1233.871784ms)
+✔ new avec swiftui inscrit une cible Apple sans inventer de projet ni de commande (1057.586138ms)
+✔ adopt reconnaît une application SwiftUI dans un projet Xcode au nom variable (1133.222314ms)
+✔ adopt reconnaît aussi une application SwiftUI décrite par Package.swift (985.164323ms)
+✔ adopt avec swiftui ignore les artefacts générés et bloque les fausses preuves (1010.251128ms)
+✔ new avec wordpress conserve le choix entre site, extension et thème (1013.383431ms)
+✔ adopt reconnaît une extension WordPress et combine Composer avec Node (1022.455788ms)
+✔ adopt reconnaît un thème WordPress par son en-tête style.css (1013.179513ms)
+✔ adopt reconnaît un site WordPress sans exiger wp-config.php (1111.251836ms)
+✔ adopt avec wordpress ignore vendor et bloque une fausse extension (1414.374982ms)
+✔ adapter add codex configure le workspace privé sans toucher au dépôt (2488.248675ms)
+✔ adapter add protège un AGENTS.md déjà rédigé (1153.332032ms)
+✔ doctor bloque une version d'adaptateur incompatible (4605.435794ms)
+✔ adapter upgrade reprend un projet Claude v3 puis permet de passer à Codex (6098.501414ms)
+✔ adapter upgrade protège une sortie personnalisée sauf --force explicite (2836.004583ms)
+✔ adapter add refuse qu'un lien symbolique fasse sortir ses fichiers du workspace (1541.307625ms)
+✔ adapter add claude-code configure mémoire, permissions, skills et agents (1771.134769ms)
+✔ les adaptateurs Codex et Claude Code coexistent sans modifier le cœur (3292.917485ms)
+✔ skill add installe une source unique et les copies natives des deux assistants (6167.921196ms)
+✔ skill sync propage une personnalisation de la source canonique (3563.453798ms)
+✔ skill sync protège une copie native modifiée séparément (4982.665604ms)
+✔ skill upgrade est un no-op sûr quand la version est déjà à jour (1680.418888ms)
+✔ skill upgrade refuse d'écraser une source modifiée sans --force, puis réussit avec --force (4310.597535ms)
+✔ skill upgrade --all met à niveau tous les skills obsolètes d'un workspace (4121.875991ms)
+✔ skill upgrade --all ne touche pas starter_version quand une mise à niveau échoue (2519.333798ms)
+✔ skill upgrade --all avance starter_version même si tous les skills étaient déjà à jour (1991.20159ms)
+✔ adapter add déploie les skills déjà installés (1696.297049ms)
+✔ les agents Builder et Independent Reviewer restent optionnels et sont traduits pour les deux assistants (4573.777881ms)
+✔ agent create protège une source personnelle et ne l'active qu'après synchronisation explicite (2209.818124ms)
+✔ agent sync bloque une fixture qui tente de s'accorder une approbation humaine (1996.757107ms)
+✔ agent sync refuse d'écraser une copie native modifiée séparément (4239.637887ms)
+✔ adapter add déploie les agents déjà installés (2549.299876ms)
+✔ project-discover accepte un projet existant et limite la découverte aux lacunes (1305.739774ms)
+✔ project-handoff est installable comme skill universel (2593.885362ms)
+✔ doctor bloque une fausse approbation sans identité humaine (889.047117ms)
+✔ doctor bloque des métadonnées d'approbation conservées sur un brouillon (920.066483ms)
+✔ doctor refuse une date d'approbation impossible (945.662229ms)
+✔ doctor n'exige aucun backlog ni stratégie d'agents quand project-plan n'est pas installé (1351.091632ms)
+✔ doctor accepte un backlog brouillon structurellement cohérent (1155.40857ms)
+✔ doctor bloque un backlog approuvé sans identité ni date (1015.752067ms)
+✔ doctor bloque un candidat selected sans unité de travail liée (880.604492ms)
+✔ doctor bloque un candidat référençant une unité de travail inexistante (1005.311064ms)
+✔ doctor autorise ready à référencer une unité proposed existante, comme WORK-001 du pilote (876.587295ms)
+✔ doctor bloque selected quand l'unité liée est encore proposed, non approuvée (1013.63472ms)
+✔ doctor autorise selected quand l'unité liée est approved (1590.815071ms)
+✔ doctor bloque des identifiants de candidats dupliqués (1514.236399ms)
+✔ doctor bloque des rangs dupliqués (1958.502028ms)
+✔ doctor bloque une dépendance autoréférente (1021.703372ms)
+✔ doctor bloque une dépendance manquante (1423.263823ms)
+✔ doctor détecte un cycle réel de dépendances entre trois candidats (995.406592ms)
+✔ doctor bloque un backlog approuvé référençant un brief obsolète (1086.096491ms)
+✔ doctor accepte une stratégie d'agents brouillon avec un agent personnalisé pas encore créé (939.706551ms)
+✔ doctor bloque un agent du noyau recommandé inconnu du catalogue (1416.737079ms)
+✔ doctor bloque un mode conversation principale portant un identifiant d'agent (1239.552231ms)
+✔ doctor bloque une incohérence de version entre backlog et stratégie d'agents (1230.217566ms)
+✔ doctor bloque quand PROJECT_STATE.md affirme un plan_version sans backlog ni stratégie approuvés (871.254848ms)
+✔ doctor confirme PLAN_READY quand backlog et stratégie approuvés correspondent à plan_version (937.32531ms)
+✔ doctor bloque un candidat done dont l'unité liée reste proposed (962.306278ms)
+✔ doctor autorise un candidat done dont l'unité liée est accepted (1062.952519ms)
+✔ doctor bloque une même unité rattachée à deux candidats actifs (1723.847002ms)
+✔ doctor autorise une même unité rattachée à un candidat actif et à un candidat retiré (1672.854066ms)
+✔ doctor bloque une stratégie couvrant un candidat inexistant (1038.103518ms)
+✔ doctor autorise une stratégie couvrant un candidat existant du backlog (1057.834685ms)
+✔ doctor bloque une stratégie d'agents présente sans backlog (1407.427104ms)
+✔ doctor bloque un source_setup_report qui sort du workspace (1083.434122ms)
+✔ doctor bloque un source_setup_report absolu (1455.499898ms)
+✔ project-setup installe ses portes et modèles pour un projet neuf (1992.265607ms)
+✔ project-setup peut fiabiliser un dépôt existant sans adaptateur préalable (1538.601402ms)
+✔ project-work installe son contrat, ses portes et ses rapports (4934.84633ms)
+✔ project-work prend en charge une maintenance explicitement adoptée (1165.292686ms)
+✔ project-ship installe son manifeste, ses portes et ses modèles de preuve (2143.728834ms)
+✔ doctor bloque la fuite d'un manifeste de livraison même pour un ancien projet (1262.944317ms)
+✔ intake import archive un product-package prêt sans approuver ni réécrire le brief (2707.145496ms)
+✔ intake import refuse un package encore brouillon sans créer d'archive (1105.240992ms)
+✔ intake import refuse un package destiné à un autre projet (1517.64197ms)
+✔ intake import refuse les liens symboliques et secrets potentiels (1543.776352ms)
+✔ intake import protège un brief déjà approuvé (1017.233272ms)
+✔ intake import reste réservé aux projets idea ou brief (950.518932ms)
+✔ doctor bloque une archive product-package modifiée après import (1985.398218ms)
+✔ phase workflow: checks, human observation, independent review, acceptance and cold resume (4004.777068ms)
+✔ phase workflow: failed check then correction invalidates earlier code evidence (1600.756559ms)
+✔ phase workflow: cannot replace human observation with a test (1325.677147ms)
+✔ phase workflow: future addition preserves mandate; active scope change needs decision (1426.828733ms)
+✔ phase workflow: discovered technical task retains mandate and can be completed (1932.594534ms)
+✔ phase workflow: reopening dependency revokes dependent and old proofs (3473.68247ms)
+✔ phase workflow: manual view is archived, never treated as plan or evidence (2264.993328ms)
+✔ phase workflow: report must name exact code and contract; later negative review blocks (2012.668911ms)
+✔ phase workflow: Swift build links ignored, source changes tracked and source links refused (1222.142145ms)
+✖ phase workflow: lock and command changing sources refuse false completion (1250.122683ms)
+✔ phase workflow: init installs nine skills and native defaults; customization preserved (3266.875691ms)
+✔ phase workflow: a failed later control does not reuse a previous pass (2176.30064ms)
+✔ phase workflow: manual Git preparation and verification with an unrelated preexisting edit (3091.493932ms)
+✔ phase workflow: migration of legacy v2 preserves archives and maps dependencies without acceptance (4350.041859ms)
+✔ phase workflow: Next migration preserves dependencies and human tasks, not old passes (3937.371699ms)
+✔ phase workflow: invalid plans leave canonical state unchanged (1097.023048ms)
+✔ phase workflow: restoring a corrupted state requires a valid snapshot and revokes old authority (1413.862261ms)
+✖ phase workflow: public CLI begins after brief approval, repeated approval preserves mandate (5954.925443ms)
+✔ phase workflow: aliased parent paths preserve the complete execution cycle (5196.939585ms)
+✔ phase workflow: canonicalizing the root still refuses a redirected state file (1400.661108ms)
+✔ phase workflow: canonicalizing the root still refuses an escaping intermediate directory (1368.098439ms)
+✔ les versions du paquet, du verrou et du modèle projet restent alignées (37.030267ms)
+✔ tous les schémas JSON sont syntaxiquement valides et compilables (506.926794ms)
+✔ la fixture product-package respecte le contrat d'échange v1 (38.235003ms)
+✔ les catalogues référencent uniquement des sources complètes et valides (124.157576ms)
+✔ les profils et adaptateurs livrés respectent leur contrat et possèdent leurs modèles (422.145358ms)
+✔ les fixtures restent des entrées ordinaires sans lien symbolique (65.049285ms)
+✔ la fixture Node/API respecte réellement son contrat TypeScript strict (2079.401819ms)
+✔ la validation continue reste en lecture seule, multi-version et épinglée (12.361444ms)
+ℹ tests 197
+ℹ suites 0
+ℹ pass 195
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 176171.913648
+
+✖ failing tests:
+
+test at tests/phase-workflow.test.mjs:381:1
+✖ phase workflow: lock and command changing sources refuse false completion (1250.122683ms)
+  Error: Le brief courant doit être approuvé ; ne pas réutiliser une ancienne approbation après modification.
+      at ensure (file:///workspace/scratch/9b165d4b8096/universal-ai-project-starter-v020/dist/lib/phase-workflow.js:36:15)
+      at file:///workspace/scratch/9b165d4b8096/universal-ai-project-starter-v020/dist/lib/phase-workflow.js:397:9
+      at mutateWorkflow (file:///workspace/scratch/9b165d4b8096/universal-ai-project-starter-v020/dist/lib/phase-workflow.js:260:30)
+      at async TestContext.<anonymous> (file:///workspace/scratch/9b165d4b8096/universal-ai-project-starter-v020/tests/phase-workflow.test.mjs:384:3)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
+
+test at tests/phase-workflow.test.mjs:640:1
+✖ phase workflow: public CLI begins after brief approval, repeated approval preserves mandate (5954.925443ms)
+  AssertionError [ERR_ASSERTION]: 
+  Erreur : Le brief courant doit être approuvé ; ne pas réutiliser une ancienne approbation après modification.
+  
+  
+  
+  2 !== 0
+  
+      at TestContext.<anonymous> (file:///workspace/scratch/9b165d4b8096/universal-ai-project-starter-v020/tests/phase-workflow.test.mjs:699:10)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 2,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
