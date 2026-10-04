@@ -198,6 +198,9 @@ test("la validation continue reste en lecture seule, multi-version et épinglée
     workflow.jobs["operating-systems"].strategy.matrix.os,
     ["macos-latest", "windows-latest"],
   );
+  // Windows reste exécuté mais non bloquant tant que sa prise en charge n'est pas livrée.
+  assert.equal(workflow.jobs["operating-systems"]["continue-on-error"], "${{ matrix.os == 'windows-latest' }}");
+  assert.equal(workflow.jobs["node-compatibility"]["continue-on-error"], undefined);
 
   for (const job of Object.values(workflow.jobs)) {
     assert.equal(job["timeout-minutes"], 30);

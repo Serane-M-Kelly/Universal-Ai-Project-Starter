@@ -40,6 +40,9 @@ jobs:
     name: Node 24 · ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
+    # Windows n'est pas encore pris en charge (fins de ligne et chemins) : le job reste exécuté et
+    # visible, mais ne bloque pas. À retirer avec la version de compatibilité Windows.
+    continue-on-error: ${{ matrix.os == 'windows-latest' }}
     strategy:
       fail-fast: false
       matrix:
