@@ -18,6 +18,8 @@ Les options --by et --request décrivent les déclarations réellement reçues.
 | check N | --task ID (répétable) --by --request --timeout MS -- programme arguments. |
 | observe N | --task ID --summary --by --request ; observation réellement reçue. |
 | review N | --report JSON --verdict passed/changes_required/blocked --independent --by --request. |
+| carry N | --proof ID_OBSERVATION [--task ID] --dry-run : diff calculé et classement, sans écriture. Puis --path (chaque chemin changé) --criteria --reason --checks --limits --by --request : conserve l'essai humain si seuls des documents non consommés ont changé. Ne crée ni observation ni revue. |
+| readme-check | [--path README.md] [--previous FICHIER \| --previous-ref REF] [--code-root CHEMIN] ; signaux consultatifs en lecture seule sur le README du produit, code de sortie 0. |
 | accept N | --by --request ; preuves et revue indépendantes actuelles requises. |
 | reopen N | --by --request ; réouverture de la phase et de ses dépendantes. |
 | block/unblock N | --reason --by --request ; obstacle/condition puis résolution constatée. |

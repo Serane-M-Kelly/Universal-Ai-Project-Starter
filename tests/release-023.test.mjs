@@ -27,7 +27,7 @@ for (const adapter of ['codex', 'claude-code']) {
     await writeFile(packagePath, JSON.stringify(pkg));
     const paths = ['project.yaml', '.starter/workflow.json', 'skills/project-ship/SKILL.md', `${native}/project-ship/SKILL.md`];
     const before = await Promise.all(paths.map(p => readFile(join(w, p), 'utf8')));
-    await assert.rejects(upgradeSkill(w, 'project-ship', false), /requiert le runtime 0\.23\.0/);
+    await assert.rejects(upgradeSkill(w, 'project-ship', false), /requiert le runtime 0\.25\.0/);
     assert.deepEqual(await Promise.all(paths.map(p => readFile(join(w, p), 'utf8'))), before);
   });
 }

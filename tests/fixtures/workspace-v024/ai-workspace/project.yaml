@@ -1,0 +1,76 @@
+schema_version: 1
+starter_version: 0.24.0
+project:
+  name: Fixture 0.24
+  slug: fixture-0-24
+  entry_mode: existing
+  owner: Fixture
+paths:
+  workspace_root: .
+  code_root: ../app
+  repository_root: ../app
+profile:
+  id: generic
+  version: 1
+adapters: []
+skills:
+  - id: project-start
+    version: 4
+    source_hash: b0fed8bc73da02d7172f70c0e675d4906dd6fda7d5fdcf57c0c8f9a89b1807d3
+  - id: project-discover
+    version: 5
+    source_hash: 4a1c67504408e068c838ae7e532a6f699fddd4dbbdca372a2adba2cafb346267
+  - id: project-handoff
+    version: 4
+    source_hash: ec7b68c16176c0e92a55da25d1a40d6ba3b0f19f33927237bad29537de2f54c9
+  - id: project-setup
+    version: 6
+    source_hash: 78c91b03922ffb69194f2aeaf9421fe44d9af9ef580b594f9a2b0e3679d03498
+  - id: project-plan
+    version: 5
+    source_hash: 85d8adc1c306751133c668518c3b717ef05c03ebf7e8836cca42eabfa6f5115b
+  - id: project-next
+    version: 3
+    source_hash: 4a24465e2e36cb9d2999945cacf14f9af77e20bcb1e51660b64f8b694e995343
+  - id: project-phase
+    version: 4
+    source_hash: fa99cfdaa2dea689ec5604c686255b891bd8760c6e02d623bdbdc9b2adf21506
+  - id: project-review
+    version: 4
+    source_hash: 3f9972e4a255e247b6d0fbc35cd8dd15fb4275d1cf9874e173f177d0ffff0301
+  - id: project-ship
+    version: 4
+    source_hash: 5aa36b5fd68927a1c4923830cf13994be95bc85e99c7ee780d1aa97b9de326dc
+agents: []
+commands:
+  install: null
+  dev: null
+  lint: null
+  typecheck: null
+  test: null
+  build: null
+governance:
+  brief_approval: ask
+  external_actions: ask
+  destructive_actions: ask
+  commits: ask
+  deployment: ask
+  ai_disclosure: unspecified
+privacy:
+  private_paths:
+    - intake/
+    - prototype/private/
+    - prototype/product-package/
+    - PROJECT_BRIEF.md
+    - PROJECT_BRIEF.draft.md
+    - PROJECT_STATE.md
+    - docs/internal/
+    - taches/
+    - livraisons/
+    - .claude/
+    - .codex/
+  secret_patterns:
+    - .env
+    - .env.*
+    - "**/secrets/**"
+    - "**/credentials.*"

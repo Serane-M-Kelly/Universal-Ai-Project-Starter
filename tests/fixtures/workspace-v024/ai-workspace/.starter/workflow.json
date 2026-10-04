@@ -1,0 +1,134 @@
+{
+  "schema_version": 3,
+  "revision": 7,
+  "next_id": 6,
+  "active": "p-1",
+  "brief": {
+    "by": "Fixture",
+    "request": "Brief de fixture approuvé (test synthétique).",
+    "at": "2026-10-03T14:30:56.668Z",
+    "hash": "71980f181723f0918a4136f64b385cd5332e3625c0a7cbd710c0e2abd927ee43"
+  },
+  "setup": {
+    "ref": "reports/setup-1791037856763.md",
+    "hash": "cf07e82d34ceffdb058f4442858e28cbe4af0d53b1b420cad180843265fc98d0"
+  },
+  "phases": [
+    {
+      "id": "p-1",
+      "iteration": 1,
+      "title": "Addition",
+      "goal": "Additionner deux nombres",
+      "validation": "Positifs et négatifs corrects",
+      "excludes": "",
+      "depends_on": [],
+      "optional": false,
+      "agent": "builder",
+      "tasks": [
+        {
+          "id": "t-2",
+          "title": "Vérifier l'addition",
+          "human": false
+        },
+        {
+          "id": "t-3",
+          "title": "Essai réel",
+          "human": true
+        }
+      ],
+      "mandate": {
+        "by": "Fixture",
+        "request": "Réalise la phase de fixture.",
+        "at": "2026-10-03T14:30:57.087Z",
+        "hash": "8034f82ecb5ee49e7200ccf79400280a81acb31ba9ec1f4f7b2759ce5092e069"
+      },
+      "acceptance": null,
+      "blocked": null,
+      "baseline": []
+    }
+  ],
+  "proofs": [
+    {
+      "id": "e-4",
+      "phase": "p-1",
+      "tasks": [
+        "t-2"
+      ],
+      "kind": "check",
+      "contract": "8034f82ecb5ee49e7200ccf79400280a81acb31ba9ec1f4f7b2759ce5092e069",
+      "code": "80a32df1db8c5694880b3baa9ee39ce295adda47a4f74dce85c9f0034e42fc27",
+      "ref": "reports/phases/p-1/606064e3-ee01-4b6d-8589-46796fb1a30c.json",
+      "report_hash": "da6bb3392af4f5b0186fd240f49a665c8763aee2904a98b95369fbaf0c4b68b3",
+      "by": "builder",
+      "request": "Contrôle de fixture.",
+      "at": "2026-10-03T14:31:06.019Z",
+      "passed": true,
+      "verdict": "passed",
+      "independent": false
+    },
+    {
+      "id": "e-5",
+      "phase": "p-1",
+      "tasks": [
+        "t-3"
+      ],
+      "kind": "observation",
+      "contract": "8034f82ecb5ee49e7200ccf79400280a81acb31ba9ec1f4f7b2759ce5092e069",
+      "code": "80a32df1db8c5694880b3baa9ee39ce295adda47a4f74dce85c9f0034e42fc27",
+      "ref": "reports/phases/p-1/2c28d5e9-f200-4546-85ec-11cb0212e6ef.json",
+      "report_hash": "fbdced9ebea51f940b04e972c1ed32116a803247122888b4d5389a092e2922aa",
+      "by": "Fixture",
+      "request": "Observation synthétique de fixture.",
+      "at": "2026-10-03T14:31:06.120Z",
+      "passed": true,
+      "verdict": "passed",
+      "independent": false
+    }
+  ],
+  "retired_ids": [],
+  "events": [
+    {
+      "at": "2026-10-03T14:30:56.156Z",
+      "action": "init",
+      "by": "system",
+      "request": "Création sans approbation produit."
+    },
+    {
+      "at": "2026-10-03T14:30:56.681Z",
+      "action": "brief-approve",
+      "by": "Fixture",
+      "request": "Brief de fixture approuvé (test synthétique)."
+    },
+    {
+      "at": "2026-10-03T14:30:56.776Z",
+      "action": "setup-record",
+      "by": "builder",
+      "request": "Socle de fixture."
+    },
+    {
+      "at": "2026-10-03T14:30:56.875Z",
+      "action": "plan",
+      "by": "Fixture",
+      "request": "Plan de fixture."
+    },
+    {
+      "at": "2026-10-03T14:30:57.102Z",
+      "action": "begin",
+      "by": "Fixture",
+      "request": "Réalise la phase de fixture."
+    },
+    {
+      "at": "2026-10-03T14:31:06.032Z",
+      "action": "check",
+      "by": "builder",
+      "request": "Contrôle de fixture."
+    },
+    {
+      "at": "2026-10-03T14:31:06.132Z",
+      "action": "observation",
+      "by": "Fixture",
+      "request": "Observation synthétique de fixture."
+    }
+  ],
+  "view_hash": "58095ad661ab7188a4b4f9fe155b8b7d56f64ebcf5dea461905c7290140dccbe"
+}

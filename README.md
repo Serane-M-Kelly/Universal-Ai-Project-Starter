@@ -1,4 +1,9 @@
-# Universal AI Project Starter — 0.24.0
+# Universal AI Project Starter — 0.25.0
+
+Version 0.25.0 : un essai humain réussi n'est plus redemandé après une correction documentaire qui ne
+le concerne pas (`workflow carry`, diff calculé et classé par le moteur), et les README publics des
+produits suivent un guide adaptable avec un contrôle consultatif (`workflow readme-check`). Voir
+[les changements, règles et limites](docs/RELEASE-0.25.0.md).
 
 Version 0.24.0 : Claude Code est configuré avec la même précision que Codex dans les workspaces
 par phases (accès au code, sandbox, rôles avec modèle et effort, skills), les deux assistants
@@ -149,7 +154,10 @@ les commandes fournies. Après le commit :
 node .starter/run.mjs workflow verify-commit
 ```
 
-Le contenu, les fichiers et le parent du commit sont contrôlés. Cela ne prouve pas un push
+Le contenu, les fichiers et le parent du commit sont contrôlés. Après une correction du README
+survenue après des essais humains, demander à l'agent de vérifier si ces essais restent pertinents :
+il examine le diff avec `workflow carry --dry-run` et ne les conserve que si le moteur l'accepte ; la
+revue et l'acceptation sur la nouvelle révision restent nécessaires. Cela ne prouve pas un push
 ou un déploiement. `project-ship` prépare ces opérations selon la cible et exige ensuite
 leur observation réelle ; pas de déploiement universel automatique.
 
@@ -158,6 +166,9 @@ leur observation réelle ; pas de déploiement universel automatique.
 Lire [VALIDATION.md](docs/VALIDATION.md) pour les résultats réellement exécutés et leurs limites.
 Lire [MOTEUR-PHASES.md](docs/MOTEUR-PHASES.md) pour les commandes, schémas et procédures de reprise.
 Le [contrat commun](core/contracts/phase-workflow.md) décrit les responsabilités appliquées par les skills.
+
+Pour le README public d'un produit, l'agent suit [le guide conditionnel](core/contracts/product-readme.md)
+(il ne s'applique pas au présent README, qui documente le Starter).
 
 Le suivi local ne fournit ni authentification des humains ni historique infalsifiable.
 Une preuve d’exécution peut être techniquement cohérente et insuffisante pour le métier :

@@ -48,6 +48,8 @@ import {
   nativeAdapters,
 } from "../lib/native-adapters.js";
 import { requireCurrentSources } from "../lib/phase-sources.js";
+import { carryObservation, previewContinuity } from "../lib/evidence-continuity.js";
+import { checkReadme } from "../lib/readme-check.js";
 
 export const PUBLIC_SKILLS = [
   "project-start",
@@ -249,6 +251,12 @@ const textOptions = [
   "stream",
   "offset",
   "limit",
+  "proof",
+  "criteria",
+  "checks",
+  "limits",
+  "previous",
+  "previous-ref",
 ];
 export async function runWorkflow(args: string[]): Promise<number> {
   const options: any = Object.fromEntries(
@@ -326,6 +334,29 @@ export async function runWorkflow(args: string[]): Promise<number> {
       ...(v.limit !== undefined ? { limit: Number(v.limit) } : {}),
     });
     result = v.metrics ? view : view.output;
+  } else if (action === "carry") {
+    ensure(arg ?? v.phase, "Phase requise.");
+    ensure(v.proof, "--proof ID de l'observation humaine d'origine requis.");
+    result = v["dry-run"]
+      ? await previewContinuity(w, arg ?? v.phase, v.proof, v.task ?? [])
+      : await carryObservation(w, arg ?? v.phase, {
+          origin: v.proof, tasks: v.task ?? [], paths: v.path ?? [], criteria: v.criteria ?? "",
+          reason: v.reason ?? "", checks: v.checks ?? "", limits: v.limits ?? "", by, request,
+        });
+  } else if (action === "readme-check") {
+    // Advisory and read-only: findings never change the exit code or any workflow state.
+    const root = v["code-root"] ? await canonicalPath(v["code-root"]) : await codePath(w);
+    ensure((v.path ?? []).length <= 1, "Un seul README par appel (--path).");
+    ensure(!(v.previous && v["previous-ref"]), "Choisir --previous ou --previous-ref.");
+    const path = v.path?.[0] ?? "README.md";
+    let previous: string | null = null;
+    if (v.previous) previous = await readFile(resolve(v.previous), "utf8");
+    else if (v["previous-ref"]) {
+      ensure(!String(v["previous-ref"]).startsWith("-"), "Référence Git invalide.");
+      const prefix = await git(root, ["rev-parse", "--show-prefix"]);
+      previous = await git(root, ["show", `${v["previous-ref"]}:${prefix}${path}`], false);
+    }
+    result = await checkReadme(root, { path, previous });
   } else if (action === "status" || action === "next" || action === "context") {
     const id = action === "context" ? (arg ?? v.phase ?? (await loadWorkflow(w)).active ?? undefined) : undefined;
     if (v.compact) {
@@ -663,10 +694,10 @@ export async function runWorkflow(args: string[]): Promise<number> {
 function quote(x: string): string {
   return "'" + x.replaceAll("'", "'\\''") + "'";
 }
-async function git(root: string, args: string[]): Promise<string> {
+async function git(root: string, args: string[], trim = true): Promise<string> {
   const r = spawnSync("git", args, { cwd: root, encoding: "utf8" });
   ensure(r.status === 0, r.stderr || "Commande Git impossible.");
-  return r.stdout.trim();
+  return trim ? r.stdout.trim() : r.stdout;
 }
 async function prepareCommit(
   w: string,

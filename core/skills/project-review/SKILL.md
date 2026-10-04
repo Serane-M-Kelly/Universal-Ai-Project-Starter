@@ -24,9 +24,17 @@ Si l'acceptation explicite ou conditionnelle applicable a été donnée et ses c
 le résultat concret à accepter. Sur demande, préparer le commit avec project-ship ; pas de mutation Git.
 Une phase déjà acceptée à réexaminer doit être rouverte avec la raison réelle, puis reprise.
 
+Une continuité d'essai humain (`kind: continuity`) se fait examiner comme un changement : diff
+calculé, critères, justification et limites. Le reviewer la conteste par changes_required si le
+changement peut toucher l'essai ; elle n'efface aucune revue négative antérieure.
+
 Pour lire une preuve, utiliser `workflow report ID_PREUVE`. Le regroupement des tests réussis
 ne démontre pas leur couverture : lire les noms ou assertions utiles avec --raw ou --stream.
 Les erreurs et les revues restent intégrales. Ne pas refaire un contrôle pour retrouver son log.
+
+## README du produit, selon le périmètre
+
+Si le README du produit a changé, faire comparer ses affirmations, commandes, liens et licences au produit livré selon la section Contrôles de `.starter/runtime/core/contracts/product-readme.md` ; `workflow readme-check` fournit des signaux, pas un verdict.
 
 ## Visibilité dans la recherche, selon le périmètre
 

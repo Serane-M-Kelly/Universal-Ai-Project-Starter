@@ -1,3 +1,41 @@
+# Validation de la version 0.25.0
+
+Environnement : macOS (Darwin 25.5.0), Node 24.10.0, 3 octobre 2026. Aucune session Codex ou
+Claude Code n'a été lancée et aucun appel de modèle n'a été fait par les tests.
+
+Référence : la 0.24.0 non modifiée, copiée puis validée sur ce poste avant tout changement,
+donnait 229/229. `npm run validate` sur la 0.25.0 réussit : **250 tests réussis (229 hérités +
+21 nouveaux), aucun échec ni test ignoré**, vérification TypeScript, compilation et contenu du
+paquet (213 fichiers). Journal : [release-025.txt](validation/release-025.txt). Six assertions
+historiques ont été adaptées aux seuls numéros de version (project-setup v7, project-ship v5,
+runtime minimal 0.25.0, starter_version 0.25.0), sans retirer de vérification.
+
+Nouveaux cas : `tests/release-025.test.mjs` (continuité des essais humains, dont un workspace réel
+produit par le runtime 0.24.0 d'origine) et `tests/readme-check.test.mjs` (site statique, API avec
+variables, extension WordPress GPL, reprise d'un README existant) : voir [tests/README.md](../tests/README.md).
+
+Vérifications hors suite :
+- parcours complet dans un workspace créé par `workflow init` (Codex + Claude Code), via le runtime
+  embarqué : observation, README modifié, `carry --dry-run`, contrôle, `carry`, statut
+  `ready_for_review` avec l'essai conservé ; une modification de code ensuite est refusée ;
+- copie de Calepio en lecture seule (blob README `1a08c857…`, commit `49bb6ab`) : `readme-check`
+  sans erreur ni avertissement ; README et `docs/architecture.md` réorganisés conservables,
+  `src/data/landing.ts` refusé ;
+- commandes des fixtures exécutées : `npm test` (site statique) et `pnpm test` (API) réussissent
+  après correction d'un script `node --test tests/` invalide sous Node 24. Composer/PHPUnit absents :
+  commandes WordPress non exécutées.
+
+Revues :
+1. sous-agent Claude (contexte séparé, lecture seule) : 1 défaut bloquant et 5 à corriger ;
+2. revue finale ChatGPT, premier passage : 3 contournements bloquants reproduits ;
+3. sous-agent Claude adverse sur ces corrections : 14 classements à tort et 1 contournement par
+   restauration d'état, reproduits.
+Tous sont corrigés et couverts par des tests qui échouaient sur la version précédente (détail dans
+[les notes 0.25](RELEASE-0.25.0.md)). Les sous-agents sont de la même famille de modèle que l'auteur :
+ce ne sont pas des revues indépendantes humaines. Les dernières corrections attendent la revue ChatGPT.
+
+# Historique — 0.24
+
 # Validation de la version 0.24.0
 
 Environnement : macOS 26.5.1, Node 24.10.0, 2 octobre 2026. Claude Code 2.1.287 et

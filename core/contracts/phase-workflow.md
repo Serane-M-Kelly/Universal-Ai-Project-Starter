@@ -1,4 +1,4 @@
-# Contrat commun — workflow par phases v0.23
+# Contrat commun — workflow par phases v0.25
 
 ## Autorités et usage
 La propriétaire choisit résultats, périmètre et priorités. La conversation principale coordonne.
@@ -43,6 +43,12 @@ techniques, contrôles de publication et suivi au plan existant. Un outil privé
 impact ne déclenche pas cet audit. Ce guide conditionnel ne constitue pas un scanner du moteur
 ni une garantie de classement. Les résultats après publication demandent des observations réelles.
 
+## README public du produit
+Quand le README d'un produit est créé, réorganisé ou repris, ou qu'une livraison change ce qu'il
+annonce, lire `.starter/runtime/core/contracts/product-readme.md`. Il ne raconte pas le pilotage et
+chaque affirmation se vérifie sur ce produit. `workflow readme-check` est consultatif et en lecture
+seule. Une coquille n'impose ni relecture du guide ni contrôle global.
+
 ## Mandat et changements
 `project-phase N` autorise la phase déjà définie et ses corrections locales. Consigner begin avec
 la déclaration réelle, puis réutiliser ce mandat après interruption. Aucune approbation séparée
@@ -86,6 +92,16 @@ Une revue JSON porte `code_hash`, `contract_hash`, `summary`, avec constats et c
 correction, refaire les contrôles concernés et faire examiner les changements. Après deux cycles
 sans convergence, présenter le désaccord concret. Les suggestions facultatives ne bloquent pas.
 Le compteur de tests n'est pas une preuve de pertinence. Les tâches humaines attendent un vrai retour.
+
+Continuité d'un essai humain : la révision exacte reste celle des contrôles, de la revue et du commit,
+mais une observation réussie peut rester pertinente après un changement qui ne touche pas ce qu'elle
+vérifie. `workflow carry N --proof ID --dry-run` montre le diff calculé depuis l'inventaire enregistré
+à l'observation. Le moteur refuse code, configuration, dépendances, assets, licences, suppressions,
+Markdown publié ou mentionné par le produit, essai portant sur la documentation, critères/brief/sources
+modifiés, réouverture sans acceptation de la révision observée et essai plus récent. Sinon,
+consigner chemins examinés, critères, justification, contrôles et limites. L'essai d'origine reste
+inchangé ; une revue négative demeure. Le moteur vérifie fichiers et empreintes, pas l'effet métier :
+en cas de doute, refaire l'essai. Les observations antérieures à 0.25 n'ont pas d'inventaire.
 
 Git, push et déploiement sont manuels par défaut. Préparer une sélection précise de fichiers et
 un message ; préserver les changements préexistants. `prepare-commit` exige un index vide, la

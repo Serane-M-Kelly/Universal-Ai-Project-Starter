@@ -10,6 +10,7 @@ import { hashDirectory } from "./content-hash.js";
 import { schemasRoot } from "./paths.js";
 import { isPathInsideOrEqual } from "./text.js";
 import { inspectPhaseSources, requireCurrentSources, type PhaseSource } from "./phase-sources.js";
+import { storeTree } from "./tree-snapshots.js";
 import { NATIVE_ADAPTERS, installedNativeAdapters, isNativeAdapter, workflowCommand } from "./native-adapters.js";
 
 export const STATE = ".starter/workflow.json";
@@ -58,7 +59,8 @@ export type Proof = {
   id: string;
   phase: string;
   tasks: string[];
-  kind: "check" | "observation" | "review";
+  // "continuity" keeps an earlier human observation relevant on a later revision; it is never an observation.
+  kind: "check" | "observation" | "review" | "continuity";
   contract: string;
   code: string;
   ref: string;
@@ -69,6 +71,7 @@ export type Proof = {
   passed: boolean;
   verdict: string;
   independent: boolean;
+  origin?: string;
 };
 export type Workflow = {
   schema_version: 3;
@@ -98,8 +101,12 @@ export function declaration(by: string, request: string): void {
   );
 }
 export function contract(p: Phase): string {
+  return contractAt(p, p.iteration);
+}
+/** Same criteria at another iteration: a reopening changes the iteration, not goal, tasks or sources. */
+export function contractAt(p: Phase, iteration: number): string {
   return hash({
-    iteration: p.iteration,
+    iteration,
     goal: p.goal,
     validation: p.validation,
     excludes: p.excludes,
@@ -145,7 +152,7 @@ export async function tree(root: string): Promise<Record<string, string>> {
 export async function sourceHash(w: string): Promise<string> {
   return hash(await tree(await codePath(w)));
 }
-async function safeLocal(w: string, ref: string): Promise<string> {
+export async function safeLocal(w: string, ref: string): Promise<string> {
   ensure(
     !isAbsolute(ref) && ref && !ref.split(/[\\/]/).includes(".."),
     "Chemin relatif interne requis.",
@@ -256,13 +263,14 @@ export async function phaseStatus(
   s: Workflow,
   p: Phase,
   code: string,
-): Promise<{ state: string; done: string[]; review: boolean }> {
+): Promise<{ state: string; done: string[]; review: boolean; carried?: string[] }> {
   // Accepted phases are historical milestones. Regressions are checked during new work and shipping.
   if (p.acceptance?.hash === contract(p))
     return { state: "accepted", done: p.tasks.map((t) => t.id), review: true };
   if ((await inspectPhaseSources(w, p.sources)).some(source => !source.current))
     return { state: "blocked", done: [], review: false };
-  const done = new Set<string>();
+  const done = new Set<string>(),
+    carried = new Set<string>();
   let review = false;
   const latestReview = s.proofs
     .filter((e) => e.phase === p.id && e.kind === "review")
@@ -283,9 +291,34 @@ export async function phaseStatus(
       e.independent
     )
       review = true;
+    if (e.kind === "continuity") {
+      // Only human tasks of an intact, passed observation of this phase can be carried forward.
+      const origin = s.proofs.find((o) => o.id === e.origin);
+      let valid = false;
+      try {
+        valid = Boolean(
+          intact && e.passed && origin && origin.kind === "observation" &&
+          origin.phase === p.id && origin.passed &&
+          origin.report_hash === hash(await readFile(await safeLocal(w, origin.ref))),
+        );
+      } catch {}
+      for (const id of e.tasks) {
+        const t = p.tasks.find((t) => t.id === id);
+        if (!t?.human) continue;
+        if (valid && origin!.tasks.includes(id)) {
+          done.add(id);
+          carried.add(id);
+        } else {
+          done.delete(id);
+          carried.delete(id);
+        }
+      }
+      continue;
+    }
     for (const id of e.tasks) {
       const t = p.tasks.find((t) => t.id === id);
       if (t && (!t.human || e.kind === "observation")) {
+        carried.delete(id);
         if (e.passed && intact) done.add(id);
         else done.delete(id);
       }
@@ -300,7 +333,7 @@ export async function phaseStatus(
       : p.mandate
         ? "in_progress"
         : "ready";
-  return { state, done: [...done], review };
+  return { state, done: [...done], review, ...(carried.size ? { carried: [...carried] } : {}) };
 }
 export async function renderView(
   w: string,
@@ -339,7 +372,7 @@ export async function renderView(
       "",
       ...p.tasks.map(
         (t) =>
-          `- [${v.done.includes(t.id) ? "x" : " "}] ${t.human ? "[essai humain] " : ""}${t.title}`,
+          `- [${v.done.includes(t.id) ? "x" : " "}] ${t.human ? "[essai humain] " : ""}${t.title}${v.carried?.includes(t.id) ? " (essai antérieur conservé après examen des changements)" : ""}`,
       ),
       "",
       `État : ${labels[v.state]}${p.blocked ? ` — ${p.blocked}` : ""}.`,
@@ -700,7 +733,10 @@ export async function recordProof(
         "Un essai humain exige une observation reçue.",
       );
     }
-    const code = await sourceHash(w);
+    const snapshot = await tree(await codePath(w)),
+      code = hash(snapshot);
+    // The exact inventory lets a later continuity examine what changed since this human observation.
+    if (kind === "observation") await storeTree(w, snapshot, code);
     let content = "",
       passed = options.verdict === undefined || options.verdict === "passed",
       verdict = options.verdict ?? "passed";

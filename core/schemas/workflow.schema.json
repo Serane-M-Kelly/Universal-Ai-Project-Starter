@@ -269,7 +269,8 @@
             "enum": [
               "check",
               "observation",
-              "review"
+              "review",
+              "continuity"
             ]
           },
           "contract": {
@@ -301,6 +302,10 @@
           },
           "independent": {
             "type": "boolean"
+          },
+          "origin": {
+            "type": "string",
+            "pattern": "^e-[0-9]+$"
           }
         },
         "required": [
@@ -318,6 +323,32 @@
           "passed",
           "verdict",
           "independent"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "continuity"
+                }
+              },
+              "required": [
+                "kind"
+              ]
+            },
+            "then": {
+              "required": [
+                "origin"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "origin"
+                ]
+              }
+            }
+          }
         ]
       }
     },

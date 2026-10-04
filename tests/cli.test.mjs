@@ -1383,7 +1383,7 @@ test("skill upgrade refuse d'écraser une source modifiée sans --force, puis r�
   assert.equal(runCli(["skill", "add", "project-setup", workspace], sandbox).status, 0);
 
   // Simule un workspace resté sur l'ancienne v2 de project-setup avant la mise à niveau du starter :
-  // la source réellement installée est la v6 courante, mais project.yaml prétend encore v2 avec
+  // la source réellement installée est la v7 courante, mais project.yaml prétend encore v2 avec
   // une empreinte différente (comme si la source locale avait divergé depuis).
   const configPath = join(workspace, "project.yaml");
   const config = YAML.parse(await readFile(configPath, "utf8"));
@@ -1403,7 +1403,7 @@ test("skill upgrade refuse d'écraser une source modifiée sans --force, puis r�
 
   const forced = runCli(["skill", "upgrade", "project-setup", workspace, "--force"], sandbox);
   assert.equal(forced.status, 0, forced.stderr || forced.stdout);
-  assert.match(forced.stdout, /v2 → v6/);
+  assert.match(forced.stdout, /v2 → v7/);
 
   const after = runCli(["doctor", workspace, "--json"], sandbox);
   const afterReport = JSON.parse(after.stdout);
@@ -1412,7 +1412,7 @@ test("skill upgrade refuse d'écraser une source modifiée sans --force, puis r�
 
   const upgradedConfig = YAML.parse(await readFile(configPath, "utf8"));
   const upgradedReference = upgradedConfig.skills.find((skill) => skill.id === "project-setup");
-  assert.equal(upgradedReference.version, 6);
+  assert.equal(upgradedReference.version, 7);
   assert.notEqual(upgradedReference.source_hash, "0".repeat(64));
 });
 
@@ -1437,17 +1437,17 @@ test("skill upgrade --all met à niveau tous les skills obsolètes d'un workspac
 
   const result = runCli(["skill", "upgrade", "--all", workspace, "--force"], sandbox);
   assert.equal(result.status, 0, result.stderr || result.stdout);
-  assert.match(result.stdout, /project-setup : v5 → v6/);
+  assert.match(result.stdout, /project-setup : v6 → v7/);
   assert.match(result.stdout, /project-work : v3 → v4/);
   assert.match(result.stdout, /project-discover : déjà en v5/);
-  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.24\.0/);
+  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.25\.0/);
 
   const after = runCli(["doctor", workspace, "--json"], sandbox);
   const afterReport = JSON.parse(after.stdout);
   assert.ok(!afterReport.items.some((item) => item.code === "SKILL_VERSION"));
 
   const upgradedConfig = YAML.parse(await readFile(configPath, "utf8"));
-  assert.equal(upgradedConfig.starter_version, "0.24.0");
+  assert.equal(upgradedConfig.starter_version, "0.25.0");
 });
 
 test("skill upgrade --all ne touche pas starter_version quand une mise à niveau échoue", async (t) => {
@@ -1478,7 +1478,7 @@ test("skill upgrade --all ne touche pas starter_version quand une mise à niveau
   const untouchedConfig = YAML.parse(await readFile(configPath, "utf8"));
   assert.equal(untouchedConfig.starter_version, "0.12.0");
   const reference = untouchedConfig.skills.find((skill) => skill.id === "project-setup");
-  assert.equal(reference.version, 5);
+  assert.equal(reference.version, 6);
 });
 
 test("skill upgrade --all avance starter_version même si tous les skills étaient déjà à jour", async (t) => {
@@ -1496,10 +1496,10 @@ test("skill upgrade --all avance starter_version même si tous les skills étaie
   const result = runCli(["skill", "upgrade", "--all", workspace], sandbox);
   assert.equal(result.status, 0, result.stderr || result.stdout);
   assert.match(result.stdout, /project-discover : déjà en v5/);
-  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.24\.0/);
+  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.25\.0/);
 
   const upgradedConfig = YAML.parse(await readFile(configPath, "utf8"));
-  assert.equal(upgradedConfig.starter_version, "0.24.0");
+  assert.equal(upgradedConfig.starter_version, "0.25.0");
 });
 
 test("adapter add déploie les skills déjà installés", async (t) => {
@@ -1708,10 +1708,10 @@ test("project-handoff est installable comme skill universel", async (t) => {
   assert.equal(listed.status, 0, listed.stderr || listed.stdout);
   assert.match(listed.stdout, /project-discover v5/);
   assert.match(listed.stdout, /project-handoff v4/);
-  assert.match(listed.stdout, /project-setup v6/);
+  assert.match(listed.stdout, /project-setup v7/);
   assert.match(listed.stdout, /project-plan v5/);
   assert.match(listed.stdout, /project-work v4/);
-  assert.match(listed.stdout, /project-ship v4/);
+  assert.match(listed.stdout, /project-ship v5/);
 
   const installed = runCli(["skill", "add", "project-handoff", workspace], sandbox);
   assert.equal(installed.status, 0, installed.stderr || installed.stdout);

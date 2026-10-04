@@ -1,4 +1,4 @@
-# Démarrer avec le starter 0.24.0
+# Démarrer avec le starter 0.25.0
 
 La distribution contient les sources, le programme compilé, les dépendances et les neuf skills.
 Node.js 22 ou supérieur suffit. Aucun RTK externe ni nouvelle installation globale.
@@ -55,6 +55,25 @@ node scripts/benchmark-context.mjs
 La seconde commande utilise un projet temporaire synthétique qu’elle supprime ensuite. Elle ne
 modifie pas ton pilote. Elle mesure le volume de lecture et son surcoût lorsque tous les détails
 sont ensuite ouverts ; elle ne mesure pas ta facture.
+
+## Corriger un README après tes essais (0.25)
+
+Dans un projet créé avec cette version, si tu demandes « Corrige le README sans me refaire tester »,
+l'agent examine les changements avec `workflow carry --dry-run`. Si seuls des documents non utilisés
+par le produit ont changé, ton essai précédent est conservé (tes mots et sa date restent intacts) ;
+sinon il te dit précisément quoi revérifier. La revue et ton acceptation restent demandées.
+Pour un README de produit, l'agent suit le [guide README](core/contracts/product-readme.md).
+
+## Ton workspace 0.24 existant
+
+Son runtime embarqué reste en 0.24 : il garde le comportement prudent (nouvel essai après toute
+modification). Cette distribution peut contrôler un README de n'importe quel dépôt, en lecture seule :
+
+```bash
+node dist/index.js workflow readme-check --code-root "/chemin/du/depot" --previous-ref HEAD
+```
+
+`carry` y est refusé sans rien écrire : voir [les notes 0.25](docs/RELEASE-0.25.0.md#compatibilité-et-mise-à-niveau).
 
 ## Changer d'assistant en cours de projet
 

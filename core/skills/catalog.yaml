@@ -33,7 +33,7 @@ skills:
     - phases-v3
     phase_runtime_min: 0.23.0
 - id: project-setup
-  version: 6
+  version: 7
   label: Project Setup
   source: project-setup
   compatibility:
@@ -47,7 +47,7 @@ skills:
     workflows:
     - legacy
     - phases-v3
-    phase_runtime_min: 0.23.0
+    phase_runtime_min: 0.25.0
 - id: project-plan
   version: 5
   label: Project Plan
@@ -79,7 +79,7 @@ skills:
     workflows:
     - legacy
 - id: project-ship
-  version: 4
+  version: 5
   label: Project Ship
   source: project-ship
   compatibility:
@@ -93,7 +93,7 @@ skills:
     workflows:
     - legacy
     - phases-v3
-    phase_runtime_min: 0.23.0
+    phase_runtime_min: 0.25.0
 - id: project-start
   version: 4
   label: project-start
@@ -125,7 +125,7 @@ skills:
     - phases-v3
     phase_runtime_min: 0.22.0
 - id: project-phase
-  version: 4
+  version: 5
   label: project-phase
   source: project-phase
   compatibility:
@@ -138,9 +138,9 @@ skills:
     - '*'
     workflows:
     - phases-v3
-    phase_runtime_min: 0.23.0
+    phase_runtime_min: 0.25.0
 - id: project-review
-  version: 4
+  version: 5
   label: project-review
   source: project-review
   compatibility:
@@ -153,4 +153,4 @@ skills:
     - '*'
     workflows:
     - phases-v3
-    phase_runtime_min: 0.23.0
+    phase_runtime_min: 0.25.0

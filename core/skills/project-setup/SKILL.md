@@ -23,6 +23,10 @@ Conserver un rapport concis sur ce qui fonctionne, les commandes vérifiées et 
 Un rapport seul ne prouve pas la faisabilité ; ne pas annoncer une vérification non réalisée.
 Passer à project-plan lorsque le socle suffit pour la prochaine phase.
 
+## README du produit
+
+Pour un nouveau produit, créer ou vérifier un README minimal et exact selon la section Nouveau projet de `.starter/runtime/core/contracts/product-readme.md`. Pour un produit adopté, ne pas réécrire le README existant sans demande ; sa reprise suit la procédure conservatrice du même guide.
+
 ## Visibilité dans la recherche, selon le périmètre
 
 Pour les pages publiques avec un enjeu de recherche, lire Setup et Plan dans `.starter/runtime/core/contracts/search-visibility.md`. Examiner rendu, URL, environnements, capacités existantes et moyens de contrôle avant de proposer des dépendances. Ne pas ajouter de framework ou plugin SEO par habitude.

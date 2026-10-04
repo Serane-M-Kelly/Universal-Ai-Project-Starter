@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "-e",
+    "process.exit(0)"
+  ],
+  "environment": {
+    "node": "v24.10.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cwd": "/private/tmp/claude-501/-Users-moaye-kelly-Desktop-Projets-Freelance/3ed9f919-bb99-40b1-ac82-af46aaf77488/scratchpad/v024/proj/app"
+  },
+  "elapsed_ms": 22,
+  "exit_code": 0,
+  "signal": null,
+  "error": null,
+  "stdout": "",
+  "stderr": "",
+  "source_unchanged": true
+}

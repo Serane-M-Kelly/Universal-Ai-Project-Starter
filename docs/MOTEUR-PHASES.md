@@ -54,6 +54,14 @@ Le moteur enregistre --independent ; il ne peut pas prouver l’identité ou l�
 Les essais humains ne sont jamais remplacés par un test automatique. L’agent peut transmettre
 un verdict d’observation négatif puis bloquer/corriger, au lieu d’enregistrer une réussite fictive.
 
+Continuité (0.25) : chaque observation enregistre l'inventaire `chemin → sha256` de la révision
+observée (`reports/trees/`). `workflow carry` compare cet inventaire à l'arbre actuel et n'ajoute une
+preuve `continuity` que si chaque changement est un document non consommé par le produit, déclaré et
+justifié, avec critères, brief et sources inchangés. Elle ne traverse une réouverture que si un
+instantané de `.starter/history` montre l'acceptation de cette phase à cette itération, appuyée sur
+une revue indépendante de la révision observée : la génération interne empêche toujours une preuve
+ancienne de revenir seule. Règles et limites : [notes 0.25](RELEASE-0.25.0.md).
+
 Une phase acceptée est un jalon historique. Ses tests de régression pertinents doivent être
 réexécutés pendant les évolutions et avant livraison. Pour préparer un commit, une revue sur
 la révision exacte actuelle est exigée, même si la phase a été acceptée antérieurement.

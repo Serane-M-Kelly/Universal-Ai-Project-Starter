@@ -82,3 +82,14 @@ La suite `release-024.test.mjs` vérifie l'intégration Claude Code des workspac
 - diagnostic, aperçu sans écriture, réparation et idempotence d'un workspace laissé par la 0.23 ;
 - refus global en présence de réglages, copies ou instructions personnalisés ;
 - passage Claude → Codex, `relocate` et variables d'environnement signalées.
+
+La suite 0.25 ajoute :
+
+- `release-025.test.mjs` : continuité des essais humains — README réorganisé conservé sans nouvelle
+  déclaration, règle métier ou critère modifiés, Markdown publié/cité/épinglé, configuration,
+  dépendance, asset et licence, diff mixte README + code, déplacement, périmètre incomplet,
+  inventaire absent ou modifié, revue négative et essai plus récent, workspace réel produit par le
+  runtime 0.24.0, préparation et vérification du commit, réouverture et brief réapprouvé ;
+- `readme-check.test.mjs` : README d'un site statique, d'une API configurée par variables et d'une
+  extension WordPress sous GPL ; mutations sur liens, ancres, scripts, gestionnaire de paquets,
+  affirmations recopiées, licences, attributions, secrets, variables et reprise d'un README existant.

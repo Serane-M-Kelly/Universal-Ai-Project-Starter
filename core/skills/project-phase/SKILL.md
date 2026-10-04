@@ -21,9 +21,22 @@ avec gestes et résultat attendu, puis consigner les retours réels avec workflo
 Terminer par résultat, contrôles, limites et project-review. Si la demande a inclus la revue,
 l'enchaîner. Ne pas passer seul à la phase suivante ni effectuer Git ou une publication.
 
+Un essai humain réussi n'est pas redemandé pour une correction documentaire sans rapport. Après
+le changement, `workflow carry NUMERO --proof ID_OBSERVATION --dry-run` (identifiant dans
+`latest_human_observations` de context --compact) liste le diff calculé, son
+classement et les événements depuis l'essai. Examiner chaque chemin ; si tout est conservable et
+étranger aux critères vérifiés, consigner `workflow carry NUMERO --proof ID --path CHEMIN (répétable)
+--criteria CRITÈRES --reason JUSTIFICATION --checks CONTRÔLES --limits LIMITES --by AGENT --request
+MISSION`. Sinon, présenter le contrôle requis retourné. Ne jamais reformuler, redater ni dupliquer
+l'essai d'origine ; relancer les contrôles automatiques pertinents ; revue et acceptation restent dues.
+
 Pour lire une preuve, utiliser `workflow report ID_PREUVE`. Le regroupement des tests réussis
 ne démontre pas leur couverture : lire les noms ou assertions utiles avec --raw ou --stream.
 Les erreurs et les revues restent intégrales. Ne pas refaire un contrôle pour retrouver son log.
+
+## README du produit, selon le périmètre
+
+Si la phase crée, réorganise ou change ce qu'annonce le README du produit (fonction, commande, configuration, licence), appliquer `.starter/runtime/core/contracts/product-readme.md` puis `workflow readme-check`. Une retouche locale suit ses règles sans relecture complète du guide.
 
 ## Visibilité dans la recherche, selon le périmètre
 

@@ -121,8 +121,17 @@ export async function contextView(w: string, id?: string) {
     }
     // Always retain the latest review, even stale: its existence can revoke an earlier review.
     const latestReview = value.proofs.filter(p => p.kind === "review").at(-1);
+    // A current continuity is examined against its original human observation: keep that original visible.
+    const carried = new Set(value.proofs.filter(p => p.kind === "continuity" && !historical.includes(p)).map(p => p.origin));
+    const origins = historical.filter(p => carried.has(p.id));
     candidate = { ...value, proofs: relevant, proof_hashes: "All listed proofs match code_hash and contract_hash; passed and integrity remain separate",
-      historical_proofs_omitted: historical.length,
+      historical_proofs_omitted: historical.length - origins.length,
+      ...(origins.length ? { continuity_origins: origins } : {}),
+      // Identifiers needed by `workflow carry --proof`, even when the observation is historical.
+      latest_human_observations: Object.fromEntries(value.phase.tasks.filter(t => t.human).flatMap(t => {
+        const last = value.proofs.filter(p => p.kind === "observation" && p.tasks.includes(t.id)).at(-1);
+        return last ? [[t.id, { proof: last.id, passed: last.passed, current: last.code === value.code_hash }]] : [];
+      })),
       latest_review_if_historical: latestReview && historical.includes(latestReview) ? latestReview : null,
       full_read: `workflow context ${value.phase.id}` };
   } else {

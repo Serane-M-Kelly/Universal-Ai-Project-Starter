@@ -23,6 +23,10 @@ Enregistrer la preuve externe dans un rapport de livraison : cible, version, obs
 Ne pas annoncer poussé ou déployé si seuls les fichiers ou les commandes sont prêts. Un commit
 vérifié ne prouve pas une publication. Ne pas imposer une procédure de déploiement à chaque commit.
 
+## README du produit, selon la livraison
+
+Avant une publication, vérifier que le README ne décrit pas une fonction, une commande ou un statut démentis par la version livrée ; ajouter l'URL publiée seulement après son observation (`.starter/runtime/core/contracts/product-readme.md`). Un simple commit n'exige pas ce contrôle.
+
 ## Visibilité dans la recherche, selon le périmètre
 
 Pour une publication de pages publiques concernées par la recherche, appliquer Ship dans `.starter/runtime/core/contracts/search-visibility.md` : vérifier la configuration sur la cible réellement publiée et consigner les limites dans le rapport de livraison. Prévoir le suivi avec responsable et période d’observation dans le plan existant. Aucun audit SEO complet pour un simple commit, aucune configuration Search Console ni automatisation déclarée faite sans exécution réelle.

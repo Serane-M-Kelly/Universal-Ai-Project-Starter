@@ -1,0 +1,15 @@
+{
+  "name": "carnet-de-randonnee",
+  "version": "1.2.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test tests/duree.spec.js"
+  },
+  "devDependencies": { "vite": "^7.0.0" }
+}
