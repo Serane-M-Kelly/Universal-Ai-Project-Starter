@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { cp, mkdir, mkdtemp, readFile, readdir, lstat, readlink, rm, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { tmpdir } from "node:os";
-import { join, resolve, relative } from "node:path";
+import { join, resolve, relative, sep } from "node:path";
 import { spawnSync } from "node:child_process";
 import YAML from "yaml";
 
@@ -62,7 +62,8 @@ async function snapshot(w, exclude = [".starter/migrations", ".starter/write.loc
   const out = {};
   async function visit(dir) {
     for (const name of (await readdir(dir)).sort()) {
-      const path = join(dir, name), rel = relative(w, path);
+      // Portable keys: "/" on every platform, as in the engine's own fingerprints.
+      const path = join(dir, name), rel = relative(w, path).split(sep).join("/");
       if (exclude.some(e => rel === e || rel.startsWith(e + "/"))) continue;
       const details = await lstat(path);
       if (details.isSymbolicLink()) out[rel] = `link:${await readlink(path)}`;

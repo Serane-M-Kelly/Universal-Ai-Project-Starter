@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, writeFile, rm, readdir, realpath, mkdir, lstat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
-import { join, resolve, relative } from 'node:path';
+import { join, resolve, relative, sep } from 'node:path';
 import { tmpdir } from 'node:os';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
@@ -37,7 +37,7 @@ async function snapshot(w) {
   const out = {};
   async function walk(dir) {
     for (const entry of await readdir(dir, { withFileTypes: true })) {
-      const path = join(dir, entry.name), ref = relative(w, path);
+      const path = join(dir, entry.name), ref = relative(w, path).split(sep).join('/');
       if (ref === '.starter/runtime') continue;
       if (entry.isDirectory()) { out[ref + '/'] = 'dir'; await walk(path); }
       else out[ref] = createHash('sha256').update(await readFile(path)).digest('hex');
