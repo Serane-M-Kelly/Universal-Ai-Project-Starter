@@ -1,3 +1,32 @@
+# Validation de la version 0.25.1
+
+Environnement : macOS (Darwin 25.5.0), Node 24.10.0, 3 octobre 2026. Base : archive 0.25.0 validée
+(SHA-256 `1ca1a5d8…`), copiée sans modification. Aucun projet réel n'a été lu ni migré ; aucune
+session Codex ou Claude Code n'a été lancée.
+
+`npm run validate` réussit : **270 tests réussis (250 hérités + 20 nouveaux), aucun échec ni test
+ignoré**, vérification TypeScript, compilation et contenu du paquet (216 fichiers). Journal :
+[release-0251.txt](validation/release-0251.txt). Quatre assertions historiques ont suivi le seul
+numéro de version (0.25.1).
+
+`tests/runtime-upgrade.test.mjs` crée de vrais workspaces avec le runtime 0.24.0 d'origine (fixture
+`runtime-v024`) : migration complète, aperçu revérifié, personnalisations et incompatibilités, arrêt
+brutal à sept étapes, échec et annulation automatique, annulation interrompue puis reprise, retour
+arrière bloqué ou accepté selon l'état, 0.25.0 (simulé), liens symboliques, commentaires, verrou
+orphelin, récupérations concurrentes.
+
+Revue adverse par un sous-agent Claude (même famille de modèle, contexte séparé ; pas une revue
+indépendante humaine) : 3 défauts bloquants, 3 à corriger et 4 mineurs reproduits, tous corrigés.
+Ses scripts rejoués sur la version corrigée : dix arrêts SIGKILL à des instants arbitraires et six
+annulations tuées ramènent le workspace à l'identique ; une vraie 0.25.0 migre puis s'annule à
+l'identique ; trois récupérations simultanées laissent un seul acteur et un état intact.
+
+Revue ChatGPT, premier passage : 2 défauts bloquants (nettoyage final supprimant la sauvegarde,
+annulation interrompue laissant un mélange de versions inscriptible), corrigés et testés ; ces
+corrections attendent le passage suivant.
+
+# Historique — 0.25.0
+
 # Validation de la version 0.25.0
 
 Environnement : macOS (Darwin 25.5.0), Node 24.10.0, 3 octobre 2026. Aucune session Codex ou

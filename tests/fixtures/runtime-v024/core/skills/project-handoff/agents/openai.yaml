@@ -1,0 +1,4 @@
+interface:
+  display_name: "project-handoff"
+  short_description: "Piloter le projet avec un suivi par phases"
+  default_prompt: "Utilise $project-handoff dans le workspace de ce projet."

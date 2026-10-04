@@ -16,6 +16,7 @@ Ces dossiers représentent des entrées stables et réalistes pour la suite de t
 - `product-package-ready` : dossier Project Architect v1 complet, relu et prêt pour un import déterministe ;
 - `codex-native-023` : fichiers Codex générés par la 0.23.0 (`{{CODE_ROOT}}` à la place du chemin), référence octet par octet de la 0.24.
 - `workspace-v024` : extrait d'un workspace produit par le runtime 0.24.0 d'origine (brief, plan, contrôle et observation synthétiques, sans inventaire détaillé) et le schéma 0.24 correspondant, pour la compatibilité de la 0.25 ; `.starter/runtime` ne contient que son `package.json`.
+- `runtime-v024/` : runtime 0.24.0 d'origine (JavaScript compilé, `core`, `profiles`, `adapters`, `package.json`, sans dépendances) ; les tests de `runtime-upgrade` lui ajoutent ajv et yaml puis l'utilisent pour créer de vrais workspaces 0.24.
 - `readme/` : trois produits (site statique, API avec variables d'environnement, extension WordPress sous GPL) et leur README rédigé selon `core/contracts/product-readme.md`, utilisés par `readme-check`.
 
 Les tests copient toujours les fixtures dans un dossier temporaire avant de les modifier. Les originaux restent immuables.

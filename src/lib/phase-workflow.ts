@@ -944,6 +944,10 @@ export async function changedFiles(root: string): Promise<string[]> {
 export async function diagnoseWorkflow(w: string): Promise<string[]> {
   const errors: string[] = [];
   try {
+    // An unfinished runtime migration makes the workspace unusable until it is completed or undone.
+    const marker = await readFile(join(w, ".starter/MIGRATION-IN-PROGRESS.json"), "utf8").then(JSON.parse).catch(() => null);
+    if (marker && !(marker.verify && process.env.STARTER_RUNTIME_UPGRADE_VERIFY === marker.verify))
+      errors.push(`Migration du runtime interrompue ou en cours (${marker.id ?? "?"}) : restaurer avec workflow runtime-rollback depuis la distribution.`);
     const s = await loadWorkflow(w);
     if (await pathExists(join(w, "taches/BACKLOG.md")))
       errors.push(

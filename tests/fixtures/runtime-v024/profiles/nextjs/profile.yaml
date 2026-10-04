@@ -1,0 +1,146 @@
+schema_version: 5
+
+profile:
+  id: nextjs
+  version: 1
+  label: Next.js TypeScript
+  description: Profil pour créer, adopter et vérifier une application Next.js TypeScript avec App Router ou Pages Router.
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+
+commands:
+  strategy: detect-existing
+  defaults:
+    install: npm install
+    dev: npm run dev
+    lint: npm run lint
+    typecheck: npm run typecheck
+    test: npm run test
+    build: npm run build
+  required:
+    - install
+    - dev
+    - lint
+    - typecheck
+    - test
+    - build
+  required_by_entry_mode: []
+
+guidance:
+  principles:
+    - Préférer l'App Router pour un nouveau projet, mais conserver le Pages Router d'un projet adopté tant qu'une migration explicite n'est pas justifiée.
+    - Garder les composants serveur par défaut et n'introduire une frontière client que pour une interaction, un état local ou une API du navigateur.
+    - Décider explicitement du rendu, de la mise en cache et de la revalidation à partir du besoin de chaque route.
+    - Vérifier l'authentification et les autorisations dans les Server Actions et les Route Handlers, sans exposer de secret au client.
+    - Réserver le préfixe NEXT_PUBLIC_ aux valeurs réellement publiques et documenter toutes les variables dans un exemple sans secret.
+    - Prévoir les états de chargement, d'erreur et d'absence, les métadonnées et l'accessibilité comme parties du produit.
+  setup_outcomes:
+    - Un arbre de routes App Router ou Pages Router fonctionne, avec ou sans dossier src.
+    - Le TypeScript strict, le lint, les tests et le build de production s'exécutent avec les commandes déclarées.
+    - Une vérification observable couvre au minimum le rendu ou le comportement critique de départ.
+    - Les variables d'environnement attendues sont validées côté approprié et décrites dans .env.example.
+    - Les frontières serveur-client, le mode de rendu et la stratégie de cache des premières routes sont intentionnels.
+    - Les états d'erreur, de chargement et de page introuvable sont traités selon le routeur choisi.
+
+validation:
+  required_paths:
+    - path: package.json
+      kind: file
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      kind: file
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: tsconfig.json
+      kind: file
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: tsconfig.json
+      kind: file
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: next-env.d.ts
+      kind: file
+      severity: warning
+    - path: .env.example
+      kind: file
+      severity: warning
+    - path: README.md
+      kind: file
+      severity: warning
+  any_of_paths:
+    - label: Arbre de routes Next.js
+      alternatives:
+        - path: app
+          kind: directory
+        - path: src/app
+          kind: directory
+        - path: pages
+          kind: directory
+        - path: src/pages
+          kind: directory
+      severity: warning
+      entry_modes: [idea, brief]
+    - label: Arbre de routes Next.js
+      alternatives:
+        - path: app
+          kind: directory
+        - path: src/app
+          kind: directory
+        - path: pages
+          kind: directory
+        - path: src/pages
+          kind: directory
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - label: Socle de tests
+      alternatives:
+        - path: tests
+          kind: directory
+        - path: test
+          kind: directory
+        - path: __tests__
+          kind: directory
+      severity: warning
+  any_of_matches: []
+  required_text_matches: []
+  required_json_fields:
+    - path: package.json
+      fields: [engines.node]
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      fields: [engines.node]
+      severity: blocked
+      entry_modes: [existing, maintenance]
+  any_of_json_fields:
+    - path: package.json
+      fields: [dependencies.next, devDependencies.next]
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      fields: [dependencies.next, devDependencies.next]
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: package.json
+      fields: [dependencies.react, devDependencies.react]
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      fields: [dependencies.react, devDependencies.react]
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: package.json
+      fields: [dependencies.react-dom, devDependencies.react-dom]
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      fields: [dependencies.react-dom, devDependencies.react-dom]
+      severity: blocked
+      entry_modes: [existing, maintenance]

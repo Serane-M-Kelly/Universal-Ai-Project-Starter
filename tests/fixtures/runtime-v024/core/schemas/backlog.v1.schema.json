@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/universal-ai-project-starter/backlog.v1.schema.json",
+  "title": "Universal AI Project Starter backlog frontmatter (schema_version 1, gelé)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "backlog_version",
+    "status",
+    "approved_by",
+    "approved_at",
+    "source_brief_version",
+    "source_setup_report",
+    "last_reviewed_at",
+    "candidates"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "backlog_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "approved"
+      ]
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "approved_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_brief_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "source_setup_report": {
+      "type": "string",
+      "minLength": 1
+    },
+    "last_reviewed_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "status",
+          "rank",
+          "priority",
+          "depends_on",
+          "work_items"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^BLG-[0-9]{3,}$"
+          },
+          "status": {
+            "enum": [
+              "candidate",
+              "ready",
+              "selected",
+              "done",
+              "deferred",
+              "retired"
+            ]
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "priority": {
+            "enum": [
+              "P0",
+              "P1",
+              "P2"
+            ]
+          },
+          "depends_on": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^BLG-[0-9]{3,}$"
+            }
+          },
+          "work_items": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^WORK-[0-9]{3,}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

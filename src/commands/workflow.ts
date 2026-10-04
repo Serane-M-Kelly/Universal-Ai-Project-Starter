@@ -50,6 +50,7 @@ import {
 import { requireCurrentSources } from "../lib/phase-sources.js";
 import { carryObservation, previewContinuity } from "../lib/evidence-continuity.js";
 import { checkReadme } from "../lib/readme-check.js";
+import { RUNTIME_FILES, applyUpgrade, assertNoMigrationInProgress, finishUpgrade, previewUpgrade, rollbackUpgrade } from "../lib/runtime-upgrade.js";
 
 export const PUBLIC_SKILLS = [
   "project-start",
@@ -62,14 +63,7 @@ export const PUBLIC_SKILLS = [
   "project-review",
   "project-ship",
 ];
-const runtimeFiles = [
-  "dist",
-  "core",
-  "profiles",
-  "adapters",
-  "node_modules",
-  "package.json",
-];
+const runtimeFiles = RUNTIME_FILES;
 export async function installRuntime(w: string): Promise<void> {
   const destination = join(w, ".starter/runtime");
   ensure(
@@ -257,6 +251,7 @@ const textOptions = [
   "limits",
   "previous",
   "previous-ref",
+  "plan",
 ];
 export async function runWorkflow(args: string[]): Promise<number> {
   const options: any = Object.fromEntries(
@@ -271,6 +266,8 @@ export async function runWorkflow(args: string[]): Promise<number> {
     "compact",
     "raw",
     "metrics",
+    "accept-state-changes",
+    "finish",
   ])
     options[b] = { type: "boolean", default: false };
   options.task = { type: "string", multiple: true };
@@ -297,8 +294,13 @@ export async function runWorkflow(args: string[]): Promise<number> {
   const w = await canonicalPath(resolve(v.workspace ?? process.cwd()));
   const by = v.by ?? "",
     request = v.request ?? "";
+  if (action !== "init" && action !== "migrate") await assertNoMigrationInProgress(w, action);
   let result: unknown;
-  if (action === "init") {
+  if (action === "runtime-upgrade") {
+    result = v["dry-run"] ? await previewUpgrade(w) : v.finish ? await finishUpgrade(w, by, request) : await applyUpgrade(w, v.plan, by, request);
+  } else if (action === "runtime-rollback") {
+    result = await rollbackUpgrade(w, { dryRun: v["dry-run"], acceptStateChanges: v["accept-state-changes"], by, request });
+  } else if (action === "init") {
     ensure(arg, "Destination requise.");
     result = {
       workspace: await initUnified(arg, {

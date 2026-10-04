@@ -26,6 +26,8 @@ Usage :
   ai-project workflow sources
   ai-project workflow status|next|context [numero] --compact [--metrics]
   ai-project workflow prepare-commit|verify-commit|models-sync|environment|migrate
+  ai-project workflow runtime-upgrade --workspace chemin (--dry-run | --plan empreinte | --finish) --by personne --request mots
+  ai-project workflow runtime-rollback --workspace chemin [--dry-run] [--accept-state-changes] --by personne --request mots
   ai-project new <nom> [--target chemin] [--entry-mode idea|brief] [--profile id] [--no-git]
   ai-project adopt <chemin-du-projet> [--workspace chemin] [--entry-mode existing|maintenance] [--profile id]
   ai-project doctor [chemin] [--json] [--compact]

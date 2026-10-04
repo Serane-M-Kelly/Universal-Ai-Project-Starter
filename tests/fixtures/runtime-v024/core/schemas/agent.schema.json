@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/universal-ai-project-starter/agent.schema.json",
+  "title": "Universal AI Project Starter agent manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "agent", "enabled", "compatibility", "execution", "authority"],
+  "properties": {
+    "schema_version": { "type": "integer", "const": 1 },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "label", "description"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "version": { "type": "integer", "minimum": 1 },
+        "label": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 40, "maxLength": 500 }
+      }
+    },
+    "enabled": { "type": "boolean" },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["entry_modes", "profiles"],
+      "properties": {
+        "entry_modes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["idea", "brief", "existing", "maintenance"] }
+        },
+        "profiles": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "anyOf": [
+              { "const": "*" },
+              { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+            ]
+          }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["filesystem", "shell", "network", "delegation"],
+      "properties": {
+        "filesystem": { "enum": ["read-only", "workspace-write"] },
+        "shell": { "type": "boolean" },
+        "network": { "type": "boolean" },
+        "delegation": { "type": "boolean" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "brief_approval",
+        "work_acceptance",
+        "ship_approval",
+        "external_actions",
+        "destructive_actions",
+        "commits",
+        "deployment"
+      ],
+      "properties": {
+        "brief_approval": { "const": false },
+        "work_acceptance": { "const": false },
+        "ship_approval": { "const": false },
+        "external_actions": { "enum": ["ask", "forbidden"] },
+        "destructive_actions": { "enum": ["ask", "forbidden"] },
+        "commits": { "enum": ["ask", "forbidden"] },
+        "deployment": { "enum": ["ask", "forbidden"] }
+      }
+    }
+  }
+}

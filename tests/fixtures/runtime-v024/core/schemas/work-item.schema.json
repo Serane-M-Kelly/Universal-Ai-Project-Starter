@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/universal-ai-project-starter/work-item.schema.json",
+  "title": "Universal AI Project Starter work item frontmatter",
+  "description": "Schéma tolérant : les champs de liaison au backlog v2 sont optionnels, afin qu'une unité rédigée avant project-work v3 reste valide sans modification.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "id",
+    "status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "work_item_version": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^WORK-[0-9]{3,}$"
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "maxLength": 120,
+      "pattern": "^[^\\n\\r]+$"
+    },
+    "status": {
+      "enum": [
+        "proposed",
+        "approved",
+        "in_progress",
+        "ready_for_review",
+        "ready_for_acceptance",
+        "accepted",
+        "blocked"
+      ]
+    },
+    "realizes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^TSK-[0-9]{3,}$"
+      }
+    },
+    "cross_cutting": {
+      "type": "boolean"
+    },
+    "unplanned_urgent": {
+      "description": "Voie d'urgence explicite : autorise une unité sans realizes avant la réconciliation du backlog. Métadonnée structurée, jamais déduite d'une phrase.",
+      "type": "boolean"
+    },
+    "brief_version": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "source_request": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "approved_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "approved_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "started_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ready_for_review_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ready_for_acceptance_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "accepted_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "accepted_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

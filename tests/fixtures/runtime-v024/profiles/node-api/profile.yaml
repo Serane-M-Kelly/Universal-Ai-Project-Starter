@@ -1,0 +1,95 @@
+schema_version: 5
+
+profile:
+  id: node-api
+  version: 1
+  label: Node/API TypeScript
+  description: Profil sans framework pour créer, adopter et vérifier un service HTTP Node.js écrit en TypeScript.
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+
+commands:
+  strategy: detect-existing
+  defaults:
+    install: npm install
+    dev: npm run dev
+    lint: npm run lint
+    typecheck: npm run typecheck
+    test: npm run test
+    build: npm run build
+  required:
+    - install
+    - dev
+    - lint
+    - typecheck
+    - test
+    - build
+  required_by_entry_mode: []
+
+guidance:
+  principles:
+    - Choisir un framework seulement à partir des besoins du projet et conserver les frontières métier indépendantes de ce framework.
+    - Charger et valider la configuration au démarrage sans valeur secrète inscrite dans le code ou dans le dépôt.
+    - Produire des erreurs HTTP stables sans exposer de détail interne et journaliser des événements structurés sans donnée sensible.
+    - Prévoir l'arrêt propre du serveur et de ses ressources avant toute cible de déploiement.
+  setup_outcomes:
+    - Un point d'entrée HTTP démarre et s'arrête proprement.
+    - Un endpoint de santé minimal possède un test observable.
+    - La configuration et les variables d'environnement sont centralisées, validées et documentées.
+    - Les erreurs inconnues suivent une réponse stable et n'exposent aucune trace interne.
+    - Le lint, le typage, les tests et le build s'exécutent avec les commandes déclarées.
+    - Les dépendances métier ne sont pas couplées au transport HTTP lorsque le domaine le justifie.
+
+validation:
+  required_paths:
+    - path: package.json
+      kind: file
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      kind: file
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: tsconfig.json
+      kind: file
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: tsconfig.json
+      kind: file
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: src
+      kind: directory
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: src
+      kind: directory
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - path: tests
+      kind: directory
+      severity: warning
+    - path: .env.example
+      kind: file
+      severity: warning
+    - path: README.md
+      kind: file
+      severity: warning
+  any_of_paths: []
+  any_of_matches: []
+  required_text_matches: []
+  required_json_fields:
+    - path: package.json
+      fields: [engines.node]
+      severity: warning
+      entry_modes: [idea, brief]
+    - path: package.json
+      fields: [engines.node]
+      severity: blocked
+      entry_modes: [existing, maintenance]
+  any_of_json_fields: []

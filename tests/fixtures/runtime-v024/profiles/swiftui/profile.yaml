@@ -1,0 +1,103 @@
+schema_version: 5
+
+profile:
+  id: swiftui
+  version: 1
+  label: SwiftUI Apple
+  description: Profil pour créer, adopter et vérifier une application SwiftUI destinée à une ou plusieurs plateformes Apple.
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+
+commands:
+  strategy: manual
+  defaults:
+    install: null
+    dev: null
+    lint: null
+    typecheck: null
+    test: null
+    build: null
+  required: []
+  required_by_entry_mode: []
+
+guidance:
+  principles:
+    - Utiliser le cycle de vie App et Scene pour une nouvelle application SwiftUI, tout en préservant une intégration UIKit ou AppKit existante lorsqu'une adoption incrémentale est plus sûre.
+    - Garder une source de vérité claire pour chaque état et séparer la logique métier testable de la description des vues.
+    - Respecter l'isolation des acteurs, conserver les mises à jour d'interface sur l'acteur principal et rendre explicites les frontières asynchrones.
+    - Adapter l'interface à la plateforme, à la taille disponible, au Dynamic Type, à la localisation et aux technologies d'assistance.
+    - Demander les accès sensibles au moment du besoin, fournir une justification compréhensible et prévoir le refus sans dégrader dangereusement l'application.
+    - Ne jamais inscrire une équipe de signature, un identifiant d'application, un secret ou une destination de build supposée sans décision explicite.
+  setup_outcomes:
+    - Les plateformes, versions minimales, identifiants, capacités et règles de signature sont décidés et documentés.
+    - Une définition de projet Xcode ou Swift Package contient des sources qui démontrent réellement l'utilisation de SwiftUI.
+    - Le point d'entrée et les scènes sont explicites pour une application SwiftUI pure, ou l'intégration UIKit ou AppKit existante est documentée.
+    - Un scheme partageable, une configuration et une destination déterministe permettent d'inscrire des commandes réelles de build et de test dans project.yaml.
+    - Des tests rapides couvrent la logique et les comportements critiques ; les tests d'interface restent ciblés sur les parcours essentiels.
+    - Les ressources, la localisation, l'accessibilité, la confidentialité, les permissions et les entitlements applicables sont contrôlés.
+    - Un build propre et les tests applicables réussissent sur une destination déclarée, sans dépendre d'un état local caché de Xcode.
+
+validation:
+  required_paths:
+    - path: README.md
+      kind: file
+      severity: warning
+    - path: .gitignore
+      kind: file
+      severity: warning
+  any_of_paths: []
+  any_of_matches:
+    - label: Définition du projet Apple
+      alternatives:
+        - pattern: "**/*.xcodeproj"
+          kind: directory
+        - pattern: "**/Package.swift"
+          kind: file
+      max_depth: 4
+      severity: warning
+      entry_modes: [idea, brief]
+    - label: Définition du projet Apple
+      alternatives:
+        - pattern: "**/*.xcodeproj"
+          kind: directory
+        - pattern: "**/Package.swift"
+          kind: file
+      max_depth: 4
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - label: Socle de tests Swift
+      alternatives:
+        - pattern: "**/*Tests.swift"
+          kind: file
+        - pattern: "**/*Test.swift"
+          kind: file
+      max_depth: 6
+      severity: warning
+  required_text_matches:
+    - label: Utilisation de SwiftUI
+      patterns: ["**/*.swift"]
+      contains: ["import SwiftUI"]
+      match: any
+      max_depth: 6
+      severity: warning
+      entry_modes: [idea, brief]
+    - label: Utilisation de SwiftUI
+      patterns: ["**/*.swift"]
+      contains: ["import SwiftUI"]
+      match: any
+      max_depth: 6
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - label: Point d'entrée SwiftUI natif
+      patterns: ["**/*.swift"]
+      contains: ["@main", ": App"]
+      match: all
+      max_depth: 6
+      severity: warning
+  required_json_fields: []
+  any_of_json_fields: []

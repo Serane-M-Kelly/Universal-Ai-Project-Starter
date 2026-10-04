@@ -1,4 +1,8 @@
-# Universal AI Project Starter — 0.25.0
+# Universal AI Project Starter — 0.25.1
+
+Version 0.25.1 : migration en place du runtime des projets existants 0.24 (`workflow runtime-upgrade`,
+avec aperçu, sauvegarde vérifiée, comportement identique exigé et annulation). Voir
+[la migration et ses garanties](docs/RELEASE-0.25.1.md).
 
 Version 0.25.0 : un essai humain réussi n'est plus redemandé après une correction documentaire qui ne
 le concerne pas (`workflow carry`, diff calculé et classé par le moteur), et les README publics des

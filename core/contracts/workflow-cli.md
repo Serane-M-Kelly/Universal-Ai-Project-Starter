@@ -33,6 +33,8 @@ Les options --by et --request décrivent les déclarations réellement reçues.
 | recover-lock | --by --request ; uniquement si le processus propriétaire n’existe plus. |
 | restore-state | --snapshot .starter/history/fichier.json --by --request ; valide puis restaure. |
 | migrate | --source ancien-workspace --target nouveau-dossier [--dry-run]. |
+| runtime-upgrade | Depuis la nouvelle distribution, assistants fermés : --workspace CHEMIN --dry-run (fichiers touchés, préservés, personnalisations, incompatibilités, empreinte du plan), puis --plan EMPREINTE --by --request. --finish termine une migration vérifiée dont le nettoyage final a échoué. Sauvegarde vérifiée, même comportement exigé, annulation automatique en cas d'échec. Ne modifie jamais workflow.json ni l'historique. |
+| runtime-rollback | --workspace CHEMIN [--dry-run] --by --request ; restaure une migration interrompue ou annule la dernière migration. Bloqué si le suivi a changé depuis, sauf --accept-state-changes avec un état lisible par le runtime précédent. |
 
 
 Exemple : workflow check 1 --task t-2 --by builder --request "Vérifier la phase autorisée" -- node --test

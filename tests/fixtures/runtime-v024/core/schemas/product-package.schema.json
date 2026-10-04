@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/universal-ai-project-starter/product-package.schema.json",
+  "title": "Project Architect product package",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract",
+    "contract_version",
+    "package_id",
+    "package_version",
+    "package_status",
+    "project_name",
+    "project_stage",
+    "decision_owner",
+    "created_at",
+    "updated_at",
+    "supersedes",
+    "producer",
+    "evidence",
+    "prototype",
+    "review",
+    "confidentiality",
+    "contents"
+  ],
+  "properties": {
+    "contract": { "const": "project-architect-product-package" },
+    "contract_version": { "const": 1 },
+    "package_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "package_version": { "type": "integer", "minimum": 1 },
+    "package_status": {
+      "enum": ["draft", "ready_for_review", "ready_for_intake", "superseded"]
+    },
+    "project_name": { "type": "string", "minLength": 1 },
+    "project_stage": {
+      "enum": [
+        "initial_idea",
+        "discovery",
+        "concept_defined",
+        "prototype_tested",
+        "ready_to_build"
+      ]
+    },
+    "decision_owner": { "type": "string", "minLength": 1 },
+    "created_at": { "$ref": "#/$defs/nullableDateTime" },
+    "updated_at": { "$ref": "#/$defs/nullableDateTime" },
+    "supersedes": { "type": ["string", "null"], "minLength": 1 },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "surface"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "surface": { "type": "string", "minLength": 1, "maxLength": 80 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "public_research",
+        "real_user_validation",
+        "synthetic_material_present"
+      ],
+      "properties": {
+        "public_research": {
+          "enum": ["not_started", "in_progress", "available", "not_required"]
+        },
+        "real_user_validation": {
+          "enum": [
+            "none",
+            "planned",
+            "in_progress",
+            "available",
+            "not_required_for_current_decision"
+          ]
+        },
+        "synthetic_material_present": { "type": "boolean" }
+      }
+    },
+    "prototype": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "canonical_reference"],
+      "properties": {
+        "status": { "enum": ["not_started", "in_progress", "available", "tested"] },
+        "canonical_reference": { "type": ["string", "null"], "minLength": 1 }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent_review", "reviewed_at"],
+      "properties": {
+        "independent_review": {
+          "enum": ["not_started", "changes_requested", "passed_with_limits", "passed"]
+        },
+        "reviewed_at": { "$ref": "#/$defs/nullableDateTime" }
+      }
+    },
+    "confidentiality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "contains_personal_data", "restricted_paths"],
+      "properties": {
+        "classification": { "enum": ["private", "restricted", "shareable"] },
+        "contains_personal_data": { "type": "boolean" },
+        "restricted_paths": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/relativePath" }
+        }
+      }
+    },
+    "contents": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "project_passport",
+        "evidence_register",
+        "product_strategy",
+        "ux_flows",
+        "prototype_brief",
+        "validation_report",
+        "decision_log",
+        "open_questions",
+        "review_report",
+        "build_handoff"
+      ],
+      "properties": {
+        "project_passport": { "const": "PROJECT_PASSPORT.md" },
+        "evidence_register": { "const": "EVIDENCE_REGISTER.md" },
+        "product_strategy": { "const": "PRODUCT_STRATEGY.md" },
+        "ux_flows": { "const": "UX_FLOWS.md" },
+        "prototype_brief": { "const": "PROTOTYPE_BRIEF.md" },
+        "validation_report": { "const": "VALIDATION_REPORT.md" },
+        "decision_log": { "const": "DECISION_LOG.md" },
+        "open_questions": { "const": "OPEN_QUESTIONS.md" },
+        "review_report": { "const": "REVIEW_REPORT.md" },
+        "build_handoff": { "const": "BUILD_HANDOFF.md" }
+      }
+    }
+  },
+  "$defs": {
+    "nullableDateTime": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:Z|[+-]\\d{2}:\\d{2})$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z]:[\\\\/])(?!.*(?:^|[\\\\/])\\.\\.(?:[\\\\/]|$)).+$"
+    }
+  }
+}

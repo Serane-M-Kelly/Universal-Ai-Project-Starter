@@ -93,3 +93,8 @@ La suite 0.25 ajoute :
 - `readme-check.test.mjs` : README d'un site statique, d'une API configurée par variables et d'une
   extension WordPress sous GPL ; mutations sur liens, ancres, scripts, gestionnaire de paquets,
   affirmations recopiées, licences, attributions, secrets, variables et reprise d'un README existant.
+
+La suite 0.25.1 ajoute `runtime-upgrade.test.mjs` : migration de vrais workspaces créés par le runtime
+0.24.0 d'origine (fixture `runtime-v024`), aperçu sans écriture et revérifié, personnalisations et
+incompatibilités, arrêt brutal à six étapes puis restauration à l'identique, annulation automatique,
+reprise d'une annulation interrompue, et règles du retour arrière.

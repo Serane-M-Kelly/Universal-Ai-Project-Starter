@@ -1440,14 +1440,14 @@ test("skill upgrade --all met à niveau tous les skills obsolètes d'un workspac
   assert.match(result.stdout, /project-setup : v6 → v7/);
   assert.match(result.stdout, /project-work : v3 → v4/);
   assert.match(result.stdout, /project-discover : déjà en v5/);
-  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.25\.0/);
+  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.25\.1/);
 
   const after = runCli(["doctor", workspace, "--json"], sandbox);
   const afterReport = JSON.parse(after.stdout);
   assert.ok(!afterReport.items.some((item) => item.code === "SKILL_VERSION"));
 
   const upgradedConfig = YAML.parse(await readFile(configPath, "utf8"));
-  assert.equal(upgradedConfig.starter_version, "0.25.0");
+  assert.equal(upgradedConfig.starter_version, "0.25.1");
 });
 
 test("skill upgrade --all ne touche pas starter_version quand une mise à niveau échoue", async (t) => {
@@ -1496,10 +1496,10 @@ test("skill upgrade --all avance starter_version même si tous les skills étaie
   const result = runCli(["skill", "upgrade", "--all", workspace], sandbox);
   assert.equal(result.status, 0, result.stderr || result.stdout);
   assert.match(result.stdout, /project-discover : déjà en v5/);
-  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.25\.0/);
+  assert.match(result.stdout, /starter_version du workspace : 0\.12\.0 → 0\.25\.1/);
 
   const upgradedConfig = YAML.parse(await readFile(configPath, "utf8"));
-  assert.equal(upgradedConfig.starter_version, "0.25.0");
+  assert.equal(upgradedConfig.starter_version, "0.25.1");
 });
 
 test("adapter add déploie les skills déjà installés", async (t) => {

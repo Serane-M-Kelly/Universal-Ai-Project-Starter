@@ -1,4 +1,4 @@
-# Démarrer avec le starter 0.25.0
+# Démarrer avec le starter 0.25.1
 
 La distribution contient les sources, le programme compilé, les dépendances et les neuf skills.
 Node.js 22 ou supérieur suffit. Aucun RTK externe ni nouvelle installation globale.
@@ -66,8 +66,16 @@ Pour un README de produit, l'agent suit le [guide README](core/contracts/product
 
 ## Ton workspace 0.24 existant
 
-Son runtime embarqué reste en 0.24 : il garde le comportement prudent (nouvel essai après toute
-modification). Cette distribution peut contrôler un README de n'importe quel dépôt, en lecture seule :
+Son runtime embarqué reste en 0.24 tant que tu ne le migres pas : il garde le comportement prudent
+(nouvel essai après toute modification). Pour le migrer, assistants fermés, depuis ce dossier :
+
+```bash
+node dist/index.js workflow runtime-upgrade --workspace "/chemin/ai-workspace" --dry-run
+```
+
+Examine l'aperçu, puis suis [la procédure de migration](docs/RELEASE-0.25.1.md#procédure-pilote-proposée)
+(empreinte du plan, sauvegarde, annulation possible). Ton suivi et son historique ne sont pas modifiés.
+Cette distribution peut aussi contrôler un README de n'importe quel dépôt, en lecture seule :
 
 ```bash
 node dist/index.js workflow readme-check --code-root "/chemin/du/depot" --previous-ref HEAD

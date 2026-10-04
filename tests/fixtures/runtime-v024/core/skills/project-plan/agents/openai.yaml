@@ -1,0 +1,4 @@
+interface:
+  display_name: "project-plan"
+  short_description: "Piloter le projet avec un suivi par phases"
+  default_prompt: "Utilise $project-plan dans le workspace de ce projet."

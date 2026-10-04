@@ -1,0 +1,4 @@
+interface:
+  display_name: "Project Work"
+  short_description: "Cadrer, réaliser et vérifier une unité de travail bornée"
+  default_prompt: "Utilise $project-work pour cadrer et faire approuver une unité réalisant les tâches d'un résultat du backlog."

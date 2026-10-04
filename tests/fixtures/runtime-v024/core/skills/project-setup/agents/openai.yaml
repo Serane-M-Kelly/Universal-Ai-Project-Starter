@@ -1,0 +1,4 @@
+interface:
+  display_name: "project-setup"
+  short_description: "Piloter le projet avec un suivi par phases"
+  default_prompt: "Utilise $project-setup dans le workspace de ce projet."

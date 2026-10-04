@@ -1,0 +1,33 @@
+schema_version: 1
+
+agent:
+  id: builder
+  version: 1
+  label: Builder
+  description: Réalise une seule unité WORK-NNN approuvée, exécute ses contrôles et s'arrête avant la revue indépendante, l'acceptation, le commit ou la livraison.
+
+enabled: true
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+  profiles:
+    - "*"
+
+execution:
+  filesystem: workspace-write
+  shell: true
+  network: false
+  delegation: false
+
+authority:
+  brief_approval: false
+  work_acceptance: false
+  ship_approval: false
+  external_actions: forbidden
+  destructive_actions: forbidden
+  commits: forbidden
+  deployment: forbidden

@@ -1,0 +1,4 @@
+interface:
+  display_name: "project-review"
+  short_description: "Piloter le projet avec un suivi par phases"
+  default_prompt: "Utilise $project-review dans le workspace de ce projet."

@@ -1,0 +1,38 @@
+schema_version: 5
+
+profile:
+  id: generic
+  version: 1
+  label: Générique
+  description: Profil neutre pour tout projet ne disposant pas encore d'un profil technique spécialisé.
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+
+commands:
+  strategy: detect-existing
+  defaults:
+    install: null
+    dev: null
+    lint: null
+    typecheck: null
+    test: null
+    build: null
+  required: []
+  required_by_entry_mode: []
+
+guidance:
+  principles: []
+  setup_outcomes: []
+
+validation:
+  required_paths: []
+  any_of_paths: []
+  any_of_matches: []
+  required_text_matches: []
+  required_json_fields: []
+  any_of_json_fields: []

@@ -1,0 +1,120 @@
+schema_version: 5
+
+profile:
+  id: wordpress
+  version: 1
+  label: WordPress
+  description: Profil pour créer, adopter et vérifier un site WordPress complet, une extension ou un thème classique ou bloc.
+
+compatibility:
+  entry_modes:
+    - idea
+    - brief
+    - existing
+    - maintenance
+
+commands:
+  strategy: detect-existing
+  defaults:
+    install: null
+    dev: null
+    lint: null
+    typecheck: null
+    test: null
+    build: null
+  required: []
+  required_by_entry_mode:
+    - name: lint
+      entry_modes: [existing, maintenance]
+    - name: test
+      entry_modes: [existing, maintenance]
+
+guidance:
+  principles:
+    - Décider d'abord si le produit est un site complet, une extension, un thème classique ou un thème bloc ; ne jamais mélanger ces responsabilités par commodité.
+    - Ne jamais modifier le cœur WordPress pour ajouter une fonctionnalité et conserver le code métier dans une extension ou dans le thème lorsque sa responsabilité est strictement visuelle.
+    - Valider ou rejeter les entrées, assainir lorsque nécessaire, échapper au plus tard selon le contexte et vérifier capacités et nonces pour toute action sensible.
+    - Utiliser les API WordPress pour les données, les requêtes, les hooks, les ressources et l'internationalisation avant d'introduire une abstraction parallèle.
+    - Ne jamais versionner de secret, de sel, de mot de passe ou de configuration de production ; wp-config.php reste propre à l'environnement et n'est pas une preuve obligatoire du profil.
+    - Fixer les versions réellement supportées de WordPress, PHP, Node et des dépendances, puis tester les bornes de compatibilité annoncées.
+  setup_outcomes:
+    - Le type de projet WordPress et sa frontière avec le cœur, les extensions, le thème et le contenu sont explicitement documentés.
+    - Une extension possède un fichier principal avec son en-tête officiel, ou un thème possède un style.css avec Theme Name, ou le site démontre son cœur WordPress.
+    - Un environnement local reproductible est choisi et documenté sans copier de données ou de secrets de production.
+    - Les commandes réellement applicables de lint et de test sont configurées ; le build et l'analyse statique sont ajoutés lorsqu'ils existent.
+    - Les entrées, sorties, permissions, nonces, requêtes SQL, téléversements et appels externes du périmètre initial ont des contrôles identifiés.
+    - La stratégie de mises à jour, migrations, activation, désactivation, désinstallation et retour arrière est proportionnée au type de projet.
+    - L'internationalisation, l'accessibilité, les licences et les fichiers destinés à la distribution sont vérifiés avant toute publication.
+
+validation:
+  required_paths:
+    - path: .gitignore
+      kind: file
+      severity: warning
+  any_of_paths:
+    - label: Documentation du projet
+      alternatives:
+        - path: README.md
+          kind: file
+        - path: readme.txt
+          kind: file
+      severity: warning
+  any_of_matches:
+    - label: Structure WordPress
+      alternatives:
+        - pattern: "**/wp-includes/version.php"
+          kind: file
+        - pattern: "**/*.php"
+          kind: file
+        - pattern: "**/style.css"
+          kind: file
+      max_depth: 6
+      severity: warning
+      entry_modes: [idea, brief]
+    - label: Structure WordPress
+      alternatives:
+        - pattern: "**/wp-includes/version.php"
+          kind: file
+        - pattern: "**/*.php"
+          kind: file
+        - pattern: "**/style.css"
+          kind: file
+      max_depth: 6
+      severity: blocked
+      entry_modes: [existing, maintenance]
+    - label: Socle de tests WordPress
+      alternatives:
+        - pattern: "**/phpunit.xml"
+          kind: file
+        - pattern: "**/phpunit.xml.dist"
+          kind: file
+        - pattern: "**/*Test.php"
+          kind: file
+        - pattern: "**/*Tests.php"
+          kind: file
+      max_depth: 6
+      severity: warning
+  required_text_matches:
+    - label: Signature WordPress
+      patterns: ["**/*.php", "**/style.css"]
+      contains: ["Plugin Name:", "Theme Name:", "$wp_version ="]
+      match: any
+      max_depth: 6
+      severity: warning
+      entry_modes: [idea, brief]
+    - label: Signature WordPress
+      patterns: ["**/*.php", "**/style.css"]
+      contains: ["Plugin Name:", "Theme Name:", "$wp_version ="]
+      match: any
+      max_depth: 6
+      severity: blocked
+      entry_modes: [existing, maintenance]
+  required_json_fields:
+    - path: composer.json
+      fields: [require.php]
+      severity: warning
+    - path: package.json
+      fields: [engines.node]
+      severity: warning
+  any_of_json_fields: []
+

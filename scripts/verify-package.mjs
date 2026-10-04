@@ -48,6 +48,7 @@ const requiredPaths = [
   "dist/lib/evidence-continuity.js",
   "dist/lib/tree-snapshots.js",
   "dist/lib/comment-lines.js",
+  "dist/lib/runtime-upgrade.js",
   "dist/lib/readme-check.js",
   "core/contracts/product-readme.md",
   "dist/lib/workflow-models.js",
