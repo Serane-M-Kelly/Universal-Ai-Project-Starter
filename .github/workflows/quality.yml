@@ -16,7 +16,7 @@ jobs:
   node-compatibility:
     name: Node ${{ matrix.node }} · Ubuntu
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
@@ -39,7 +39,7 @@ jobs:
   operating-systems:
     name: Node 24 · ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 10
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:

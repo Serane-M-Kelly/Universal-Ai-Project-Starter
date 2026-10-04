@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 dist/
+# Runtime 0.24.0 d'origine utilisé comme fixture par les tests de migration : à suivre.
+!tests/fixtures/runtime-v024/dist/
 coverage/
 .cache/
 *.tmp

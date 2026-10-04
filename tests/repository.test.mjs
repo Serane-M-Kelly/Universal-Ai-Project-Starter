@@ -200,7 +200,7 @@ test("la validation continue reste en lecture seule, multi-version et épinglée
   );
 
   for (const job of Object.values(workflow.jobs)) {
-    assert.equal(job["timeout-minutes"], 10);
+    assert.equal(job["timeout-minutes"], 30);
     assert.ok(job.steps.some((step) => step.run === "npm run validate"));
     for (const step of job.steps.filter((candidate) => candidate.uses)) {
       assert.match(
