@@ -13,6 +13,7 @@ Ces dossiers représentent des entrées stables et réalistes pour la suite de t
 - `existing-wordpress-theme` : thème bloc WordPress avec chaîne Node ;
 - `domain-expert-agent` : agent personnel valide, non technique et en lecture seule ;
 - `invalid-agent` : manifeste volontairement dangereux que le schéma doit refuser.
-- `product-package-ready` : dossier Project Architect v1 complet, relu et prêt pour un import déterministe.
+- `product-package-ready` : dossier Project Architect v1 complet, relu et prêt pour un import déterministe ;
+- `codex-native-023` : fichiers Codex générés par la 0.23.0 (`{{CODE_ROOT}}` à la place du chemin), référence octet par octet de la 0.24.
 
 Les tests copient toujours les fixtures dans un dossier temporaire avant de les modifier. Les originaux restent immuables.

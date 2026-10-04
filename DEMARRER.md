@@ -1,4 +1,4 @@
-# Démarrer avec le starter 0.23.0
+# Démarrer avec le starter 0.24.0
 
 La distribution contient les sources, le programme compilé, les dépendances et les neuf skills.
 Node.js 22 ou supérieur suffit. Aucun RTK externe ni nouvelle installation globale.
@@ -8,10 +8,23 @@ Node.js 22 ou supérieur suffit. Aucun RTK externe ni nouvelle installation glob
 Depuis le dossier décompressé du starter, choisis une destination qui n’existe pas encore :
 
 ```bash
-node dist/index.js workflow init ../pilote-contexte-v023 --name "Pilote contexte" --owner "Kelly"
-cd ../pilote-contexte-v023/ai-workspace
+node dist/index.js workflow init ../pilote-contexte-v024 --name "Pilote contexte" --owner "Kelly"
+cd ../pilote-contexte-v024/ai-workspace
 codex
 ```
+
+Avec Claude Code, ou les deux assistants sur le même workspace :
+
+```bash
+node dist/index.js workflow init ../pilote-claude-v024 --name "Pilote Claude" --owner "Kelly" --adapter codex,claude-code
+cd ../pilote-claude-v024/ai-workspace
+claude
+```
+
+À la première ouverture, Claude Code présente le dossier applicatif ajouté et les réglages du projet :
+vérifier que le chemin est bien `../app` (ou ta copie), accepter, puis taper `/project-start`.
+`/agents` doit lister planner, builder, reviewer, implementer et reader ; `/model` montre le modèle
+de la session.
 
 Dans Codex, donne une demande ordinaire :
 
@@ -42,6 +55,34 @@ node scripts/benchmark-context.mjs
 La seconde commande utilise un projet temporaire synthétique qu’elle supprime ensuite. Elle ne
 modifie pas ton pilote. Elle mesure le volume de lecture et son surcoût lorsque tous les détails
 sont ensuite ouverts ; elle ne mesure pas ta facture.
+
+## Changer d'assistant en cours de projet
+
+Dans un Terminal, aucune session ouverte, depuis `ai-workspace` :
+
+```bash
+node .starter/run.mjs workflow adapter-add claude-code --dry-run
+node .starter/run.mjs workflow adapter-add claude-code
+node .starter/run.mjs doctor . --compact
+claude
+```
+
+Puis `/project-start`. Pour revenir à Codex : `codex` puis `$project-start` (après
+`workflow adapter-add codex` si Codex n'était pas installé). Le plan, la phase active, son mandat et
+ses preuves sont partagés ; seule la conversation repart de zéro. Ne jamais ouvrir les deux en même temps.
+
+## Ton workspace 0.23 où les skills Claude manquent
+
+Le runtime 0.23 copié dans ce workspace ne connaît pas la réparation : utiliser ce starter 0.24 en
+lui indiquant le workspace (adapter les chemins). L'aperçu ne modifie rien.
+
+```bash
+node dist/index.js workflow adapter-add claude-code --workspace "/chemin/ai-workspace" --dry-run
+node dist/index.js workflow adapter-add claude-code --workspace "/chemin/ai-workspace"
+```
+
+Si un conflit est listé, rien n'a été écrit : reporter la personnalisation (voir
+[les notes 0.24](docs/RELEASE-0.24.0.md)), puis relancer.
 
 ## Ton workspace actuel 0.20.x, 0.21.x ou 0.22.x
 

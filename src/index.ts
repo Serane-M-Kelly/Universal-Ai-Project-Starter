@@ -19,7 +19,8 @@ const help = `
 Universal AI Project Starter
 
 Usage :
-  ai-project workflow init <dossier> [--name nom] [--owner personne] [--code-root chemin]
+  ai-project workflow init <dossier> [--name nom] [--owner personne] [--code-root chemin] [--adapter codex|claude-code|codex,claude-code]
+  ai-project workflow adapter-add codex|claude-code [--dry-run] [--workspace chemin]
   ai-project workflow status|next|context|plan|begin|check|observe|review|accept|reopen
   ai-project workflow report <preuve> [--raw | --stream stdout --offset 0 --limit 12000]
   ai-project workflow sources

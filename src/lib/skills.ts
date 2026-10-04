@@ -11,6 +11,7 @@ import { dirname, join } from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
 import { loadAdapter } from "./adapters.js";
+import { NATIVE_ADAPTERS, installedNativeAdapters } from "./native-adapters.js";
 import { hashDirectory } from "./content-hash.js";
 import { parseFrontmatter } from "./frontmatter.js";
 import { canonicalPath, pathExists, writeFileAtomic } from "./fs-safe.js";
@@ -511,14 +512,15 @@ async function destinationsForAdapters(
 ): Promise<string[]> {
   const destinations: string[] = [];
   if (await pathExists(join(workspace, ".starter/workflow.json"))) {
-    // Phase workspaces own their native configuration through models.json, not legacy adapters.
-    const modelsPath = join(workspace, ".starter/models.json");
-    if (!(await pathExists(modelsPath))) throw new Error("Configuration native absente : .starter/models.json est requis avant la gestion des skills.");
-    const models = JSON.parse(await readFile(modelsPath, "utf8"));
-    if (!["codex", "claude-code"].includes(models.adapter)) throw new Error("Adaptateur natif inconnu.");
-    const destination = join(workspace, models.adapter === "codex" ? ".agents/skills" : ".claude/skills", skillId);
-    await assertDestinationInsideWorkspace(workspace, destination, skillId);
-    return [destination];
+    // Phase workspaces own their native configuration through models.json, not legacy adapters:
+    // every assistant listed there receives its copy (single registry, see native-adapters.ts).
+    if (!(await pathExists(join(workspace, ".starter/models.json")))) throw new Error("Configuration native absente : .starter/models.json est requis avant la gestion des skills.");
+    for (const id of await installedNativeAdapters(workspace)) {
+      const destination = join(workspace, NATIVE_ADAPTERS[id].skills, skillId);
+      await assertDestinationInsideWorkspace(workspace, destination, skillId);
+      destinations.push(destination);
+    }
+    return destinations;
   }
   for (const reference of references) {
     const adapter = await loadAdapter(reference.id);

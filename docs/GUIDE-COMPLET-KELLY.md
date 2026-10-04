@@ -71,7 +71,7 @@ Ajoute éventuellement `--profile nextjs`, par exemple, à la commande d’initi
 
 Un profil fournit des règles et des contrôles ; ce n’est pas une application complète préinstallée. Un projet Express ou JavaScript existant ne doit pas être forcé dans Next.js. Le profil générique permet d’adapter le suivi à sa stack.
 
-Pour un nouveau workspace Claude Code, ajoute `--adapter claude-code`. Ouvre ensuite ce workspace dans Claude Code et vérifie le chargement des skills natifs. Les exemples `$project-…` de ce guide concernent Codex ; dans un autre assistant, nomme le skill ou formule la demande selon son interface. L’adaptateur Claude n’utilise pas les identifiants de modèles OpenAI comme modèles Claude.
+Pour un nouveau workspace Claude Code, ajoute `--adapter claude-code`, ou `--adapter codex,claude-code` pour pouvoir ouvrir le projet avec l’un ou l’autre. Les exemples `$project-…` de ce guide concernent Codex ; dans Claude Code, tape `/project-start`, `/project-phase 1`, etc. Les modèles Claude sont réglés par rôle avec `claude_model` et `claude_effort` dans `.starter/models.json`, jamais déduits des modèles OpenAI. Pour ajouter l’autre assistant plus tard : `node .starter/run.mjs workflow adapter-add claude-code` dans un Terminal, sessions fermées. Détails : [adaptateur Claude](../adapters/claude-code/README.md).
 
 ## 4. Choisir le bon départ
 

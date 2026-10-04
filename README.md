@@ -1,10 +1,12 @@
-# Universal AI Project Starter — 0.23.0
+# Universal AI Project Starter — 0.24.0
 
-Version 0.23.0 : SEO intégré au cadrage, à la réalisation, à la publication et au suivi,
-avec une référence conditionnelle partagée par les skills. Aucun nouvel agent permanent,
-audit imposé aux produits privés, scanner automatique ou garantie de classement.
-Voir [les changements et limites](docs/RELEASE-0.23.0.md) et [le parcours SEO](docs/SEO-WORKFLOW.md).
-Les corrections de la [0.22](docs/RELEASE-0.22.0.md) et le module compact restent inclus.
+Version 0.24.0 : Claude Code est configuré avec la même précision que Codex dans les workspaces
+par phases (accès au code, sandbox, rôles avec modèle et effort, skills), les deux assistants
+partagent un même workspace et le changement d'assistant est réparé. Les fichiers Codex générés
+restent identiques à la 0.23. Voir [les changements](docs/RELEASE-0.24.0.md),
+[l'audit Claude Code](docs/AUDIT-CLAUDE-CODE-0.24.md) et [l'adaptateur Claude](adapters/claude-code/README.md).
+Le [parcours SEO de la 0.23](docs/RELEASE-0.23.0.md), les corrections de la
+[0.22](docs/RELEASE-0.22.0.md) et le module compact restent inclus.
 
 Le parcours FNIX validé par Kelly, intégré au CLI Node du starter historique.
 La propriétaire exprime ses objectifs ; l’agent organise le backlog et le moteur conserve
@@ -40,7 +42,7 @@ Les phases futures peuvent rester sommaires. Aucun ticket ou identifiant à sais
 
 ## Démarrer sur Mac
 
-Prérequis : Node.js 22 ou supérieur, Git pour préparer un commit, et une surface Codex
+Prérequis : Node.js 22 ou supérieur, Git pour préparer un commit, et Codex ou Claude Code
 capable de charger les skills et les agents locaux. La disponibilité des modèles dépend
 réellement de la session et du compte. `workflow environment` ne fait pas de requête modèle.
 
@@ -63,6 +65,10 @@ Le starter inspecte les sources avant de créer le suivi. Il ignore les sorties 
 dont BuildArtifacts, DerivedData et .build ; ne pas y conserver du code source manuel.
 
 Ouvrir le dossier `mon-projet/ai-workspace`, lancer Codex puis `$project-start`.
+Avec Claude Code : ajouter `--adapter claude-code` (ou `--adapter codex,claude-code` pour les deux),
+lancer `claude` dans `ai-workspace` puis `/project-start`. Pour ajouter l'autre assistant plus tard :
+`node .starter/run.mjs workflow adapter-add claude-code` (ou `codex`), voir
+[le changement d'assistant](adapters/README.md#passer-dun-assistant-à-lautre).
 Le runtime est copié localement dans le workspace : garder le dossier du starter à côté
 n’est pas nécessaire. Il ne modifie pas les installations globales ni le PATH.
 
@@ -120,9 +126,11 @@ de la surface, puis leurs résultats examinés. Les replis autorisés sont docum
 `fallbacks`; le coordinateur les applique et les annonce, sans prétendre à une détection
 automatique de disponibilité. Aucun modèle n’est lancé par le moteur Node.
 
-`--adapter claude-code` installe les skills et agents Claude. Les identifiants OpenAI et
-leurs efforts ne sont pas transmis à Claude : héritage du modèle de sa session par défaut,
-ou `claude_model` explicitement configuré par rôle. Cette surface reste à tester en situation.
+Pour Claude Code, `claude_model` et `claude_effort` sont lus par rôle ; les identifiants et efforts
+OpenAI ne sont jamais transmis. Défauts : coordinateur au choix de la session (`/model`, `/effort`),
+planner et reviewer `opus` high, builder `inherit`, implementer `sonnet` medium, reader `haiku`.
+Justification et limites : [adaptateur Claude](adapters/claude-code/README.md). Le chargement réel
+dans une session Claude Code reste à vérifier sur le compte de Kelly.
 
 ## Git et livraison
 

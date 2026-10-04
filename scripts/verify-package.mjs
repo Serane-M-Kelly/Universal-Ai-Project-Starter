@@ -46,6 +46,8 @@ const requiredPaths = [
   "dist/lib/phase-sources.js",
   "dist/lib/context-output.js",
   "dist/lib/workflow-models.js",
+  "dist/lib/native-adapters.js",
+  "dist/lib/native-switch.js",
   "core/schemas/workflow.schema.json",
   "core/contracts/phase-workflow.md",
   "core/contracts/workflow-cli.md",

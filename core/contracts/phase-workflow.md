@@ -60,6 +60,9 @@ implementer et reader. `workflow models-sync` génère les réglages natifs sans
 personnalisation inconnue. Le rôle est indépendant du modèle. Les valeurs y sont des préférences,
 pas une preuve de disponibilité. Vérifier `workflow environment`, le modèle réellement proposé
 par la surface et un appel. Ne pas inventer de version minimale du CLI.
+`adapters` liste les assistants installés (Codex, Claude Code ou les deux) ; ils partagent sources,
+plan, preuves et skills canoniques. Codex lit `model`/`effort`, Claude seulement `claude_model`/
+`claude_effort` : aucun identifiant n'est transposé. Fermer un assistant avant d'en ouvrir un autre.
 Le skill peut demander une délégation à l'agent configuré lorsque les outils locaux la permettent ;
 il ne change pas le modèle du parent. Start/Next restent dans la session principale. Phase délègue
 si le rôle spécialisé ou un réglage différent apporte un gain. Review demande un contexte distinct.

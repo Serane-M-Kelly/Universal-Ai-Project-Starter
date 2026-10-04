@@ -10,6 +10,7 @@ import { hashDirectory } from "./content-hash.js";
 import { schemasRoot } from "./paths.js";
 import { isPathInsideOrEqual } from "./text.js";
 import { inspectPhaseSources, requireCurrentSources, type PhaseSource } from "./phase-sources.js";
+import { NATIVE_ADAPTERS, installedNativeAdapters, isNativeAdapter, workflowCommand } from "./native-adapters.js";
 
 export const STATE = ".starter/workflow.json";
 export const VIEW = "BACKLOG.md";
@@ -940,22 +941,40 @@ export async function diagnoseWorkflow(w: string): Promise<string[]> {
         await readFile(join(w, ".starter/native-hashes.json"), "utf8"),
       );
       for (const [ref, expected] of Object.entries(ledger))
-        if (hash(await readFile(await safeLocal(w, ref))) !== expected)
+        if (!(await pathExists(join(w, ref))))
+          errors.push(
+            `Configuration native absente : ${ref}. Examiner puis workflow models-sync depuis un Terminal.`,
+          );
+        else if (hash(await readFile(await safeLocal(w, ref))) !== expected)
           errors.push(
             `Configuration native modifiée : ${ref}. Examiner avant synchronisation.`,
           );
       const cfg = YAML.parse(await readFile(join(w, "project.yaml"), "utf8"));
-      const models = JSON.parse(
-        await readFile(join(w, ".starter/models.json"), "utf8"),
-      );
-      const native =
-        models.adapter === "codex" ? ".agents/skills" : ".claude/skills";
-      for (const skill of cfg.skills ?? [])
-        if (
-          (await hashDirectory(join(w, native, skill.id))) !== skill.source_hash
-        )
+      const adapters = await installedNativeAdapters(w);
+      for (const id of adapters) {
+        const { label, skills } = NATIVE_ADAPTERS[id];
+        const missing: string[] = [];
+        for (const skill of cfg.skills ?? []) {
+          if (!(await pathExists(join(w, skills, skill.id)))) {
+            missing.push(skill.id);
+            continue;
+          }
+          if ((await hashDirectory(join(w, skills, skill.id))) !== skill.source_hash)
+            errors.push(
+              `Skill natif divergent pour ${label} : ${skill.id}. Examiner puis reporter la modification dans skills/${skill.id} avant skill sync.`,
+            );
+        }
+        if (missing.length)
           errors.push(
-            `Skill natif divergent : ${skill.id}. Examiner et réinstaller sa copie depuis la source canonique.`,
+            `Copies ${label} absentes dans ${skills} : ${missing.join(", ")}. Depuis un Terminal, assistant fermé : ${await workflowCommand(w, `adapter-add ${id}`)} (aucune copie existante n'est écrasée).`,
+          );
+      }
+      // The historical `adapter add` registers assistants in project.yaml, which phase workspaces
+      // do not read for native files: report the gap instead of letting copies silently diverge.
+      for (const reference of cfg.adapters ?? [])
+        if (isNativeAdapter(reference?.id) && !adapters.includes(reference.id))
+          errors.push(
+            `Adaptateur ${reference.id} inscrit par la commande historique sans configuration native v3. Examiner ${await workflowCommand(w, `adapter-add ${reference.id} --dry-run`)}, puis relancer sans --dry-run.`,
           );
     }
   } catch (e) {

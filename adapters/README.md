@@ -61,16 +61,40 @@ Les adaptateurs disponibles sont :
 
 Leur coexistence sur un même workspace valide que le moteur commun ne dépend pas du format d'un assistant particulier.
 
+## Workspaces par phases (v3)
+
+Dans un workspace créé par `workflow init`, les adaptateurs historiques ne sont pas utilisés :
+`.starter/models.json` est le registre unique. Son champ `adapters` liste les assistants installés
+et `workflow models-sync` génère leurs réglages et agents ; `skill add|sync|upgrade` alimente une
+copie par assistant. `ai-project adapter add` y est redirigé vers `workflow adapter-add` et
+`adapter upgrade` y est refusé. Détails Claude : [claude-code/README.md](claude-code/README.md).
+
 ## Passer d'un assistant à l'autre
 
-Claude Code et Codex utilisent le **même workspace privé** et les mêmes sources canoniques. Il n'existe pas d'adaptateur « actif » : installer les deux permet d'ouvrir le projet avec l'un ou l'autre sans copier le brief, le backlog, les décisions ou les unités de travail.
+Codex et Claude Code utilisent le **même workspace privé**, le même suivi (`.starter/workflow.json`,
+`BACKLOG.md`), les mêmes preuves et les mêmes sources de skills (`skills/`). Il n'y a pas
+d'assistant « actif » : une fois les deux installés, on ouvre l'un ou l'autre.
 
-Avant un changement d'environnement :
+Installation de l'assistant manquant (une fois, dans un Terminal, aucun assistant ouvert) :
 
-1. terminer ou suspendre proprement l'opération en cours ;
-2. mettre à jour `PROJECT_STATE.md` avec le fait observé et la prochaine action ;
-3. exécuter `ai-project backlog sync-view` si le backlog v2 a changé ;
-4. exécuter `ai-project doctor` ;
-5. fermer l'ancien assistant avant d'autoriser le nouveau à écrire.
+```bash
+cd /chemin/vers/ai-workspace
+node .starter/run.mjs workflow adapter-add claude-code --dry-run
+node .starter/run.mjs workflow adapter-add claude-code
+```
 
-Le nouvel assistant relit `PROJECT_BRIEF.md`, `PROJECT_STATE.md`, les décisions, le backlog et l'unité active, puis relance `doctor`. L'historique du chat, le contexte en mémoire et le prompt cache ne sont pas transférés. Deux assistants peuvent lire le workspace, mais ne doivent jamais le modifier simultanément.
+(`codex` à la place de `claude-code` pour le sens inverse.) L'aperçu indique les fichiers créés,
+les copies de skills à installer, le sort du fichier d'instructions et tout conflit. Une copie ou un
+réglage modifié séparément bloque l'opération sans rien écrire.
+
+À chaque changement :
+
+1. demander à l'assistant en cours de terminer ou suspendre l'opération (le mandat est conservé) ;
+2. fermer la session ; vérifier qu'aucun `.starter/write.lock` ne subsiste ;
+3. `node .starter/run.mjs doctor . --compact` doit être OK ou WARNING ;
+4. ouvrir l'autre assistant dans `ai-workspace` (`codex` ou `claude`) puis appeler project-start
+   (`$project-start` dans Codex, `/project-start` dans Claude Code).
+
+project-start relit le workflow, `workflow sources` et les vues compactes : il retrouve la phase
+active, son mandat et ses preuves. L'historique de conversation, le contexte en mémoire et le cache
+ne sont pas transférés. Deux assistants ne doivent jamais écrire simultanément dans le workspace.

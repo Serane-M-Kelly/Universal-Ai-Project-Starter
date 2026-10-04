@@ -69,3 +69,16 @@ La porte complète utilisée par la CI ajoute le typage strict et l'inspection d
 ```bash
 npm run validate
 ```
+
+La suite `release-024.test.mjs` vérifie l'intégration Claude Code des workspaces par phases :
+
+- réglages Claude générés (dossier applicatif, sandbox, refus des secrets, lectures du moteur) ;
+- absence d'écriture par les commandes autorisées sans confirmation ;
+- modèle, effort, outils et mode de permission de chaque rôle, sans identifiant OpenAI ;
+- validation des choix Claude sans écriture en cas de refus ;
+- fichiers Codex identiques octet par octet à la 0.23 ;
+- copies de skills pour deux assistants, conflits préservés et mise à niveau des deux copies ;
+- redirection de `adapter add` et refus de `adapter upgrade` en workspace par phases ;
+- diagnostic, aperçu sans écriture, réparation et idempotence d'un workspace laissé par la 0.23 ;
+- refus global en présence de réglages, copies ou instructions personnalisés ;
+- passage Claude → Codex, `relocate` et variables d'environnement signalées.

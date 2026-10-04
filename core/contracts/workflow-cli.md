@@ -23,8 +23,9 @@ Les options --by et --request décrivent les déclarations réellement reçues.
 | block/unblock N | --reason --by --request ; obstacle/condition puis résolution constatée. |
 | prepare-commit N | --path relatif (répétable) --message ; prépare les commandes sans Git en écriture. |
 | verify-commit | Observe le commit manuel et le compare à la préparation. |
-| environment | Version Node, version de codex trouvé, configuration ; pas de test d’accès au serveur. |
-| models-sync | Génère les fichiers natifs, préserve les personnalisations inconnues. |
+| environment | Versions Node, codex et claude trouvées, assistants installés, configuration et variables d’environnement qui remplacent les modèles Claude ; pas de test d’accès au serveur. |
+| models-sync | Génère les fichiers natifs de chaque assistant listé dans `adapters`, préserve les personnalisations inconnues. |
+| adapter-add ID | `codex` ou `claude-code` [--dry-run] ; ajoute ou répare un assistant : réglages, agents, copies des skills et fichier d’instructions absents. Refuse sans rien écrire si une copie ou un réglage a été personnalisé. À lancer dans un Terminal, assistant fermé. |
 | relocate | --code-root --by --request ; archive les anciens chemins et régénère les chemins natifs. |
 | repair-view | --by --request ; archive la vue modifiée puis la reconstruit, sans changer le plan. |
 | recover-lock | --by --request ; uniquement si le processus propriétaire n’existe plus. |

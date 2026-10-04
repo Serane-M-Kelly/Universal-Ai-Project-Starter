@@ -4,6 +4,7 @@ import { join, isAbsolute } from "node:path";
 import { canonicalPath } from "./fs-safe.js";
 import { STATE, hash, ensure, loadWorkflow, sourceHash, contract, status, type Proof, type Phase } from "./phase-workflow.js";
 import { fingerprintSource, inspectPhaseSources } from "./phase-sources.js";
+import { NATIVE_ADAPTERS, installedNativeAdapters } from "./native-adapters.js";
 
 export const serialize = (value: unknown): string => JSON.stringify(value, null, 2);
 export const bytes = (value: unknown): number => Buffer.byteLength(serialize(value), "utf8");
@@ -138,14 +139,21 @@ export async function contextView(w: string, id?: string) {
 /** Fingerprints allow agents to reuse already-read rules only when still in their context. */
 export async function contextSources(w: string, paths: string[] = []) {
   const state = await loadWorkflow(w);
-  const sources: { path: string; sha256: string | null; bytes: number | null; state: string }[] = [];
+  // Instruction files are required only for the assistants installed in this workspace.
+  let required: Set<string> | null = null;
+  try {
+    required = new Set(["PROJECT_BRIEF.md", ".starter/WORKFLOW.md",
+      ...(await installedNativeAdapters(w)).map(id => NATIVE_ADAPTERS[id].instructions)]);
+  } catch { /* Without models.json the historical output is kept. */ }
+  const sources: { path: string; sha256: string | null; bytes: number | null; state: string; required?: boolean }[] = [];
   for (const path of ["PROJECT_BRIEF.md", ".starter/WORKFLOW.md", "AGENTS.md", "CLAUDE.md"]) {
+    const flag = required ? { required: required.has(path) } : {};
     try {
       const content = await readFile(await localFile(w, path));
-      sources.push({ path, sha256: hash(content), bytes: content.length, state: "present" });
+      sources.push({ path, sha256: hash(content), bytes: content.length, state: "present", ...flag });
     } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
-      sources.push({ path, sha256: null, bytes: null, state: "missing" });
+      sources.push({ path, sha256: null, bytes: null, state: "missing", ...flag });
     }
   }
   const active = state.phases.find(p => p.id === state.active);

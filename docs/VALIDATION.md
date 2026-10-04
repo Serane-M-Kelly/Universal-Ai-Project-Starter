@@ -1,3 +1,37 @@
+# Validation de la version 0.24.0
+
+Environnement : macOS 26.5.1, Node 24.10.0, 2 octobre 2026. Claude Code 2.1.287 et
+codex-cli 0.159.3 sont installés sur le poste mais n'ont pas été lancés par les tests.
+
+`npm run validate` réussit : **229 tests réussis (217 hérités + 12 nouveaux), aucun échec ni test
+ignoré**, vérification TypeScript, compilation et contenu du paquet vérifiés (200 fichiers).
+Journal : [release-024.txt](validation/release-024.txt). La suite 0.23 d'origine, exécutée sur le
+même poste avant modification, donnait 217/217.
+
+Les nouveaux cas (`tests/release-024.test.mjs`) couvrent les fichiers générés pour Claude, la
+synchronisation sur deux assistants et les changements d'adaptateur : voir
+[tests/README.md](../tests/README.md). Trois assertions historiques ont été adaptées au seul numéro
+de version 0.24.0, sans retirer de vérification.
+
+Reproduction manuelle du défaut, avec la distribution 0.23 non modifiée : sur un workspace Codex,
+`ai-project adapter add claude-code` affiche « Skills synchronisés : 9 » mais laisse `.claude/skills`
+vide et le Doctor bloque (9 copies absentes) ; `skill sync` ne répare pas. Le passage par
+`models.json` + `models-sync` crée les agents Claude, aucune copie de skill ni `settings.json`, et le
+Doctor bloque sur un `ENOENT`. Avec la 0.24, le même workspace est diagnostiqué, prévisualisé sans
+écriture, réparé (verdict WARNING : seulement l'absence de Git de la fixture), et le runtime 0.23
+embarqué fonctionne encore ensuite (`doctor`, `models-sync`, `skill sync`).
+
+Non vérifié ici, à faire dans une vraie session (liste détaillée dans la réponse de livraison et
+[l'audit](AUDIT-CLAUDE-CODE-0.24.md)) : chargement des skills `/project-…` et des agents, modèle
+effectivement exécuté par rôle sur le compte, mode `plan` des sous-agents, règles `allow` sous
+sandbox, écriture du builder dans le dossier applicatif. Aucun appel de modèle n'a été effectué.
+
+La vérification de l'archive extraite est décrite dans [archive-024.txt](validation/archive-024.txt).
+
+---
+
+# Historique — 0.23
+
 # Validation de la version 0.23.0
 
 Environnement : Linux, Node 24.19.0, 1er octobre 2026.

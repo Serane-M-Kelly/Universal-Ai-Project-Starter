@@ -1,4 +1,4 @@
-import { mkdir, readFile, rm, stat } from "node:fs/promises";
+import { mkdir, readdir, readFile, rm, stat } from "node:fs/promises";
 import { isAbsolute, join, normalize, resolve, sep } from "node:path";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import YAML from "yaml";
@@ -417,4 +417,39 @@ function escapeShellDoubleQuoted(value: string): string {
 
 function messageOf(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
+}
+
+/**
+ * Exact renderings of the historical `adapter add` outputs (current and archived versions) for a
+ * workspace-relative path. Used to recognise an untouched legacy file before a phase workspace
+ * takes ownership of it; any other content is treated as a personalization.
+ */
+export async function legacyAdapterRenderings(
+  workspacePath: string,
+  outputPath: string,
+): Promise<string[]> {
+  const workspace = await canonicalPath(workspacePath);
+  const config = YAML.parse(await readFile(join(workspace, "project.yaml"), "utf8")) as ProjectConfig;
+  const codeRoot = await canonicalPath(resolveFromWorkspace(workspace, config.paths.code_root));
+  const repositoryRoot = await canonicalPath(
+    resolveFromWorkspace(workspace, config.paths.repository_root),
+  );
+  const variables = buildTemplateVariables(workspace, codeRoot, repositoryRoot, config.project.name);
+  const renderings: string[] = [];
+  for (const adapterId of ["codex", "claude-code"]) {
+    const currentRoot = await canonicalPath(join(adaptersRoot, adapterId));
+    const roots = [currentRoot];
+    const versions = join(currentRoot, "versions");
+    if (await pathExists(versions))
+      for (const entry of (await readdir(versions)).sort()) roots.push(join(versions, entry));
+    for (const root of roots) {
+      const manifest = await loadAdapterFromRoot(adapterId, root).catch(() => null);
+      const output = manifest?.outputs.find((candidate) => candidate.path === outputPath);
+      if (!output) continue;
+      const template = await canonicalPath(join(root, output.template));
+      if (!isPathInsideOrEqual(template, currentRoot)) continue;
+      renderings.push(renderTemplate(await readFile(template, "utf8"), variables));
+    }
+  }
+  return renderings;
 }

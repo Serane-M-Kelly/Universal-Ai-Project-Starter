@@ -4,6 +4,10 @@ import { inspectWorkspace, printDiagnostic } from "../lib/doctor.js";
 import { resolveWorkspace } from "../lib/paths.js";
 import { synchronizeSkills } from "../lib/skills.js";
 import { synchronizeAgents } from "../lib/agents.js";
+import { join } from "node:path";
+import { pathExists } from "../lib/fs-safe.js";
+import { STATE } from "../lib/phase-workflow.js";
+import { addNativeAdapter } from "../lib/native-switch.js";
 
 export async function runAdapter(args: string[]): Promise<number> {
   const { values, positionals } = parseArgs({
@@ -27,6 +31,17 @@ export async function runAdapter(args: string[]): Promise<number> {
   const workspace = resolveWorkspace(
     values.workspace ?? positionalWorkspace ?? process.cwd(),
   );
+  if (await pathExists(join(workspace, STATE))) {
+    // Phase workspaces keep one native registry (.starter/models.json). The historical templates
+    // describe the legacy backlog and would register an assistant without its native copies.
+    if (action === "upgrade")
+      throw new Error(
+        "Workspace par phases : les fichiers natifs sont régénérés par « node .starter/run.mjs workflow models-sync », pas par adapter upgrade.",
+      );
+    const result = await addNativeAdapter(workspace, adapterId, false);
+    console.log(JSON.stringify(result, null, 2));
+    return result.verdict === "BLOCKED" ? 2 : 0;
+  }
   if (action === "add") {
     const initialReport = await inspectWorkspace(workspace);
     if (initialReport.verdict === "BLOCKED") {
