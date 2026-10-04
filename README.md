@@ -51,6 +51,9 @@ Les phases futures peuvent rester sommaires. Aucun ticket ou identifiant à sais
 
 ## Démarrer sur Mac
 
+Systèmes pris en charge : macOS et Linux, vérifiés par la CI. Windows n'est pas pris en charge
+(`prepare-commit` et `restore-state` y échouent) ; WSL2 reste à éprouver.
+
 Prérequis : Node.js 22 ou supérieur, Git pour préparer un commit, et Codex ou Claude Code
 capable de charger les skills et les agents locaux. La disponibilité des modèles dépend
 réellement de la session et du compte. `workflow environment` ne fait pas de requête modèle.

@@ -188,6 +188,11 @@ test("la fixture Node/API respecte réellement son contrat TypeScript strict", (
   );
 });
 
+test("les fins de ligne ne sont jamais converties : fixtures et références identiques partout", async () => {
+  const attributes = await readFile(join(starterRoot, ".gitattributes"), "utf8");
+  assert.ok(attributes.split(/\n/).some((line) => line.trim() === "* -text"));
+});
+
 test("la validation continue reste en lecture seule, multi-version et épinglée", async () => {
   const workflow = YAML.parse(
     await readFile(join(starterRoot, ".github", "workflows", "quality.yml"), "utf8"),
@@ -196,11 +201,10 @@ test("la validation continue reste en lecture seule, multi-version et épinglée
   assert.deepEqual(workflow.jobs["node-compatibility"].strategy.matrix.node, [22, 24, 26]);
   assert.deepEqual(
     workflow.jobs["operating-systems"].strategy.matrix.os,
-    ["macos-latest", "windows-latest"],
+    ["macos-latest"],
   );
-  // Windows reste exécuté mais non bloquant tant que sa prise en charge n'est pas livrée.
-  assert.equal(workflow.jobs["operating-systems"]["continue-on-error"], "${{ matrix.os == 'windows-latest' }}");
-  assert.equal(workflow.jobs["node-compatibility"]["continue-on-error"], undefined);
+  // macOS et Linux sont pris en charge et bloquants ; aucun job n'est autorisé à échouer.
+  for (const job of Object.values(workflow.jobs)) assert.equal(job["continue-on-error"], undefined);
 
   for (const job of Object.values(workflow.jobs)) {
     assert.equal(job["timeout-minutes"], 30);

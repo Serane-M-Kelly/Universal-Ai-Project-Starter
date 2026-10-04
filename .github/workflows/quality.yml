@@ -40,13 +40,12 @@ jobs:
     name: Node 24 · ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
-    # Windows n'est pas encore pris en charge (fins de ligne et chemins) : le job reste exécuté et
-    # visible, mais ne bloque pas. À retirer avec la version de compatibilité Windows.
-    continue-on-error: ${{ matrix.os == 'windows-latest' }}
+    # Systèmes pris en charge : macOS (ce job) et Linux (job node-compatibility). Windows n'est pas
+    # pris en charge ; il sera ajouté avec une version de compatibilité dédiée si un besoin apparaît.
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [macos-latest]
     steps:
       - name: Récupérer le starter
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2

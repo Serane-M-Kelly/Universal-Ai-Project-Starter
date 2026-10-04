@@ -1,0 +1,3 @@
+# Aucune conversion des fins de ligne : fixtures, références « octet par octet » et empreintes
+# doivent rester identiques quel que soit le réglage Git (core.autocrlf) du poste.
+* -text
