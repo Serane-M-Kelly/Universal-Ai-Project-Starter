@@ -98,6 +98,21 @@ existantes**. Préciser pour chaque risque significatif : résultat attendu, tes
 environnement et preuve, et limite de couverture. Les nouvelles exigences hors mandat passent par
 Plan et l'arbitrage normal, jamais par un faux `task-add`.
 
+Avant de promettre ou d'accepter un invariant (isolation, intégrité, conservation ou contrôle
+d'accès), identifier ses prérequis et les données **déjà présentes**, y compris les lignes
+historiques, ambiguës ou non encore rattachées, ainsi que les écritures concurrentes. Si leur
+mapping, leur migration ou leur réconciliation conditionne l'invariant, intégrer ces travaux
+et leurs preuves dans la phase qui le revendique ou dans une phase préalable vérifiée. Sinon,
+limiter explicitement le résultat à une fondation préparatoire, sans annoncer l'invariant
+complet comme acquis. Une phase ne valide pas seulement les nouveaux enregistrements en
+oubliant les anciens ; si le rattachement reste inconnu, signaler la dépendance et différer
+l'acceptation correspondante.
+
+Raccorder chaque risque critique aux critères du plan réellement en vigueur, à une preuve
+située (révision, environnement, méthode, résultat et limites) et à la revue distincte requise
+par le runtime applicable. Distinguer étape proposée, mandat obtenu, preuve exécutée, revue
+rendue et acceptation humaine ; ne jamais annoncer une porte satisfaite par une intention.
+
 Phase réalise les protections adaptées à la stack ; utiliser `workflow check` et les observations
 réelles pour les tests pertinents (ex. refus d'un accès non autorisé, isolation de comptes,
 collision de créneaux, validation d'entrée, migrations, restauration si applicable). Tester les
