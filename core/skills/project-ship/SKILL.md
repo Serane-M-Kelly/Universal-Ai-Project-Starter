@@ -23,6 +23,13 @@ Enregistrer la preuve externe dans un rapport de livraison : cible, version, obs
 Ne pas annoncer poussé ou déployé si seuls les fichiers ou les commandes sont prêts. Un commit
 vérifié ne prouve pas une publication. Ne pas imposer une procédure de déploiement à chaque commit.
 
+## Architecture, données et sécurité selon le risque
+
+Pour une publication ou migration affectant données, accès, secrets ou disponibilité, appliquer
+Ship dans `.starter/runtime/core/contracts/architecture-data-security.md`. Préparer les contrôles
+sur la cible réelle, les décisions de sauvegarde/migration et le retour arrière approprié ; ne
+consigner que les observations effectuées. Un simple commit ne déclenche pas cet audit.
+
 ## README du produit, selon la livraison
 
 Avant une publication, vérifier que le README ne décrit pas une fonction, une commande ou un statut démentis par la version livrée ; ajouter l'URL publiée seulement après son observation (`.starter/runtime/core/contracts/product-readme.md`). Un simple commit n'exige pas ce contrôle.
