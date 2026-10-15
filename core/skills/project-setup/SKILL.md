@@ -23,6 +23,16 @@ Conserver un rapport concis sur ce qui fonctionne, les commandes vérifiées et 
 Un rapport seul ne prouve pas la faisabilité ; ne pas annoncer une vérification non réalisée.
 Passer à project-plan lorsque le socle suffit pour la prochaine phase.
 
+## Architecture, données et sécurité selon le risque
+
+Pour toute persistance, authentification, réservation, intégration ou risque technique significatif,
+lire les sections Setup de `.starter/runtime/core/contracts/architecture-data-security.md`.
+Définir responsabilités et flux, modèle de données et invariants, menaces pertinentes et contrôles
+vérifiables avant les phases qui en dépendent. Consigner les décisions techniques dans les sources
+existantes ou un dossier consultable si la complexité ou la demande le justifie ; aucun document
+supplémentaire obligatoire pour une simple landing statique. Reprendre les exigences PA sans
+créer de backlog, de schéma ou de registre parallèle.
+
 ## README du produit
 
 Pour un nouveau produit, créer ou vérifier un README minimal et exact selon la section Nouveau projet de `.starter/runtime/core/contracts/product-readme.md`. Pour un produit adopté, ne pas réécrire le README existant sans demande ; sa reprise suit la procédure conservatrice du même guide.
