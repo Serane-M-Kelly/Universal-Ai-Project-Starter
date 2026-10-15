@@ -32,6 +32,14 @@ Pour lire une preuve, utiliser `workflow report ID_PREUVE`. Le regroupement des 
 ne démontre pas leur couverture : lire les noms ou assertions utiles avec --raw ou --stream.
 Les erreurs et les revues restent intégrales. Ne pas refaire un contrôle pour retrouver son log.
 
+## Architecture, données et sécurité selon le risque
+
+Si des frontières d'accès, données, migrations ou invariants critiques sont concernés, appliquer
+Review dans `.starter/runtime/core/contracts/architecture-data-security.md`. Examiner le diff,
+les décisions et les preuves exécutées, y compris les refus d'accès et les échecs pertinents.
+Signaler comme bloquants les défauts critiques non corrigés ou les contrôles critiques non démontrés
+sur le périmètre revu ; ne pas assimiler présence de documentation et couverture réelle.
+
 ## README du produit, selon le périmètre
 
 Si le README du produit a changé, faire comparer ses affirmations, commandes, liens et licences au produit livré selon la section Contrôles de `.starter/runtime/core/contracts/product-readme.md` ; `workflow readme-check` fournit des signaux, pas un verdict.
