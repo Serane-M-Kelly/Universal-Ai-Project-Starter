@@ -5,11 +5,9 @@ description: "Préparer ou fiabiliser le socle technique minimal et ses vérific
 
 # project-setup
 
-Identifier d'abord le suivi réellement accessible dans le projet. Si l'absence de
-`.starter/workflow.json` est constatée après inspection, suivre uniquement
-[la procédure historique](references/legacy-v014.md). Si le dépôt ou le suivi n'est pas
-accessible, déclarer son état **inconnu**, sans déduire un parcours historique de cette
-absence d'accès ; préparer des options conditionnelles sans simuler des commandes exécutées.
+Sans `.starter/workflow.json` après inspection du projet, suivre uniquement [la procédure historique](references/legacy-v014.md).
+Si le dépôt ou le suivi n'est pas accessible, déclarer son état **inconnu** : cette absence d'accès
+ne prouve pas l'absence du suivi. Préparer des options conditionnelles sans simuler de commandes.
 Avec un suivi v3 constaté, appliquer la suite ci-dessous.
 
 Lire `.starter/WORKFLOW.md`, le brief et le profil de project.yaml. Inspecter code, Git, dépendances,
