@@ -43,6 +43,15 @@ techniques, contrôles de publication et suivi au plan existant. Un outil privé
 impact ne déclenche pas cet audit. Ce guide conditionnel ne constitue pas un scanner du moteur
 ni une garantie de classement. Les résultats après publication demandent des observations réelles.
 
+## Architecture, données et sécurité conditionnelles
+Pour une persistance, une frontière d'accès, des opérations concurrentes, des intégrations ou
+une migration à risque, lire la section appropriée de
+`.starter/runtime/core/contracts/architecture-data-security.md`. Reprendre les exigences PA
+et les sources techniques existantes ; Setup précise les décisions et invariants, Plan les
+rattache aux phases, Phase les teste, Review examine les preuves et Ship prépare la vérification
+sur la cible. Une landing statique n'impose pas de dossier d'architecture complet. Aucune règle
+ne modifie le contrat d'import PA, le moteur, les autorisations ou le backlog unique.
+
 ## README public du produit
 Quand le README d'un produit est créé, réorganisé ou repris, ou qu'une livraison change ce qu'il
 annonce, lire `.starter/runtime/core/contracts/product-readme.md`. Il ne raconte pas le pilotage et
