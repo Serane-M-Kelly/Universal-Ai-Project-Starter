@@ -5,11 +5,10 @@ description: "Organiser le backlog sous la direction de la propriétaire avec un
 
 # project-plan
 
-Identifier d'abord le suivi réel du projet : si `.starter/workflow.json` est absent après
-inspection, suivre uniquement [la procédure historique](references/legacy-v014.md).
+Sans `.starter/workflow.json` après inspection du projet, suivre uniquement [la procédure historique](references/legacy-v014.md).
 Si le suivi n'est pas accessible, son état reste inconnu : ne pas présumer le mode historique,
-ni inventer les identités, mandats ou portes du runtime. Avec un suivi v3 constaté, appliquer
-la suite ci-dessous.
+ni inventer les identités, mandats ou portes du runtime.
+Avec un suivi v3 constaté, appliquer la suite ci-dessous.
 
 Lire `.starter/WORKFLOW.md`, le brief et workflow status. Assurer la fonction Product Owner ou la
 confier au planner configuré si utile. Consulter le code et les contraintes techniques ; demander
