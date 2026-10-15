@@ -5,8 +5,12 @@ description: "Préparer ou fiabiliser le socle technique minimal et ses vérific
 
 # project-setup
 
-Sans `.starter/workflow.json`, suivre uniquement [la procédure historique](references/legacy-v014.md).
-Avec un suivi v3, appliquer la suite ci-dessous.
+Identifier d'abord le suivi réellement accessible dans le projet. Si l'absence de
+`.starter/workflow.json` est constatée après inspection, suivre uniquement
+[la procédure historique](references/legacy-v014.md). Si le dépôt ou le suivi n'est pas
+accessible, déclarer son état **inconnu**, sans déduire un parcours historique de cette
+absence d'accès ; préparer des options conditionnelles sans simuler des commandes exécutées.
+Avec un suivi v3 constaté, appliquer la suite ci-dessous.
 
 Lire `.starter/WORKFLOW.md`, le brief et le profil de project.yaml. Inspecter code, Git, dépendances,
 commandes réellement disponibles et premières capacités prévues avant les choix techniques.
@@ -28,7 +32,9 @@ Passer à project-plan lorsque le socle suffit pour la prochaine phase.
 Pour toute persistance, authentification, réservation, intégration ou risque technique significatif,
 lire les sections Setup de `.starter/runtime/core/contracts/architecture-data-security.md`.
 Définir responsabilités et flux, modèle de données et invariants, menaces pertinentes et contrôles
-vérifiables avant les phases qui en dépendent. Consigner les décisions techniques dans les sources
+vérifiables avant les phases qui en dépendent. Pour des données déjà présentes, identifier
+leurs rattachements et migrations comme prérequis des garanties d'intégrité ou d'isolation ;
+ne pas déclarer un socle prêt à les assurer sans les preuves correspondantes. Consigner les décisions techniques dans les sources
 existantes ou un dossier consultable si la complexité ou la demande le justifie ; aucun document
 supplémentaire obligatoire pour une simple landing statique. Reprendre les exigences PA sans
 créer de backlog, de schéma ou de registre parallèle.
