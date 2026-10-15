@@ -30,6 +30,13 @@ l'historique et invalide les mandats/acceptations affectés, pas les phases futu
 Ne pas éditer BACKLOG.md ni workflow.json. Restituer le plan lisible et l'impact, puis project-next.
 L'ajout de fonctionnalités ne constitue pas une autorisation de les implémenter immédiatement.
 
+## Architecture, données et sécurité selon le risque
+
+Pour les surfaces concernées, lire Plan dans `.starter/runtime/core/contracts/architecture-data-security.md`.
+Rattacher intégrité métier, autorisations, schéma/migrations et contrôles de sécurité pertinents aux
+critères vérifiables des phases existantes. Distinguer preuve locale, revue et contrôle après
+publication ; ne créer ni backlog parallèle ni phase d'audit systématique pour une retouche sans risque.
+
 ## Visibilité dans la recherche, selon le périmètre
 
 Pour un périmètre SEO applicable, lire `.starter/runtime/core/contracts/search-visibility.md`. Relier aux phases les critères utiles, la préservation des URL lors des refontes, les contrôles sur la cible publiée et le suivi après observation. Réutiliser les sources produit et leur mécanisme d’épinglage ; aucun backlog SEO parallèle. Ne pas bloquer la livraison technique sur une hausse future de trafic ni lancer le suivi sans mandat.
