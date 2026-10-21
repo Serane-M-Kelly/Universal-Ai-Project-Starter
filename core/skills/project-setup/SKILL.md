@@ -5,8 +5,10 @@ description: "Préparer ou fiabiliser le socle technique minimal et ses vérific
 
 # project-setup
 
-Sans `.starter/workflow.json`, suivre uniquement [la procédure historique](references/legacy-v014.md).
-Avec un suivi v3, appliquer la suite ci-dessous.
+Sans `.starter/workflow.json` après inspection du projet, suivre uniquement [la procédure historique](references/legacy-v014.md).
+Si le dépôt ou le suivi n'est pas accessible, déclarer son état **inconnu** : cette absence d'accès
+ne prouve pas l'absence du suivi. Préparer des options conditionnelles sans simuler de commandes.
+Avec un suivi v3 constaté, appliquer la suite ci-dessous.
 
 Lire `.starter/WORKFLOW.md`, le brief et le profil de project.yaml. Inspecter code, Git, dépendances,
 commandes réellement disponibles et premières capacités prévues avant les choix techniques.
@@ -22,6 +24,18 @@ Conserver un rapport concis sur ce qui fonctionne, les commandes vérifiées et 
 `workflow setup-record --report CHEMIN --by AGENT --request MISSION` enregistre cette référence.
 Un rapport seul ne prouve pas la faisabilité ; ne pas annoncer une vérification non réalisée.
 Passer à project-plan lorsque le socle suffit pour la prochaine phase.
+
+## Architecture, données et sécurité selon le risque
+
+Pour toute persistance, authentification, réservation, intégration ou risque technique significatif,
+lire les sections Setup de `.starter/runtime/core/contracts/architecture-data-security.md`.
+Définir responsabilités et flux, modèle de données et invariants, menaces pertinentes et contrôles
+vérifiables avant les phases qui en dépendent. Pour des données déjà présentes, identifier
+leurs rattachements et migrations comme prérequis des garanties d'intégrité ou d'isolation ;
+ne pas déclarer un socle prêt à les assurer sans les preuves correspondantes. Consigner les décisions techniques dans les sources
+existantes ou un dossier consultable si la complexité ou la demande le justifie ; aucun document
+supplémentaire obligatoire pour une simple landing statique. Reprendre les exigences PA sans
+créer de backlog, de schéma ou de registre parallèle.
 
 ## README du produit
 

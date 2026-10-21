@@ -87,14 +87,14 @@ test("migration 0.24 → 0.25.1 : aperçu complet, état et historique à l'octe
   assert.equal(dry.from, "0.24.0");
   assert.equal(dry.to, "0.25.1");
   assert.deepEqual(dry.touched.map(x => x.path), [".starter/runtime", ".starter/WORKFLOW.md",
-    ...["project-setup", "project-phase", "project-review", "project-ship"].flatMap(id => [`skills/${id}`, `.agents/skills/${id}`, `.claude/skills/${id}`]), "project.yaml"]);
+    ...["project-setup", "project-plan", "project-phase", "project-review", "project-ship"].flatMap(id => [`skills/${id}`, `.agents/skills/${id}`, `.claude/skills/${id}`]), "project.yaml"]);
   assert.ok(dry.never_written.includes.includes(".starter/workflow.json") && dry.never_written.includes.includes(".starter/history/"));
   assert.deepEqual(await snapshot(f.w), before, "l'aperçu n'écrit rien");
   const result = json(apply(f.w, dry.plan_hash));
   assert.equal(result.upgraded, true);
   assert.equal(await version(f.w), "0.25.1");
   const after = await snapshot(f.w);
-  const preserved = Object.keys(before).filter(p => !p.startsWith(".starter/runtime/") && p !== ".starter/WORKFLOW.md" && p !== "project.yaml" && !/(^|\/)skills\/project-(setup|phase|review|ship)\//.test(p));
+  const preserved = Object.keys(before).filter(p => !p.startsWith(".starter/runtime/") && p !== ".starter/WORKFLOW.md" && p !== "project.yaml" && !/(^|\/)skills\/project-(setup|plan|phase|review|ship)\//.test(p));
   for (const path of preserved) assert.equal(after[path], before[path], `${path} modifié`);
   assert.ok(preserved.includes(".starter/workflow.json") && preserved.some(p => p.startsWith(".starter/history/")) && preserved.some(p => p.startsWith(".claude/agents/")));
   assert.equal(Object.keys(after).filter(p => p.startsWith(".starter/history/")).length, Object.keys(before).filter(p => p.startsWith(".starter/history/")).length);
@@ -103,6 +103,7 @@ test("migration 0.24 → 0.25.1 : aperçu complet, état et historique à l'octe
   assert.equal(config.starter_version, "0.25.1");
   assert.equal(config.skills.find(s => s.id === "project-phase").version, 5);
   assert.equal(await readFile(join(f.w, ".claude/skills/project-phase/SKILL.md"), "utf8"), await readFile(resolve("core/skills/project-phase/SKILL.md"), "utf8"));
+  assert.equal(await readFile(join(f.w, ".claude/skills/project-plan/SKILL.md"), "utf8"), await readFile(resolve("core/skills/project-plan/SKILL.md"), "utf8"));
   const doctor = spawnSync(process.execPath, [join(f.w, ".starter/run.mjs"), "doctor", f.w, "--json"], { encoding: "utf8" });
   assert.notEqual(JSON.parse(doctor.stdout).verdict, "BLOCKED");
   // The new runtime is really in use: carry exists, and pre-0.25 observations stay non-carryable.

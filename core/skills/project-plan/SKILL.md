@@ -5,8 +5,10 @@ description: "Organiser le backlog sous la direction de la propriétaire avec un
 
 # project-plan
 
-Sans `.starter/workflow.json`, suivre uniquement [la procédure historique](references/legacy-v014.md).
-Avec un suivi v3, appliquer la suite ci-dessous.
+Sans `.starter/workflow.json` après inspection du projet, suivre uniquement [la procédure historique](references/legacy-v014.md).
+Si le suivi n'est pas accessible, son état reste inconnu : ne pas présumer le mode historique,
+ni inventer les identités, mandats ou portes du runtime.
+Avec un suivi v3 constaté, appliquer la suite ci-dessous.
 
 Lire `.starter/WORKFLOW.md`, le brief et workflow status. Assurer la fonction Product Owner ou la
 confier au planner configuré si utile. Consulter le code et les contraintes techniques ; demander
@@ -29,6 +31,18 @@ ou les titres uniques de la proposition, résolus par le moteur lors du premier 
 l'historique et invalide les mandats/acceptations affectés, pas les phases futures indépendantes.
 Ne pas éditer BACKLOG.md ni workflow.json. Restituer le plan lisible et l'impact, puis project-next.
 L'ajout de fonctionnalités ne constitue pas une autorisation de les implémenter immédiatement.
+
+## Architecture, données et sécurité selon le risque
+
+Pour les surfaces concernées, lire Plan dans `.starter/runtime/core/contracts/architecture-data-security.md`.
+Rattacher intégrité métier, autorisations, schéma/migrations et contrôles de sécurité pertinents aux
+critères vérifiables des phases existantes. Avant d'accepter un invariant, vérifier ses
+prérequis sur les données existantes : mapping et migration doivent être prouvés dans la même
+phase ou dans une phase antérieure, sinon nommer la phase « préparatoire » et différer la
+garantie complète. Associer les risques critiques aux tâches, preuves situées et revues
+distinctes réellement exigées par le suivi constaté, sans déclarer ces portes satisfaites.
+Distinguer preuve locale, revue et contrôle après publication ; ne créer ni backlog parallèle
+ni phase d'audit systématique pour une retouche sans risque.
 
 ## Visibilité dans la recherche, selon le périmètre
 

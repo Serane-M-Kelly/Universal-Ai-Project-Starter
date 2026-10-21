@@ -34,6 +34,14 @@ Pour lire une preuve, utiliser `workflow report ID_PREUVE`. Le regroupement des 
 ne démontre pas leur couverture : lire les noms ou assertions utiles avec --raw ou --stream.
 Les erreurs et les revues restent intégrales. Ne pas refaire un contrôle pour retrouver son log.
 
+## Architecture, données et sécurité selon le risque
+
+Pour une phase touchant données, accès, intégrations ou autres surfaces à risque, appliquer Phase
+dans `.starter/runtime/core/contracts/architecture-data-security.md`. Réaliser les invariants et
+protections prévues et contrôler les cas d'échec, permissions et concurrence pertinents avec des
+preuves réellement exécutées. Ne pas exposer de secrets ou données privées dans les journaux.
+Un test heureux seul ne démontre pas la sécurité du chemin concerné.
+
 ## README du produit, selon le périmètre
 
 Si la phase crée, réorganise ou change ce qu'annonce le README du produit (fonction, commande, configuration, licence), appliquer `.starter/runtime/core/contracts/product-readme.md` puis `workflow readme-check`. Une retouche locale suit ses règles sans relecture complète du guide.
