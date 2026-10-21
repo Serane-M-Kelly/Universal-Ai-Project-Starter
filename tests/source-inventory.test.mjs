@@ -4,6 +4,8 @@ import { mkdtemp, mkdir, writeFile, rm, symlink } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { tree, hash } from "../dist/lib/phase-workflow.js";
+import { examineChanges } from "../dist/lib/evidence-continuity.js";
+
 import { isGeneratedNextEnv, isPrivateEnvFile, isGeneratedCacheDirectory } from "../dist/lib/source-inventory.js";
 
 const nextGenerated = [
@@ -65,4 +67,18 @@ test("inventory: classifications reject broad implicit excludes",()=>{
   assert.equal(isGeneratedCacheDirectory("",".npm-cache"),true);
   assert.equal(isGeneratedCacheDirectory("src",".npm-cache"),false);
   assert.equal(isGeneratedNextEnv("src/next-env.d.ts","custom"),false);
+});
+
+test("inventory: documentary change never reads private env during continuity", async t => {
+  const root = await mkdtemp(join(tmpdir(), "starter-private-continuity-"));
+  t.after(() => rm(root,{recursive:true,force:true}));
+  await writeFile(join(root,".env.local"),"TOKEN=private-secret");
+  await writeFile(join(root,"README.md"),"# Before");
+  await writeFile(join(root,"src.js"),"export const ready = true");
+  const before = await tree(root);
+  await writeFile(join(root,"README.md"),"# After");
+  const after = await tree(root);
+  const result = await examineChanges(root,before,after);
+  assert.deepEqual(result.changes.map(x=>x.path),["README.md"]);
+  assert.ok(result.signals);
 });
