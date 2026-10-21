@@ -7,9 +7,9 @@ export function isPrivateEnvFile(path: string): boolean {
 
 /** Only well-known cache folders, never arbitrary user directories or SQL migrations. */
 export function isGeneratedCacheDirectory(parent: string, name: string): boolean {
-  if (name === ".npm-cache") return true;
+  if (!parent && name === ".npm-cache") return true;
   const segments = parent.split("/").filter(Boolean);
-  return segments.at(-1) === "supabase" && (name === ".temp" || name === ".branches");
+  return segments.at(-1) === "supabase" && name === ".temp";
 }
 
 /**
