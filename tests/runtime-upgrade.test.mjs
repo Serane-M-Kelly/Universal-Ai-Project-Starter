@@ -187,6 +187,7 @@ test("migration inventory: strict rollback, opt-in and immutable historical proo
     '// NOTE: This file should not be edited',
     '// see https://nextjs.org/docs/app/api-reference/config/typescript for more information.',
   ].join("\n"));
+  await writeFile(join(f.app, ".env.local"), "FAKE_TEST_ONLY_CONFIG=abc");
   const before = await snapshot(f.w), oldBehavior = behaviour(f);
   const strict = apply(f.w, preview(f.w).plan_hash);
   assert.equal(strict.status, 2, strict.stdout + strict.stderr);
@@ -204,6 +205,18 @@ test("migration inventory: strict rollback, opt-in and immutable historical proo
   const current = behaviour(f);
   assert.deepEqual(current.status.phases.filter(p => p.state === "accepted"), oldBehavior.status.phases.filter(p => p.state === "accepted"));
   assert.notDeepEqual(current.contexts.map(x => x.code_hash), oldBehavior.contexts.map(x => x.code_hash));
+});
+
+test("migration inventory: source changes after preview invalidate plan without touching workspace", async (t) => {
+  const f = await workspace024(t);
+  await writeFile(join(f.app, ".env.local"), "FAKE_TEST_ONLY_CONFIG=abc");
+  const dry = preview(f.w);
+  const original = await snapshot(f.w);
+  await writeFile(join(f.app, "a.js"), "export const a = 2;\n");
+  const changed = apply(f.w, dry.plan_hash);
+  assert.equal(changed.status, 2);
+  assert.match(changed.stderr, /a changé depuis l'aperçu/);
+  assert.deepEqual(await snapshot(f.w), original);
 });
 
 test("migration : un échec de vérification annule automatiquement ; une annulation interrompue reprend", async (t) => {
