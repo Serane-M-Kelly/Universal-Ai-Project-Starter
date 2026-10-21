@@ -267,6 +267,7 @@ export async function runWorkflow(args: string[]): Promise<number> {
     "raw",
     "metrics",
     "accept-state-changes",
+    "accept-proof-invalidation",
     "finish",
   ])
     options[b] = { type: "boolean", default: false };
@@ -297,7 +298,7 @@ export async function runWorkflow(args: string[]): Promise<number> {
   if (action !== "init" && action !== "migrate") await assertNoMigrationInProgress(w, action);
   let result: unknown;
   if (action === "runtime-upgrade") {
-    result = v["dry-run"] ? await previewUpgrade(w) : v.finish ? await finishUpgrade(w, by, request) : await applyUpgrade(w, v.plan, by, request);
+    result = v["dry-run"] ? await previewUpgrade(w) : v.finish ? await finishUpgrade(w, by, request) : await applyUpgrade(w, v.plan, by, request, v["accept-proof-invalidation"]);
   } else if (action === "runtime-rollback") {
     result = await rollbackUpgrade(w, { dryRun: v["dry-run"], acceptStateChanges: v["accept-state-changes"], by, request });
   } else if (action === "init") {

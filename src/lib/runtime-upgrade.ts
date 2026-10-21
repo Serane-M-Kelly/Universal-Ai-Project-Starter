@@ -20,7 +20,8 @@ import { dirname, join, relative } from "node:path";
 import YAML from "yaml";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import { canonicalPath, pathExists, writeFileAtomic } from "./fs-safe.js";
-import { declaration, ensure } from "./phase-workflow.js";
+import { declaration, ensure, sourceHash } from "./phase-workflow.js";
+import { conservativeInventoryTransition } from "./inventory-upgrade.js";
 import { packageRoot } from "./paths.js";
 import { isPathInsideOrEqual } from "./text.js";
 import { loadSkill } from "./skills.js";
@@ -57,7 +58,7 @@ export type Plan = {
   format: 2; workspace: string; from: string | null; to: string; up_to_date: boolean;
   runtime: { before: string | null; after: string };
   operations: Operation[]; untouched: Record<string, string>;
-  behavior: string | null; incompatibilities: string[]; personalizations: string[];
+  behavior: string | null; source_inventory_sha?: string; incompatibilities: string[]; personalizations: string[];
 };
 
 /** Tree hash tolerant of symbolic links (node_modules/.bin), compared by their target text. */
@@ -232,7 +233,9 @@ export async function planUpgrade(workspace: string, options: { ownLock?: string
     format: 2, workspace: w, from, to, up_to_date: upToDate,
     runtime: { before: await runtimeHashFrom(runtimeDir), after: await runtimeHashFrom(packageRoot) },
     operations: upToDate ? [] : operations, untouched: await fingerprint(w, replaced.map(o => o.path)),
-    behavior: observed ? sha(JSON.stringify(observed)) : null, incompatibilities, personalizations,
+    behavior: observed ? sha(JSON.stringify(observed)) : null,
+    ...(!incompatibilities.length ? { source_inventory_sha: await sourceHash(w) } : {}),
+    incompatibilities, personalizations,
   };
   return { plan, plan_hash: sha(JSON.stringify(plan)), ...(observed ? { behavior: observed } : {}), ...(configText !== undefined ? { config: configText } : {}) };
 }
@@ -317,7 +320,7 @@ async function place(w: string, dir: string, source: string, rel: string, kind: 
   await rm(aside, { recursive: true, force: true });
 }
 
-export async function applyUpgrade(workspace: string, planHash: string, by: string, request: string) {
+export async function applyUpgrade(workspace: string, planHash: string, by: string, request: string, acceptProofInvalidation = false) {
   declaration(by, request);
   ensure(/^[a-f0-9]{64}$/.test(planHash ?? ""), "--plan EMPREINTE requis : lancer d'abord --dry-run et examiner l'aperçu.");
   const w = await canonicalPath(workspace);
@@ -362,8 +365,14 @@ export async function applyUpgrade(workspace: string, planHash: string, by: stri
     const untouched = await fingerprint(w, replaced.map(o => o.path));
     const drift = [...new Set([...Object.keys(untouched), ...Object.keys(plan.untouched)])].filter(p => untouched[p] !== plan.untouched[p]);
     ensure(!drift.length, `Fichiers modifiés pendant la migration : ${drift.slice(0, 10).join(", ")}.`);
+    ensure(await sourceHash(w) === plan.source_inventory_sha,
+      "Code applicatif modifié depuis l’aperçu : migration annulée.");
     const after = behavior(w, nonce);
-    ensure(JSON.stringify(after) === JSON.stringify(before), "Comportement différent après migration (statuts ou contextes de phase) : migration annulée.");
+    const identical = JSON.stringify(after) === JSON.stringify(before);
+    if (!identical) {
+      ensure(acceptProofInvalidation && conservativeInventoryTransition(before!, after, (after.contexts[0] as any)?.code_hash),
+        "Comportement différent après migration (statuts ou contextes de phase) : migration annulée. Si le seul changement est la perte de fraîcheur des anciennes preuves, examiner --dry-run puis utiliser explicitement --accept-proof-invalidation.");
+    }
     const doctorAfter = doctorFindings(w, nonce);
     journal.doctor_after = doctorAfter;
     const added = doctorAfter.filter(f => f.startsWith("blocked:") && !journal!.doctor_before!.includes(f));
@@ -373,7 +382,8 @@ export async function applyUpgrade(workspace: string, planHash: string, by: stri
     await finishCleanup(w, journal);
     return {
       upgraded: true, id, from: plan.from, to: plan.to, journal: `${MIGRATIONS}/${id}/journal.json`,
-      behavior: "statut et contextes de toutes les phases identiques", untouched_files_verified: Object.keys(untouched).length,
+      behavior: JSON.stringify(after) === JSON.stringify(before) ? "statut et contextes identiques" : "empreintes actualisées : preuves anciennes conservées mais non requalifiées, sans nouvelle acceptation",
+      proof_invalidation_accepted: JSON.stringify(after) !== JSON.stringify(before), untouched_files_verified: Object.keys(untouched).length,
       doctor: { before: journal.doctor_before, after: doctorAfter, rule: "aucun nouveau blocage ; le verrou de la migration est exclu de la comparaison" },
       rollback: `workflow runtime-rollback --workspace "${w}" --dry-run`,
       not_done: "Les observations enregistrées par un runtime 0.24 n'ont pas d'inventaire : workflow carry ne les conservera pas (celles d'un runtime 0.25.0 en ont un). Relancer les assistants et project-start.",

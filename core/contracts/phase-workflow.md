@@ -136,6 +136,25 @@ JSON endommagé, utiliser `restore-state` avec un snapshot inspecté, puis réex
 preuves. Les personnalisations inconnues ne sont pas écrasées. Aucun mécanisme local n'est un
 contrôle d'accès ni un historique infalsifiable ; sauvegarder le workspace de manière privée.
 
+## Empreinte de révision : fichiers générés et environnements privés
+L'inventaire de la révision exclut seulement les sorties reconnues : cache npm local
+`.npm-cache/`, `supabase/.temp/`, et `next-env.d.ts` **uniquement** lorsqu'il
+correspond à une déclaration générée connue de Next.js. Une déclaration personnalisée,
+une migration SQL, `supabase/config.toml`, le code, les règles d'accès, les assets
+et les dépendances restent suivis. `.gitignore` ne décide pas de la sécurité
+ni de la pertinence d'un fichier.
+
+Pour les fichiers privés `.env` et `.env.*` hors modèles publics
+(`.example`, `.sample`, `.template`, `.dist`), le moteur ne lit
+pas le contenu et ne le place pas dans un rapport : seule une empreinte de
+métadonnées (taille, dates de modification/changement et mode) est suivie.
+Elle signale les changements observables, mais **ne garantit pas** qu'un secret
+ou une configuration n'a pas changé. Les preuves d'environnement réel,
+de déploiement, de prestataire ou de secrets nécessitent des contrôles
+situés et un mandat adapté ; ne jamais présenter un hash de source comme
+leur validation. Une modification non détectable des métadonnées est
+hors de cette garantie et exige une nouvelle vérification quand elle est plausible.
+
 ## Lecture compacte intégrée
 Le module de contexte réduit uniquement ce que l’agent lit. Il ne modifie ni les commandes de
 contrôle, ni les preuves, ni les décisions. Aucun appel IA supplémentaire, aucun nouveau skill.

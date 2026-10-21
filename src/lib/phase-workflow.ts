@@ -11,6 +11,7 @@ import { schemasRoot } from "./paths.js";
 import { isPathInsideOrEqual } from "./text.js";
 import { inspectPhaseSources, requireCurrentSources, type PhaseSource } from "./phase-sources.js";
 import { storeTree } from "./tree-snapshots.js";
+import { isPrivateEnvFile, isGeneratedCacheDirectory, isGeneratedNextEnv } from "./source-inventory.js";
 import { NATIVE_ADAPTERS, installedNativeAdapters, isNativeAdapter, workflowCommand } from "./native-adapters.js";
 
 export const STATE = ".starter/workflow.json";
@@ -130,7 +131,9 @@ export async function tree(root: string): Promise<Record<string, string>> {
   const out: Record<string, string> = {};
   async function walk(dir: string): Promise<void> {
     for (const name of (await readdir(dir)).sort()) {
-      if (ignored.has(name)) continue;
+      const folder = relative(root, dir).split("\\").join("/");
+      const parent = folder === "." ? "" : folder;
+      if (ignored.has(name) || isGeneratedCacheDirectory(parent, name)) continue;
       const p = join(dir, name),
         s = await lstat(p);
       ensure(
@@ -138,8 +141,18 @@ export async function tree(root: string): Promise<Record<string, string>> {
         `Lien symbolique dans les sources : ${relative(root, p)}. Déplacer les sorties générées dans un dossier de compilation reconnu.`,
       );
       if (s.isDirectory()) await walk(p);
-      else if (s.isFile())
-        out[relative(root, p).split("\\").join("/")] = hash(await readFile(p));
+      else if (s.isFile()) {
+        const ref = relative(root, p).split("\\").join("/");
+        if (isPrivateEnvFile(ref)) {
+          // Metadata-only sentinel: do not read secrets, but invalidate upon detectable changes.
+          const st = await lstat(p, { bigint: true });
+          out[ref] = hash({ kind: "private-env-metadata-v1", size: String(st.size), mtime: String(st.mtimeNs), ctime: String(st.ctimeNs), mode: String(st.mode) });
+        } else {
+          const contents = await readFile(p);
+          if (isGeneratedNextEnv(ref, contents.toString("utf8"))) continue;
+          out[ref] = hash(contents);
+        }
+      }
       else
         throw new Error(
           `Type de fichier non pris en charge : ${relative(root, p)}`,

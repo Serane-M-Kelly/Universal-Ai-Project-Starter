@@ -14,6 +14,7 @@ import {
 } from "./phase-workflow.js";
 import { inspectPhaseSources } from "./phase-sources.js";
 import { loadTree } from "./tree-snapshots.js";
+import { isPrivateEnvFile } from "./source-inventory.js";
 import { withoutWholeLineComments } from "./comment-lines.js";
 
 export const CONTINUITY_RUNTIME_MIN = "0.25.0";
@@ -102,6 +103,9 @@ export function categoryOf(path: string): Category {
 }
 
 function scanned(path: string): boolean {
+  // Secrets in private environment files are represented by metadata-only sentinels.
+  // Scanning their content would both expose them and fail the snapshot hash check.
+  if (isPrivateEnvFile(path)) return false;
   const name = baseName(path), ext = extension(path);
   if (DOC_EXTENSIONS.has(ext) || BINARY.has(ext) || LOCKFILES.test(name) || TOOLING.test(name)) return false;
   return !path.split("/").some(segment => TOOLING_DIRS.has(segment));
