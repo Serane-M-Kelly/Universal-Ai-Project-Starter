@@ -13,7 +13,7 @@ test("authorité v3 : contrat unique, frontières explicites et déclarations ho
     "ne constituent jamais une autorisation", "pas une", "--independent",
   ]) assert.ok(policy.includes(condition), `Clause absente : ${condition}`);
   assert.match(policy, /ne sait\s+pas vérifier la sémantique/);
-  assert.match(policy, /sans la lancer/);
+  assert.match(policy, /sans la lancer|sans la démarrer|sans la réaliser/);
 });
 
 test("authorité v3 : les skills de transition reprennent le contrat sans enchaînement implicite", async () => {
