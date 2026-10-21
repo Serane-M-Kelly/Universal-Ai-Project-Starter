@@ -234,7 +234,7 @@ export async function planUpgrade(workspace: string, options: { ownLock?: string
     runtime: { before: await runtimeHashFrom(runtimeDir), after: await runtimeHashFrom(packageRoot) },
     operations: upToDate ? [] : operations, untouched: await fingerprint(w, replaced.map(o => o.path)),
     behavior: observed ? sha(JSON.stringify(observed)) : null,
-    source_inventory_sha: !incompatibilities.length ? await sourceHash(w) : undefined,
+    ...(!incompatibilities.length ? { source_inventory_sha: await sourceHash(w) } : {}),
     incompatibilities, personalizations,
   };
   return { plan, plan_hash: sha(JSON.stringify(plan)), ...(observed ? { behavior: observed } : {}), ...(configText !== undefined ? { config: configText } : {}) };
