@@ -6,8 +6,7 @@ description: "Faire examiner une phase dans un contexte distinct, organiser les 
 # project-review
 
 Lire `.starter/WORKFLOW.md` et `workflow context NUMERO --compact` (la phase active si non précisée).
-Appliquer `.starter/runtime/core/contracts/action-authority.md` : l'invocation de ce
-skill ou un accord antérieur explicite applicable doit couvrir la revue. L'état
+Appliquer `.starter/runtime/core/contracts/action-authority.md` : la demande actuelle de la propriétaire ou une autorisation antérieure explicite et applicable doit couvrir la revue. Une délégation par le coordinateur ne crée pas cet accord. L'état
 `ready_for_review` et une simple demande `project-phase` ne l'autorisent pas.
 Si l'autorisation est absente ou indécidable, présenter la revue à autoriser sans
 appeler d'agent ni enregistrer de preuve. Une revue est distincte de l'acceptation.
