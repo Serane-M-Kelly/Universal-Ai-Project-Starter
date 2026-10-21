@@ -25,6 +25,7 @@ test("authorité v3 : les skills de transition reprennent le contrat sans encha�
   assert.match(phase, /sans la lancer/);
   assert.match(phase, /ne\s+consigner `workflow review` que si/);
   const review = await load("core/skills/project-review/SKILL.md");
+  assert.match(review, /délégation par le coordinateur ne crée pas cet accord/);
   assert.match(review, /revue seule n'est pas une acceptation/);
   const next = await load("core/skills/project-next/SKILL.md");
   assert.match(next, /sans l'invoquer/);
