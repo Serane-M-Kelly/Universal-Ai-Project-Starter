@@ -56,6 +56,7 @@ const requiredPaths = [
   "dist/lib/native-switch.js",
   "core/schemas/workflow.schema.json",
   "core/contracts/phase-workflow.md",
+  "core/contracts/action-authority.md",
   "core/contracts/workflow-cli.md",
   "core/contracts/search-visibility.md",
   "core/skills/project-start/SKILL.md",

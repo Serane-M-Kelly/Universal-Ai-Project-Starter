@@ -10,7 +10,9 @@ Si une phase est active, indiquer comment la reprendre ou ce qui attend son acce
 recommander une nouvelle phase pour contourner un blocage. Sinon expliquer objectif, résultat
 observable, dépendances et agent utile. Détailler une phase future insuffisamment cadrée avec
 la fonction Product Owner avant son lancement. Ne pas transformer une suggestion de priorité
-en décision humaine. Terminer par un appel court à project-phase avec le numéro visible.
+en décision humaine. Terminer par une proposition de project-phase avec le numéro visible, sans l'invoquer.
+Appliquer `.starter/runtime/core/contracts/action-authority.md` : le conseil sur la prochaine
+phase ne crée jamais son mandat et ne vaut pas autorisation de commencer.
 
 Pour lire une preuve, utiliser `workflow report ID_PREUVE`. Le regroupement des tests réussis
 ne démontre pas leur couverture : lire les noms ou assertions utiles avec --raw ou --stream.

@@ -8,7 +8,11 @@ description: "Préparer un commit ou une livraison précise après vérification
 Sans `.starter/workflow.json`, suivre uniquement [la procédure historique](references/legacy-v014.md).
 Avec un suivi v3, appliquer la suite ci-dessous.
 
-Lire `.starter/WORKFLOW.md`. Distinguer la demande de commit d'une publication ou d'un déploiement.
+Lire `.starter/WORKFLOW.md` et `.starter/runtime/core/contracts/action-authority.md`.
+Distinguer la demande de commit d'une publication ou d'un déploiement. Une revue ou
+acceptation ne donne pas implicitement mandat pour Ship ; une demande de préparation
+n'autorise ni `git commit`, ni `push`, ni déploiement. Si la portée est indécidable,
+proposer les opérations sans les exécuter.
 Pour un commit, prendre la phase acceptée et le diff actuel ; vérifier les fichiers préexistants,
 l'index Git, les preuves et la revue sur cette révision. Choisir explicitement les seuls fichiers
 concernés. `workflow prepare-commit NUMERO --path FICHIER --path AUTRE --message TEXTE` génère

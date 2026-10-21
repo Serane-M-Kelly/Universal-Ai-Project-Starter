@@ -31,6 +31,8 @@ ou les titres uniques de la proposition, résolus par le moteur lors du premier 
 l'historique et invalide les mandats/acceptations affectés, pas les phases futures indépendantes.
 Ne pas éditer BACKLOG.md ni workflow.json. Restituer le plan lisible et l'impact, puis project-next.
 L'ajout de fonctionnalités ne constitue pas une autorisation de les implémenter immédiatement.
+Respecter `.starter/runtime/core/contracts/action-authority.md` : la planification n'autorise
+ni `begin` sur la prochaine phase ni revue, acceptation ou livraison sans accord applicable.
 
 ## Architecture, données et sécurité selon le risque
 

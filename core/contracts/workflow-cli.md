@@ -2,7 +2,10 @@
 
 Depuis ai-workspace : node .starter/run.mjs workflow ACTION.
 Pour les détails : workflow --help. --workspace permet de choisir un autre workspace.
-Les options --by et --request décrivent les déclarations réellement reçues.
+Les options --by et --request décrivent des déclarations réellement reçues : elles ne
+prouvent ni l'identité humaine ni le consentement à une étape non demandée. Lire
+`.starter/runtime/core/contracts/action-authority.md` avant les transitions.
+`--independent` déclare une revue faite en contexte distinct, sans authentifier la délégation.
 
 | Action | Paramètres / effet |
 |---|---|
