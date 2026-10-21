@@ -15,6 +15,14 @@ Lire les autres références seulement pour la tâche actuelle. Ne pas relire to
 Doctor conserve tous ses contrôles avec `doctor . --json --compact` ; seuls les diagnostics positifs
 sont regroupés. Pour leurs détails, omettre --compact. Conserver les codes de sortie 0/1/2.
 
+## Frontières des autorisations
+Lire `.starter/runtime/core/contracts/action-authority.md` avant toute transition
+entre préparation, réalisation, revue, acceptation, livraison ou nouvelle phase.
+Une demande de phase n'autorise pas automatiquement la revue ni l'acceptation.
+Les autorisations regroupées doivent être explicites et vérifiables dans les échanges
+accessibles. Le moteur enregistre des déclarations, pas leur authentification.
+En cas de doute, proposer l'étape suivante sans la lancer.
+
 ## Entrée et préparation
 Project Architect conserve l'autorité des décisions produit déjà prises. Importer le package avec
 `node .starter/run.mjs intake import CHEMIN .`. L'import conserve les sources et n'approuve pas le
@@ -62,7 +70,8 @@ seule. Une coquille n'impose ni relecture du guide ni contrôle global.
 `project-phase N` autorise la phase déjà définie et ses corrections locales. Consigner begin avec
 la déclaration réelle, puis réutiliser ce mandat après interruption. Aucune approbation séparée
 par sous-tâche. Ne pas passer automatiquement à une autre phase. Une instruction explicite peut
-regrouper phase, revue, acceptation conditionnelle et préparation du commit.
+regrouper phase, revue, acceptation conditionnelle et préparation du commit, selon
+les frontières de `action-authority.md` ; ne pas étendre ce regroupement par inférence.
 Une nouvelle demande indépendante s'ajoute au plan sans interrompre l'actif ; une hypothèse reste
 à clarifier. Si elle affecte l'actif, présenter l'impact avant le remplacement avec
 `--allow-active-change`. Une tâche technique découverte dans le même résultat s'ajoute par

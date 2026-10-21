@@ -18,8 +18,12 @@ Exécuter les vérifications avec `workflow check NUMERO --task ID --by AGENT --
 -- PROGRAMME ARGUMENTS`. --task est répétable ; attribuer seulement les tâches démontrées.
 Un échec de commande ne clôt pas le travail : le traiter dans le mandat. Préparer les essais humains
 avec gestes et résultat attendu, puis consigner les retours réels avec workflow observe.
-Terminer par résultat, contrôles, limites et project-review. Si la demande a inclus la revue,
-l'enchaîner. Ne pas passer seul à la phase suivante ni effectuer Git ou une publication.
+Terminer par résultat, contrôles, limites et proposition de project-review. Lire
+`.starter/runtime/core/contracts/action-authority.md` : n'invoquer le reviewer et ne
+consigner `workflow review` que si la demande actuelle ou un accord préalable explicite
+et toujours applicable couvre réellement la revue. Sinon s'arrêter au résultat prêt
+pour revue, sans la lancer. La réalisation de la phase seule n'autorise ni Accept,
+ni Ship, ni une autre phase, ni Git ou publication.
 
 Un essai humain réussi n'est pas redemandé pour une correction documentaire sans rapport. Après
 le changement, `workflow carry NUMERO --proof ID_OBSERVATION --dry-run` (identifiant dans

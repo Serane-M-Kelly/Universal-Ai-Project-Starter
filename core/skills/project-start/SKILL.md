@@ -5,7 +5,8 @@ description: "Reprendre ou démarrer un projet, retrouver ses acquis et guider l
 
 # project-start
 
-Lire `.starter/WORKFLOW.md`. Exécuter `workflow status --compact` et `doctor . --json --compact` via le moteur local.
+Lire `.starter/WORKFLOW.md` et les frontières de
+`.starter/runtime/core/contracts/action-authority.md` pour les transitions. Exécuter `workflow status --compact` et `doctor . --json --compact` via le moteur local.
 Examiner les blocages et les sources utiles. Sans workflow v3, proposer la migration vers un nouveau
 workspace et conserver l'historique ; ne pas exécuter les opérations v3 sur un ancien état.
 Si status indique backlog_refresh_needed, régénérer la vue avec workflow repair-view en attribuant

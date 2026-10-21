@@ -191,6 +191,23 @@ test("phase workflow: checks, human observation, independent review, acceptance 
   assert.equal(resumed.phases[0].state, "accepted");
   assert.equal(resumed.active, null);
 });
+test("phase workflow: begin does not auto-review, auto-accept or start another phase", async (t) => {
+  const { w } = await fixture(t);
+  const p = (await loadWorkflow(w)).phases[0];
+  await beginPhase(w, p.id, "Kelly", "Réalise seulement la phase 1.");
+  const current = await loadWorkflow(w);
+  assert.equal(current.proofs.length, 0);
+  assert.equal(current.phases[0].acceptance, null);
+  assert.equal(current.active, p.id);
+  const s = await status(w, p.id);
+  assert.equal(s.status.review, false);
+  assert.equal(
+    cmd(w, ["accept", "1", "--by", "Kelly", "--request", "Accepte."]).status,
+    2,
+    "La phase en cours ne suffit pas à autoriser une acceptation par le moteur.",
+  );
+});
+
 test("phase workflow: failed check then correction invalidates earlier code evidence", async (t) => {
   const { w, code } = await fixture(t);
   const p = (await loadWorkflow(w)).phases[0];

@@ -23,7 +23,9 @@ Product Owner/plan confrontera ensuite le découpage aux dépendances techniques
 Conserver un rapport concis sur ce qui fonctionne, les commandes vérifiées et les limites ;
 `workflow setup-record --report CHEMIN --by AGENT --request MISSION` enregistre cette référence.
 Un rapport seul ne prouve pas la faisabilité ; ne pas annoncer une vérification non réalisée.
-Passer à project-plan lorsque le socle suffit pour la prochaine phase.
+Proposer project-plan lorsque le socle suffit, ou le poursuivre si la demande ou un
+accord antérieur explicite couvre déjà la planification ; appliquer les frontières de
+`.starter/runtime/core/contracts/action-authority.md`.
 
 ## Architecture, données et sécurité selon le risque
 

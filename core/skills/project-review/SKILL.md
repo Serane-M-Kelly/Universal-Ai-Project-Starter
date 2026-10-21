@@ -6,6 +6,11 @@ description: "Faire examiner une phase dans un contexte distinct, organiser les 
 # project-review
 
 Lire `.starter/WORKFLOW.md` et `workflow context NUMERO --compact` (la phase active si non précisée).
+Appliquer `.starter/runtime/core/contracts/action-authority.md` : l'invocation de ce
+skill ou un accord antérieur explicite applicable doit couvrir la revue. L'état
+`ready_for_review` et une simple demande `project-phase` ne l'autorisent pas.
+Si l'autorisation est absente ou indécidable, présenter la revue à autoriser sans
+appeler d'agent ni enregistrer de preuve. Une revue est distincte de l'acceptation.
 Lancer le reviewer configuré dans un contexte distinct avec critères, diff et empreintes retournées
 par context. Lui fournir les preuves, puis seulement la justification détaillée du constructeur.
 Pour une interface, joindre les références PA/AD épinglées et les rendus inspectables : distinguer
@@ -13,15 +18,20 @@ Pour une interface, joindre les références PA/AD épinglées et les rendus ins
 sa revue de sa propre direction ne constitue pas une revue indépendante.
 Attendre le rapport JSON (code_hash, contract_hash, summary, findings, checks). Il ne doit pas
 éditer le code. Ne pas présenter une auto-revue comme indépendante si la délégation est indisponible.
+`--independent` est une déclaration : ne l'utiliser qu'après constat d'un vrai contexte
+distinct, sans le faire passer pour une authentification par le moteur.
 Consigner le rapport réel avec `workflow review NUMERO --report RAPPORT_JSON --verdict
 passed|changes_required|blocked --independent --by REVIEWER --request MISSION`. Associer --task
 uniquement aux tâches démontrées par l'inspection. Faire corriger les défauts dans le mandat et
 réexaminer le résultat modifié ; respecter la règle de sortie des boucles du contrat commun.
 Les observations humaines réellement reçues utilisent `workflow observe NUMERO --task ID
 --summary OBSERVATION --by PERSONNE --request MOTS_REELS`. Ne pas déduire un essai du seul avis IA.
-Si l'acceptation explicite ou conditionnelle applicable a été donnée et ses conditions démontrées,
-`workflow accept NUMERO --by PERSONNE --request MOTS_REELS` sans nouvelle demande. Sinon présenter
-le résultat concret à accepter. Sur demande, préparer le commit avec project-ship ; pas de mutation Git.
+Si l'acceptation du résultat concret a été réellement donnée, ou si une acceptation
+conditionnelle explicitement autorisée couvre ce résultat et que ses conditions sont
+démontrées, `workflow accept NUMERO --by PERSONNE --request MOTS_REELS` peut être consigné.
+Sinon présenter le résultat à accepter, sans inventer de `--by` ou `--request` humain.
+La réussite de la revue seule n'est pas une acceptation. Sur demande autorisant sa
+préparation, proposer project-ship ; pas de mutation Git.
 Une phase déjà acceptée à réexaminer doit être rouverte avec la raison réelle, puis reprise.
 
 Une continuité d'essai humain (`kind: continuity`) se fait examiner comme un changement : diff
