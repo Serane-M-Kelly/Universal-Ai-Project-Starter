@@ -20,7 +20,7 @@ import { dirname, join, relative } from "node:path";
 import YAML from "yaml";
 import { Ajv2020 } from "ajv/dist/2020.js";
 import { canonicalPath, pathExists, writeFileAtomic } from "./fs-safe.js";
-import { declaration, ensure } from "./phase-workflow.js";
+import { declaration, ensure, sourceHash } from "./phase-workflow.js";
 import { conservativeInventoryTransition } from "./inventory-upgrade.js";
 import { packageRoot } from "./paths.js";
 import { isPathInsideOrEqual } from "./text.js";
@@ -58,7 +58,7 @@ export type Plan = {
   format: 2; workspace: string; from: string | null; to: string; up_to_date: boolean;
   runtime: { before: string | null; after: string };
   operations: Operation[]; untouched: Record<string, string>;
-  behavior: string | null; incompatibilities: string[]; personalizations: string[];
+  behavior: string | null; source_inventory_sha?: string; incompatibilities: string[]; personalizations: string[];
 };
 
 /** Tree hash tolerant of symbolic links (node_modules/.bin), compared by their target text. */
@@ -233,7 +233,9 @@ export async function planUpgrade(workspace: string, options: { ownLock?: string
     format: 2, workspace: w, from, to, up_to_date: upToDate,
     runtime: { before: await runtimeHashFrom(runtimeDir), after: await runtimeHashFrom(packageRoot) },
     operations: upToDate ? [] : operations, untouched: await fingerprint(w, replaced.map(o => o.path)),
-    behavior: observed ? sha(JSON.stringify(observed)) : null, incompatibilities, personalizations,
+    behavior: observed ? sha(JSON.stringify(observed)) : null,
+    source_inventory_sha: !incompatibilities.length ? await sourceHash(w) : undefined,
+    incompatibilities, personalizations,
   };
   return { plan, plan_hash: sha(JSON.stringify(plan)), ...(observed ? { behavior: observed } : {}), ...(configText !== undefined ? { config: configText } : {}) };
 }
@@ -363,6 +365,8 @@ export async function applyUpgrade(workspace: string, planHash: string, by: stri
     const untouched = await fingerprint(w, replaced.map(o => o.path));
     const drift = [...new Set([...Object.keys(untouched), ...Object.keys(plan.untouched)])].filter(p => untouched[p] !== plan.untouched[p]);
     ensure(!drift.length, `Fichiers modifiés pendant la migration : ${drift.slice(0, 10).join(", ")}.`);
+    ensure(await sourceHash(w) === plan.source_inventory_sha,
+      "Code applicatif modifié depuis l’aperçu : migration annulée.");
     const after = behavior(w, nonce);
     const identical = JSON.stringify(after) === JSON.stringify(before);
     if (!identical) {
